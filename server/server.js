@@ -1,11 +1,15 @@
 const express = require('express');
 const path = require('path');
+const mongoose = require('mongoose');
 
 //Connection to DataBase:
 //To connect to Development environment DB (Comment line below if not using it)
 mongoose.connect('mongodb://localhost:27017/Tradheo', {
   useNewUrlParser: true
 });
+
+mongoose.connection.on('error', error => console.log(error));
+mongoose.Promise = global.Promise;
 
 const app = express();
 
