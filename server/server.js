@@ -1,6 +1,12 @@
 const express = require('express');
 const path = require('path');
 
+//Connection to DataBase:
+//To connect to Development environment DB (Comment line below if not using it)
+mongoose.connect('mongodb://localhost:27017/Tradheo', {
+  useNewUrlParser: true
+});
+
 const app = express();
 
 //Allowing Cross-Origin Request
