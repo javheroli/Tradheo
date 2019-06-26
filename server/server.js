@@ -1,11 +1,14 @@
 const express = require('express');
-const path = require('path');
 const mongoose = require('mongoose');
 require('dotenv').config();
 var bodyParser = require('body-parser');
 var multer = require('multer');
 const cloudinary = require("cloudinary");
 const cloudinaryStorage = require("multer-storage-cloudinary");
+const passport = require('passport');
+var routes = require('./routes/routes.js');
+var secureRoutes = require('./routes/secureRoutes.js');
+require('./auth/auth');
 
 //Connection to DataBase:
 //To connect to Development environment DB (Comment line below if not using it)
@@ -63,6 +66,14 @@ app.use((req, res, next) => {
     next();
   }
 });
+
+//Server path to annonymous users routes
+app.use('/api', routes);
+
+//Server path to logged users secured routes
+app.use('/api', passport.authenticate('jwt', {
+  session: false
+}), secureRoutes);
 
 const port = process.env.PORT || 5000;
 app.listen(port);
