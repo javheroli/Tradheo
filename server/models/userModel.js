@@ -61,6 +61,10 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
+    admin: {
+        type: Boolean,
+        required: true,
+    },
     image: {
         type: String,
         default: 'https://res.cloudinary.com/tradheo/image/upload/v1561651255/userImages/default.png'
