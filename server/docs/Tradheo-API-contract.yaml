@@ -1,0 +1,72 @@
+openapi: 3.0.0
+servers:
+  - description: Developing environment
+    url: http://localhost:5000/api
+
+  - description: Production environment
+    url: http://tradheo-server.herokuapp.com/api
+
+info:
+  description: |
+    Restfull API which works as Tradheo's back-end server, allowing the platform to make every operation related with its business logic.
+  version: '1.0.0'
+  title: Tradheo-API
+  contact:
+    email: javierherraizolivas@gmail.com
+
+tags:
+  - name: User
+    description: Everything about how to access to authenticated methods by signing up with credentials, log in with them receiving a session Bearer token and once authenticated display your own profile.
+
+paths:
+  /user/login:
+    post:
+      tags:
+        - user
+      summary: Logs user into the system. The system responds with a valid token.
+      operationId: loginUser
+      requestBody:
+        $ref: '#/components/requestBodies/User'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+
+        '401':
+          description: 'Unauthorized:  An Error occured: Wrong Password / User not found'
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    Token:
+      type: object
+      properties:
+        token:
+          type: string
+        message:
+          type: string
+
+  requestBodies:
+    User:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+
+      description: User object stored in DB
+      required: true
+
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

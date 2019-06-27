@@ -75,6 +75,9 @@ app.use('/api', passport.authenticate('jwt', {
   session: false
 }), secureRoutes);
 
+//Access to API contract
+app.use("/api/docs", express.static('docs'));
+
 const port = process.env.PORT || 5000;
 app.listen(port);
 
