@@ -1,0 +1,27 @@
+{
+  "LOGIN": {
+    "FAIL": "Las credenciales introducidas no fueron correctas. Por favor, intentelo de nuevo.",
+    "NEW_HERE": "¿Nuevo por aquí?",
+    "PASSWORD": "Contraseña",
+    "REQUIRED_FIELD": "Campo obligatorio",
+    "SIGNIN": "Inicia sesión",
+    "SIGN_UP": "¡Regístrese y pruebe Tradheo 7 días gratis!",
+    "USERNAME": "Usuario",
+    "WAIT": "Por favor, espere...",
+    "CHAT": "CBD Chat"
+  },
+  "MENU": {
+    "APP_SETTINGS": "Ajustes",
+    "USERS": "Usuarios",
+    "LOGOUT": "Cerrar sesión",
+    "MENU": "Menú",
+    "PROFILE": "Perfil"
+  },
+  "SETTINGS": {
+    "APP_LANGUAGE": "Idioma",
+    "APP_SETTINGS": "Ajustes",
+    "GENERAL": "General",
+    "LOGOUT": "Cerrar sesión",
+    "PROFILE": "Perfil"
+  }
+}
