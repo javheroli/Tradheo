@@ -1,0 +1,85 @@
+<ion-content padding class="animated fadeIn login auth-page" (keypress)="keypress($event)">
+  <div class="theme-bg"></div>
+  <div class="auth-content altoCompleto">
+    <div class="arriba">
+      <ion-item style="width:350px; float: right;">
+        <ion-icon name="md-globe" slot="start" color="light"></ion-icon>
+        <ion-label color="light">{{ 'SETTINGS.APP_LANGUAGE' | translate}}</ion-label>
+        <ion-select (ionChange)="changeLanguage($event)">
+          <ion-select-option class="option-es" value="es">Español
+          </ion-select-option>
+          <ion-select-option value="en">English</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+    <!-- Logo -->
+    <div padding-horizontal text-center class="animated fadeInDown">
+      <div class="logoCircle"></div>
+      <h4 no-margin>
+        <ion-text color="light" class="fw700">
+          {{ 'LOGIN.CHAT' | translate}}
+        </ion-text>
+      </h4>
+    </div>
+
+    <!-- Login form -->
+    <form [formGroup]="onLoginForm" class="list-form">
+      <ion-item no-padding class="animated fadeInUp">
+        <ion-label position="floating">
+          <ion-icon name="person" item-start></ion-icon>
+          {{ 'LOGIN.USERNAME' | translate}}
+        </ion-label>
+        <ion-input [(ngModel)]="registerCredentials.username" maxlength="30" color="secondary" type="text"
+          formControlName="username">
+        </ion-input>
+      </ion-item>
+      <p ion-text class="text08"
+        *ngIf="onLoginForm.get('username').touched && onLoginForm.get('username').hasError('required')">
+        <ion-text color="warning">
+          {{ 'LOGIN.REQUIRED_FIELD' | translate}}
+        </ion-text>
+      </p>
+
+      <ion-item no-padding class="animated fadeInUp">
+        <ion-label position="floating">
+          <ion-icon name="lock" item-start></ion-icon>
+          {{ 'LOGIN.PASSWORD' | translate}}
+        </ion-label>
+        <ion-input [(ngModel)]="registerCredentials.password" maxlength="30" color="secondary" type="password"
+          formControlName="password"></ion-input>
+      </ion-item>
+      <p ion-text color="warning" class="text08"
+        *ngIf="onLoginForm.get('password').touched && onLoginForm.get('password').hasError('required')">
+        <ion-text color="warning">
+          {{ 'LOGIN.REQUIRED_FIELD' | translate}}
+        </ion-text>
+      </p>
+    </form>
+
+    <br><br>
+
+    <div>
+      <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="login()"
+        [disabled]="!onLoginForm.valid" tappable>
+        <ion-icon name="log-in"></ion-icon>&nbsp;
+        {{ 'LOGIN.SIGNIN' | translate}}
+      </ion-button>
+
+
+      <br>
+
+    </div>
+
+    <!-- Other links -->
+    <div text-center margin-top>
+      <span (click)="goToRegister()" class="paz" tappable>
+        <ion-text color="light">
+          {{ 'LOGIN.NEW_HERE' | translate}} <strong>{{ 'LOGIN.SIGN_UP' | translate}}</strong>
+        </ion-text>
+      </span>
+    </div>
+  </div>
+
+  <div class="logoEtsii"></div>
+
+</ion-content>
