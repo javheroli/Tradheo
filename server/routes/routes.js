@@ -17,6 +17,27 @@ router.route('/turnOnServer')
 
     })
 
+//Route  /api/auth/signup
+//Authenticate user based on the data sended by user previously
+router.post('/auth/signup', async (req, res, next) => {
+    passport.authenticate('signup', async (err, user, info) => {
+        try {
+            if (err || !user) {
+                return next(res.status(500).send(
+                    'An Error occured: ' + info['message']
+                ));
+            } else {
+                res.json({
+                    message: 'Signup successful',
+                    user: user
+                });
+            }
+        } catch (error) {
+            return next(error);
+        }
+    })(req, res, next);
+});
+
 //Route /api/auth/login
 //Creation of login token for user
 router.post('/auth/login', async (req, res, next) => {

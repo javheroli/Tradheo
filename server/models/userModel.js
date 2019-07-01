@@ -35,7 +35,8 @@ const UserSchema = new Schema({
     },
     licence: {
         type: Boolean,
-        required: true
+        required: true,
+        default: true
     },
     licenceDate: {
         type: Date,
