@@ -7,7 +7,8 @@ const routes: Routes = [
   {
     path: 'signup',
     loadChildren: './pages/register/register.module#RegisterPageModule'
-  }
+  },
+  { path: 'gdpr', loadChildren: './pages/gdpr/gdpr.module#GdprPageModule' }
 ];
 
 @NgModule({

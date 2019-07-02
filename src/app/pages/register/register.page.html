@@ -307,12 +307,17 @@
     </ion-card>
     <br>
     <div class="terms">
-      <ion-checkbox [(ngModel)]="privacyPolicites" checked="false"></ion-checkbox>
+      <ion-checkbox [(ngModel)]="privacyPolicites" checked="false"></ion-checkbox>&nbsp;
       <ion-label color="light">
-        {{ 'REGISTER.TERMS' | translate}}&nbsp;
+        {{ 'REGISTER.TERMS' | translate}}
         <a color="dark" style="cursor: pointer" target="_blank"
           href="{{path}}/gdpr">{{ 'REGISTER.PRIVACY_POLICIES' | translate}}</a>
       </ion-label>
+      <div class="error-message" *ngIf="!privacyPolicites
+            ">
+        <ion-icon name="information-circle-outline"> </ion-icon>
+        {{ 'REGISTER.MUST_ACCEPT_TERMS' | translate }}
+      </div>
     </div>
     <br />
     <br />
