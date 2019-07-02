@@ -1,0 +1,41 @@
+:host {
+  ion-content {
+    --background: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary))
+  }
+
+  ion-card {
+    --background: white;
+
+  }
+
+  ion-card-subtitle {
+    color: white;
+  }
+
+  ion-card-title {
+    color: var(--ion-color-medium)
+  }
+
+  ion-item {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  p {
+    margin-left: 5%;
+  }
+}
+
+.imageCard1 {
+  margin-top: 3%;
+}
+
+.arriba {
+  position: relative;
+  display: block;
+  height: 50px;
+}
+
+.terms {
+  text-align: center;
+}
