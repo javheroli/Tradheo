@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
+const User = require('../models/userModel');
 
 
 
@@ -37,6 +38,60 @@ router.post('/auth/signup', async (req, res, next) => {
         }
     })(req, res, next);
 });
+
+//Route  /api/auth/signup/validationUsername/:username
+//Turn on de server on heroku
+router.route('/auth/signup/validationUsername/:username')
+    .get((req, res) => {
+        var username = req.params.username;
+        User.findOne({
+            username: username
+        }, (err, user) => {
+            console.log("Validate username: " + username);
+            if (user !== null) {
+                res.status(409).send('Username already taken');
+            } else {
+                res.status(200).send("Ok")
+            }
+        })
+
+    })
+
+//Route  /api/auth/signup/validationEmail/:email
+//Turn on de server on heroku
+router.route('/auth/signup/validationEmail/:email')
+    .get((req, res) => {
+        var email = req.params.email;
+        User.findOne({
+            email: email
+        }, (err, user) => {
+            console.log("Validate email: " + email);
+            if (user !== null) {
+                res.status(409).send('Email already taken');
+            } else {
+                res.status(200).send("Ok")
+            }
+        })
+
+    })
+
+//Route  /api/auth/signup/validationPhoneNumber/:phoneNumber
+//Turn on de server on heroku
+router.route('/auth/signup/validationPhoneNumber/:phoneNumber')
+    .get((req, res) => {
+        var phoneNumber = req.params.phoneNumber;
+        User.findOne({
+            phoneNumber: phoneNumber
+        }, (err, user) => {
+            console.log("Validate phoneNumber: " + phoneNumber);
+            if (user !== null) {
+                res.status(409).send('phoneNumber already taken');
+            } else {
+                res.status(200).send("Ok")
+            }
+        })
+
+    })
 
 //Route /api/auth/login
 //Creation of login token for user
@@ -74,6 +129,10 @@ router.post('/auth/login', async (req, res, next) => {
         }
     })(req, res, next);
 });
+
+
+
+
 
 
 module.exports = router;

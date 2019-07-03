@@ -66,6 +66,14 @@
             {{ 'REGISTER.PATTERN' | translate }}
           </div>
 
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('username').touched &&
+              onRegisterForm.get('username').hasError('usernameInUse')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.USERNAME_TAKEN' | translate }}
+          </div>
+
           <ion-item>
             <ion-label position="floating">
               <ion-icon name="mail" item-start></ion-icon>
@@ -87,6 +95,14 @@
             ">
             <ion-icon name="information-circle-outline"> </ion-icon>
             {{ 'REGISTER.EMAIL_VALIDATION' | translate }}
+          </div>
+
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('email').touched &&
+              onRegisterForm.get('email').hasError('emailInUse')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.EMAIL_TAKEN' | translate }}
           </div>
 
           <ion-item>
@@ -231,6 +247,13 @@
               {{ 'REGISTER.INVALID_PHONE' | translate }}
             </div>
           </div>
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('phoneNumber').touched &&
+              onRegisterForm.get('phoneNumber').hasError('phoneNumberInUse')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.PHONENUMBER_TAKEN' | translate }}
+          </div>
 
 
           <ion-item>
@@ -285,15 +308,15 @@
               placeholder="{{ 'REGISTER.DESCRIPTION_PLACEHOLDER' | translate }}"></ion-textarea>
           </ion-item>
 
-          <ion-item>
+          <ion-item class="item-file">
             <ion-card class="imageCard1">
-              <ion-card-header>
+              <ion-card-header class="header-file">
                 <ion-title>
                   <ion-icon name="image" item-start></ion-icon>
                   {{ 'REGISTER.PROFILE_PIC' | translate }}
                 </ion-title>
               </ion-card-header>
-              <ion-card-content>
+              <ion-card-content class="content-file">
                 <br />
                 <div>
                   <input type="file" id="procPic" (change)="onProfilePicInputChange($event.target.files)" />

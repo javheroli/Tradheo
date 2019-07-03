@@ -65,4 +65,37 @@ export class DataManagement {
         return Promise.reject('error');
       });
   }
+
+  public validationUsername(username): Promise<any> {
+    return this.restService
+      .validationUsername(username)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public validationEmail(email): Promise<any> {
+    return this.restService
+      .validationEmail(email)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public validationPhoneNumber(phoneNumber): Promise<any> {
+    return this.restService
+      .validationPhoneNumber(phoneNumber)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
 }

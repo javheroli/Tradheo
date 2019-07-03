@@ -40,7 +40,8 @@ passport.use('signup', new localStrategy({
                     description,
                     country,
                     city,
-                    admin
+                    admin,
+                    image
                 });
                 //Send the user information to the next middleware
                 return done(null, user);

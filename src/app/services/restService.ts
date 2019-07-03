@@ -86,4 +86,46 @@ export class RestWS extends AbstractWS {
         return Promise.reject(error);
       });
   }
+
+  public validationUsername(username) {
+    return this.makeGetRequest(
+      this.path + 'api/auth/signup/validationUsername/' + username,
+      null
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public validationEmail(email) {
+    return this.makeGetRequest(
+      this.path + 'api/auth/signup/validationEmail/' + email,
+      null
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public validationPhoneNumber(phoneNumber) {
+    return this.makeGetRequest(
+      this.path + 'api/auth/signup/validationPhoneNumber/' + phoneNumber,
+      null
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
 }

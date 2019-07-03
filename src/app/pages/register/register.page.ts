@@ -20,6 +20,9 @@ import { CookieService } from 'ngx-cookie-service';
 import { ActivatedRoute } from '@angular/router';
 import countries from './phonePrefixByCountry';
 import libphonenumber from 'google-libphonenumber';
+import { UsernameValidator } from 'src/app/validators/username.validator';
+import { CustomEmailValidator } from 'src/app/validators/email.validator';
+import { PhoneNumberValidator } from 'src/app/validators/phonenumber.validator';
 
 @Component({
   selector: 'app-register',
@@ -37,7 +40,7 @@ export class RegisterPage implements OnInit {
   birthDate: string;
   firstName: string;
   lastName: string;
-  description: string;
+  description: string = '';
   country;
   countries = countries;
   city: string;
@@ -55,7 +58,10 @@ export class RegisterPage implements OnInit {
     private cookieService: CookieService,
     public alertCtrl: AlertController,
     private activatedRoute: ActivatedRoute,
-    public events: Events
+    public events: Events,
+    public usernameValidator: UsernameValidator,
+    public emailValidator: CustomEmailValidator,
+    public phoneNumberValidator: PhoneNumberValidator
   ) {}
 
   ionViewWillEnter() {
@@ -73,7 +79,8 @@ export class RegisterPage implements OnInit {
           Validators.pattern(
             '^(?=.{5,25}$)(?![_.-])(?!.*[_.-]{2})[a-zA-Z0-9._-]+(?<![_.-])$'
           )
-        ])
+        ]),
+        this.usernameValidator.checkUsername.bind(this.usernameValidator)
       ],
       password: [
         null,
@@ -82,14 +89,21 @@ export class RegisterPage implements OnInit {
       confirmPassword: [null, Validators.compose([Validators.required])],
       email: [
         null,
-        Validators.compose([Validators.required, Validators.email])
+        Validators.compose([Validators.required, Validators.email]),
+        this.emailValidator.checkEmail.bind(this.emailValidator)
       ],
       birthDate: [null, Validators.compose([Validators.required])],
       firstName: [null, Validators.compose([Validators.required])],
       lastName: [null, Validators.compose([Validators.required])],
       description: [null, null],
       country: [null, Validators.compose([Validators.required])],
-      phoneNumber: [null, Validators.compose([Validators.required])],
+      phoneNumber: [
+        null,
+        Validators.compose([Validators.required]),
+        this.phoneNumberValidator.checkPhoneNumber.bind(
+          this.phoneNumberValidator
+        )
+      ],
       city: [null, Validators.compose([Validators.required])]
     });
   }
@@ -131,9 +145,7 @@ export class RegisterPage implements OnInit {
       'REGISTER.HEADER_SUCCESS'
     );
     let translation2: string = this.translate.instant('REGISTER.SUCCESS');
-    let translation3: string = this.translate.instant(
-      'REGISTER.ERROR_USERNAME'
-    );
+    let translation3: string = this.translate.instant('REGISTER.ERROR_SIGNUP');
 
     this.dm
       .register(

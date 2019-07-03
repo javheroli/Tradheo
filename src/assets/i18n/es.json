@@ -13,9 +13,9 @@
   "REGISTER": {
     "CONFIRM_PASSWORD": "Confirmar contraseña",
     "PROFILE_PIC": "Imagen de perfil",
-    "ERROR_USERNAME": "El nombre de usuario ya está cogido",
+    "ERROR_SIGNUP": "Hubo un error inexperado mientras se intentaba registrar su cuenta. Por favor, inténtelo más tarde o póngase en contacto con tradheo.app@gmail.com",
     "FIRST_NAME": "Nombre",
-    "HEADER_SUCCESS": "Éxito",
+    "HEADER_SUCCESS": "Se ha registrado con éxito",
     "INTRUDUCE_INFORMATION": "Introduce tus datos personales",
     "I_HAVE_AN_ACCOUNT": "¡Ya tengo una cuenta!",
     "LAST_NAME": "Apellidos",
@@ -24,7 +24,7 @@
     "REGISTER": "Formulario de registro",
     "REQUIRED_FIELD": "Campo obligatorio",
     "SIGN_UP": "Registro",
-    "SUCCESS": "¡Registro realizado correctamente!",
+    "SUCCESS": "¡Disfrute de sus 7 días de licencia gratuita en Tradheo! Una vez expirada, siéntase libre de actualizar su licencia con nuestras económicas tarifas",
     "THIS_FIELD_IS_REQUIRED": "Este campo es obligatorio",
     "USERNAME": "Usuario",
     "EMAIL": "Correo electrónico",
@@ -43,7 +43,10 @@
     "INVALID_PHONE": "El número de teléfono es incorrecto para el país seleccionado",
     "TERMS": "He leido y estoy de acuerdo con las ",
     "PRIVACY_POLICIES": "Políticas de privacidad",
-    "MUST_ACCEPT_TERMS": "Debe aceptar las políticas de privacidad"
+    "MUST_ACCEPT_TERMS": "Debe aceptar las políticas de privacidad",
+    "USERNAME_TAKEN": "Este usuario ya está en uso",
+    "EMAIL_TAKEN": "Este email ya está en uso",
+    "PHONENUMBER_TAKEN": "Este número de teléfono ya está en uso"
   },
   "MENU": {
     "APP_SETTINGS": "Ajustes",

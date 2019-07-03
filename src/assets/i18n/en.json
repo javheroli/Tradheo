@@ -13,20 +13,20 @@
   "REGISTER": {
     "CONFIRM_PASSWORD": "Confirm password",
     "PROFILE_PIC": "Profile picture",
-    "ERROR_USERNAME": "The username is already taken",
+    "ERROR_SIGNUP": "There was an unexpected error trying to sign up your account. Please, try again later or contact with tradheo.app@gmail.com",
     "FIRST_NAME": "First name",
-    "HEADER_SUCCESS": "Success",
+    "HEADER_SUCCESS": "You have signed up successfully",
     "HEADER_SUCCESS_EDIT": "Edit profile success",
     "IMAGE_ERROR": "You have to select an image",
     "INTRUDUCE_INFORMATION": "Introduce your personal data",
-    "I_HAVE_AN_ACCOUNT": "I have an account!",
+    "I_HAVE_AN_ACCOUNT": "I have an account already!",
     "LAST_NAME": "Last name",
     "PASSWORD": "Password",
     "PASSWORD_VALIDATION_FALSE": "Passwords do not match!",
     "REGISTER": "Sign up form",
     "REQUIRED_FIELD": "Required field",
     "SIGN_UP": "Sign up",
-    "SUCCESS": "Sign up done successfully!",
+    "SUCCESS": "Enjoy your 7 days Tradheo's trial licence! Once expired, feel free to update your license with our reasonable rates",
     "THIS_FIELD_IS_REQUIRED": "This field is required",
     "USERNAME": "Username",
     "EMAIL": "Email",
@@ -45,7 +45,10 @@
     "INVALID_PHONE": "The phone is incorrect for the selected country",
     "TERMS": "I have read and agree to the ",
     "PRIVACY_POLICIES": "Privacy policies",
-    "MUST_ACCEPT_TERMS": "You must accept privacy policies"
+    "MUST_ACCEPT_TERMS": "You must accept privacy policies",
+    "USERNAME_TAKEN": "This username is already in use",
+    "EMAIL_TAKEN": "This email is already in use",
+    "PHONENUMBER_TAKEN": "This phone number is already in use"
 
   },
   "MENU": {
