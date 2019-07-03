@@ -54,7 +54,7 @@ export class LoginPage implements OnInit {
 
   // // //
   goToRegister() {
-    this.navCtrl.navigateRoot('/userForm');
+    this.navCtrl.navigateRoot('/signup');
   }
 
   onKeydown(event) {

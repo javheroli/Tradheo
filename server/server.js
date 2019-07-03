@@ -71,9 +71,9 @@ app.use((req, res, next) => {
 app.use('/api', routes);
 
 //Server path to logged users secured routes
-app.use('/api', passport.authenticate('jwt', {
+/*app.use('/api', passport.authenticate('jwt', {
   session: false
-}), secureRoutes);
+}), secureRoutes);*/
 
 //Access to API contract
 app.use("/api/docs", express.static('docs'));

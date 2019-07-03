@@ -24,7 +24,7 @@ const UserSchema = new Schema({
         unique: true
     },
     birthDate: {
-        rype: Date,
+        type: Date,
         required: true,
     },
     registrationDate: {
@@ -35,7 +35,8 @@ const UserSchema = new Schema({
     },
     licence: {
         type: Boolean,
-        required: true
+        required: true,
+        default: true
     },
     licenceDate: {
         type: Date,

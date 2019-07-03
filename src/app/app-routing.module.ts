@@ -3,7 +3,12 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth/auth.guard';
 
 const routes: Routes = [
-  { path: '', loadChildren: './pages/login/login.module#LoginPageModule' }
+  { path: '', loadChildren: './pages/login/login.module#LoginPageModule' },
+  {
+    path: 'signup',
+    loadChildren: './pages/register/register.module#RegisterPageModule'
+  },
+  { path: 'gdpr', loadChildren: './pages/gdpr/gdpr.module#GdprPageModule' }
 ];
 
 @NgModule({

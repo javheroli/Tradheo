@@ -1,0 +1,370 @@
+<ion-content padding class="login auth-page">
+  <div class="auth-content">
+    <!-- Logo -->
+    <div class="arriba">
+      <ion-item style="width:350px; float: right;">
+        <ion-icon name="md-globe" slot="start" color="light"></ion-icon>
+        <ion-label color="light">{{
+          'SETTINGS.APP_LANGUAGE' | translate
+        }}</ion-label>
+        <ion-select (ionChange)="changeLanguage($event)">
+          <ion-select-option value="es">Español</ion-select-option>
+          <ion-select-option value="en">English</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+    <div padding-horizontal text-center>
+      <div class="logo"></div>
+      <h3 no-margin>
+        <ion-text color="light" class="fw700">
+          <ion-text color="primary">{{
+            'REGISTER.REGISTER' | translate
+          }}</ion-text>
+        </ion-text>
+      </h3>
+    </div>
+
+    <!-- Register form -->
+    <br />
+    <ion-card class="form-card">
+      <ion-card-header class="bg-dark">
+        <ion-card-title>{{
+          'REGISTER.INTRUDUCE_INFORMATION' | translate
+        }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="onRegisterForm">
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="person" item-start></ion-icon>{{ 'REGISTER.USERNAME' | translate }}
+            </ion-label>
+            <ion-input color="secondary" type="text" maxlength="30" formControlName="username" [(ngModel)]="username">
+            </ion-input>
+          </ion-item>
+
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('username').touched &&
+              onRegisterForm.get('username').hasError('required')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.REQUIRED_FIELD' | translate }}
+          </div>
+
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('username').touched &&
+              onRegisterForm.get('username').hasError('minlength')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.MIN_LENGTH' | translate }}
+          </div>
+
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('username').touched &&
+              onRegisterForm.get('username').hasError('pattern')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.PATTERN' | translate }}
+          </div>
+
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('username').touched &&
+              onRegisterForm.get('username').hasError('usernameInUse')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.USERNAME_TAKEN' | translate }}
+          </div>
+
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="mail" item-start></ion-icon>
+              {{ 'REGISTER.EMAIL' | translate }}
+            </ion-label>
+            <ion-input color="secondary" [(ngModel)]="email" maxlength="60" type="email" formControlName="email">
+            </ion-input>
+          </ion-item>
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('email').touched &&
+              onRegisterForm.get('email').hasError('required')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.REQUIRED_FIELD' | translate }}
+          </div>
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('email').touched &&
+              onRegisterForm.get('email').hasError('email')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.EMAIL_VALIDATION' | translate }}
+          </div>
+
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('email').touched &&
+              onRegisterForm.get('email').hasError('emailInUse')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.EMAIL_TAKEN' | translate }}
+          </div>
+
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="lock" item-start></ion-icon>
+              {{ 'REGISTER.PASSWORD' | translate }}
+            </ion-label>
+            <ion-input [(ngModel)]="password" color="secondary" maxlength="25" type="password"
+              formControlName="password"></ion-input>
+          </ion-item>
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('password').touched &&
+              onRegisterForm.get('password').hasError('required')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.REQUIRED_FIELD' | translate }}
+          </div>
+
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('password').touched &&
+              onRegisterForm.get('password').hasError('minlength')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.MIN_LENGTH' | translate }}
+          </div>
+
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="lock" item-start></ion-icon>
+              {{ 'REGISTER.CONFIRM_PASSWORD' | translate }}
+            </ion-label>
+            <ion-input (change)="confirmPasswordValidation()" maxlength="25" [(ngModel)]="confirmPassword"
+              color="secondary" type="password" formControlName="confirmPassword">
+            </ion-input>
+          </ion-item>
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('confirmPassword').touched &&
+              onRegisterForm.get('confirmPassword').hasError('required')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.REQUIRED_FIELD' | translate }}
+          </div>
+
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('confirmPassword').touched &&
+              !confirmPasswordValidation()
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.PASSWORD_VALIDATION_FALSE' | translate }}
+          </div>
+
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="create" item-start></ion-icon>
+              {{ 'REGISTER.FIRST_NAME' | translate }}
+            </ion-label>
+            <ion-input color="secondary" type="text" formControlName="firstName" maxlength="30" [(ngModel)]="firstName">
+            </ion-input>
+          </ion-item>
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('firstName').touched &&
+              onRegisterForm.get('firstName').hasError('required')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.REQUIRED_FIELD' | translate }}
+          </div>
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="create" item-start></ion-icon>
+              {{ 'REGISTER.LAST_NAME' | translate }}
+            </ion-label>
+            <ion-input color="secondary" type="text" formControlName="lastName" maxlength="50" [(ngModel)]="lastName">
+            </ion-input>
+          </ion-item>
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('lastName').touched &&
+              onRegisterForm.get('lastName').hasError('required')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.REQUIRED_FIELD' | translate }}
+          </div>
+
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="map" item-start></ion-icon>
+              {{ 'REGISTER.COUNTRY' | translate }}
+            </ion-label>
+            <ionic-selectable color="secondary" (onChange)="autocompletePrefixPhoneNumber()" [isMultiple]="false"
+              formControlName="country" [(ngModel)]="country" [items]="countries" itemValueField="name"
+              itemTextField="name" [canSearch]="true">
+            </ionic-selectable>
+          </ion-item>
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('country').touched &&
+              onRegisterForm.get('country').hasError('required')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.REQUIRED_FIELD' | translate }}
+          </div>
+
+          <div *ngIf="country === undefined">
+            <ion-item>
+
+              <ion-label position="floating">
+                <ion-icon name="call" item-start></ion-icon>
+                {{ 'REGISTER.PHONENUMBER' | translate }}
+                {{phonePrefix !== '' ? '('+phonePrefix+')' : ''}}
+              </ion-label>
+              <ion-input disabled="true" color="secondary" type="tel">
+              </ion-input>
+
+            </ion-item>
+
+          </div>
+
+          <div *ngIf="country !== undefined">
+            <ion-item>
+
+              <ion-label position="floating">
+                <ion-icon name="call" item-start></ion-icon>
+                {{ 'REGISTER.PHONENUMBER' | translate }}
+                {{phonePrefix !== '' ? '('+phonePrefix+')' : ''}}
+              </ion-label>
+              <ion-input (ionChange)="validatePhoneNumber()" color="secondary" type="tel" formControlName="phoneNumber"
+                maxlength="50" [(ngModel)]="phoneNumber">
+              </ion-input>
+
+            </ion-item>
+            <div class="error-message" *ngIf="
+              onRegisterForm.get('phoneNumber').touched &&
+              onRegisterForm.get('phoneNumber').hasError('required')
+            ">
+              <ion-icon name="information-circle-outline"> </ion-icon>
+              {{ 'REGISTER.REQUIRED_FIELD' | translate }}
+            </div>
+
+            <div class="error-message" *ngIf="
+              onRegisterForm.get('phoneNumber').touched &&
+              !isValidNumber
+            ">
+              <ion-icon name="information-circle-outline"> </ion-icon>
+              {{ 'REGISTER.INVALID_PHONE' | translate }}
+            </div>
+          </div>
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('phoneNumber').touched &&
+              onRegisterForm.get('phoneNumber').hasError('phoneNumberInUse')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.PHONENUMBER_TAKEN' | translate }}
+          </div>
+
+
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="business" item-start></ion-icon>
+              {{ 'REGISTER.CITY' | translate }}
+            </ion-label>
+            <ion-input color="secondary" type="text" formControlName="city" [(ngModel)]="city" maxlength="50">
+            </ion-input>
+          </ion-item>
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('city').touched &&
+              onRegisterForm.get('city').hasError('required')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.REQUIRED_FIELD' | translate }}
+          </div>
+
+          <ion-item>
+            <ion-label>
+              <ion-icon name="calendar" item-start></ion-icon>
+              {{ 'REGISTER.BIRTHDATE' | translate }}
+            </ion-label>
+            <ion-datetime (change)="validateBirthdate()" displayFormat="DD/MM/YYYY" [(ngModel)]="birthDate"
+              formControlName="birthDate">
+            </ion-datetime>
+          </ion-item>
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('birthDate').touched &&
+              onRegisterForm.get('birthDate').hasError('required')
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.REQUIRED_FIELD' | translate }}
+          </div>
+          <div class="error-message" *ngIf="
+              onRegisterForm.get('birthDate').touched && !validateBirthdate()
+            ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.FUTURE_BIRTHDATE' | translate }}
+          </div>
+          <div class="error-message" *ngIf="onRegisterForm.get('birthDate').touched && !isAdult()">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.NOT_ADULT' | translate }}
+          </div>
+
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="book" item-start></ion-icon>
+              {{ 'REGISTER.DESCRIPTION' | translate }}
+            </ion-label>
+            <ion-textarea [(ngModel)]="description" maxlength="150" formControlName="description"
+              placeholder="{{ 'REGISTER.DESCRIPTION_PLACEHOLDER' | translate }}"></ion-textarea>
+          </ion-item>
+
+          <ion-item class="item-file">
+            <ion-card class="imageCard1">
+              <ion-card-header class="header-file">
+                <ion-title>
+                  <ion-icon name="image" item-start></ion-icon>
+                  {{ 'REGISTER.PROFILE_PIC' | translate }}
+                </ion-title>
+              </ion-card-header>
+              <ion-card-content class="content-file">
+                <br />
+                <div>
+                  <input type="file" id="procPic" (change)="onProfilePicInputChange($event.target.files)" />
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </ion-item>
+          <ion-item lines="none"></ion-item>
+        </form>
+      </ion-card-content>
+    </ion-card>
+    <br>
+    <div class="terms">
+      <ion-checkbox [(ngModel)]="privacyPolicites" checked="false"></ion-checkbox>&nbsp;
+      <ion-label color="light">
+        {{ 'REGISTER.TERMS' | translate}}
+        <a color="dark" style="cursor: pointer" target="_blank"
+          href="{{path}}/gdpr">{{ 'REGISTER.PRIVACY_POLICIES' | translate}}</a>
+      </ion-label>
+      <div class="error-message" *ngIf="!privacyPolicites
+            ">
+        <ion-icon name="information-circle-outline"> </ion-icon>
+        {{ 'REGISTER.MUST_ACCEPT_TERMS' | translate }}
+      </div>
+    </div>
+    <br />
+    <br />
+    <div margin-top>
+      <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="signUp()" [disabled]="
+          !onRegisterForm.valid ||
+          !confirmPasswordValidation() ||
+          !validateBirthdate() ||
+          !isAdult() ||
+          !isValidNumber ||
+          !privacyPolicites
+        " tappable>
+        <ion-icon name="log-in"></ion-icon>
+        {{ 'REGISTER.SIGN_UP' | translate }}
+      </ion-button>
+    </div>
+
+    <!-- Other links -->
+    <div text-center margin-top>
+      <span (click)="goToLogin()" tappable>
+        <ion-text color="light">
+          <strong>{{ 'REGISTER.I_HAVE_AN_ACCOUNT' | translate }}</strong>
+        </ion-text>
+      </span>
+    </div>
+  </div>
+</ion-content>

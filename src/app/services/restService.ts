@@ -46,4 +46,86 @@ export class RestWS extends AbstractWS {
         return Promise.reject(err);
       });
   }
+
+  public register(
+    username: string,
+    password: string,
+    email: string,
+    phoneNumber: string,
+    birthDate: string,
+    firstName: string,
+    lastName: string,
+    description: string,
+    country: string,
+    city: string,
+    profilePic
+  ) {
+    const fd = new FormData();
+    fd.append('username', username);
+    fd.append('password', password);
+    fd.append('email', email);
+    fd.append('phoneNumber', phoneNumber);
+    fd.append('birthDate', birthDate);
+    fd.append('firstName', firstName);
+    fd.append('lastName', lastName);
+    fd.append('description', description);
+    fd.append('country', country);
+    fd.append('city', city);
+    if (profilePic !== null) {
+      console.log(profilePic);
+      fd.append('image', profilePic);
+    }
+
+    return this.makePostRequest(this.path + 'api/auth/signup/', fd)
+      .then(res => {
+        console.log('Sign up successfully');
+        return Promise.resolve(res);
+      })
+      .catch(error => {
+        console.log('Error: ' + error);
+        return Promise.reject(error);
+      });
+  }
+
+  public validationUsername(username) {
+    return this.makeGetRequest(
+      this.path + 'api/auth/signup/validationUsername/' + username,
+      null
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public validationEmail(email) {
+    return this.makeGetRequest(
+      this.path + 'api/auth/signup/validationEmail/' + email,
+      null
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public validationPhoneNumber(phoneNumber) {
+    return this.makeGetRequest(
+      this.path + 'api/auth/signup/validationPhoneNumber/' + phoneNumber,
+      null
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
 }
