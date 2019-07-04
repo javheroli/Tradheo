@@ -9,6 +9,7 @@ const passport = require('passport');
 var routes = require('./routes/routes.js');
 var secureRoutes = require('./routes/secureRoutes.js');
 require('./auth/auth');
+const axios = require('axios');
 
 //Connection to DataBase:
 //To connect to Development environment DB (Comment line below if not using it)
