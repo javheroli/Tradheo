@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -25,6 +26,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { UsernameValidator } from './validators/username.validator';
 import { CustomEmailValidator } from './validators/email.validator';
 import { PhoneNumberValidator } from './validators/phonenumber.validator';
+import { CookieLawModule } from 'angular2-cookie-law';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, '../assets/i18n/', '.json');
@@ -35,10 +37,12 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   entryComponents: [],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     IonicModule.forRoot(),
     RecaptchaModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    CookieLawModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

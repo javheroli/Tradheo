@@ -53,7 +53,9 @@
     "USERS": "Usuarios",
     "LOGOUT": "Cerrar sesión",
     "MENU": "Menú",
-    "PROFILE": "Perfil"
+    "PROFILE": "Perfil",
+    "COOKIES": " Al continuar navegando, usted está aceptando el uso de cookies. Descubra más en nuestra ",
+    "PRIVACY_POLICY": "Política de privacidad"
   },
   "SETTINGS": {
     "APP_LANGUAGE": "Idioma",

@@ -56,7 +56,10 @@
     "USERS": "Users",
     "LOGOUT": "Logout",
     "MENU": "Menu",
-    "PROFILE": "Profile"
+    "PROFILE": "Profile",
+    "COOKIES": " By continuing to browse the site, you're agreeing to our use of cookies. Learn more in our ",
+    "PRIVACY_POLICY": "Privacy policy"
+
   },
   "SETTINGS": {
     "APP_LANGUAGE": "App language",
