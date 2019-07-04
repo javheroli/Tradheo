@@ -9,6 +9,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { RecaptchaModule } from 'ng-recaptcha';
+
 //Services
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { DataManagement } from './services/dataManagement';
@@ -20,7 +22,9 @@ import { AuthGuard } from './guards/auth/auth.guard';
 import { CookieService } from 'ngx-cookie-service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
+import { UsernameValidator } from './validators/username.validator';
+import { CustomEmailValidator } from './validators/email.validator';
+import { PhoneNumberValidator } from './validators/phonenumber.validator';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, '../assets/i18n/', '.json');
@@ -32,6 +36,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    RecaptchaModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
     TranslateModule.forRoot({
@@ -50,6 +55,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ConfigService,
     DataManagement,
     RestWS,
+    UsernameValidator,
+    CustomEmailValidator,
+    PhoneNumberValidator,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

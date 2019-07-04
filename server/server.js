@@ -9,6 +9,7 @@ const passport = require('passport');
 var routes = require('./routes/routes.js');
 var secureRoutes = require('./routes/secureRoutes.js');
 require('./auth/auth');
+const axios = require('axios');
 
 //Connection to DataBase:
 //To connect to Development environment DB (Comment line below if not using it)
@@ -70,10 +71,46 @@ app.use((req, res, next) => {
 //Server path to annonymous users routes
 app.use('/api', routes);
 
+
 //Server path to logged users secured routes
-app.use('/api', passport.authenticate('jwt', {
+/*app.use('/api', passport.authenticate('jwt', {
   session: false
-}), secureRoutes);
+}), secureRoutes);*/
+
+const captchaCheck = (req, res, next) => {
+
+  console.log("CAPTCHA middleware activated");
+
+  let urlEncodedData = 'secret=' + process.env.CAPTCHA_KEY + '&response=' + req.body.captchaResponse + '&remoteip=' + req.connection.remoteAddress;
+
+  axios.post('https://www.google.com/recaptcha/api/siteverify', urlEncodedData, {
+
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+
+  }).then((res) => {
+
+    if (res.data.success) {
+      next();
+    } else {
+      res.status(401).send({
+        message: 'No bots!'
+      });
+    }
+
+  }).catch((err) => {
+    console.log(err);
+    res.status(401).send({
+      message: 'No bots!'
+    });
+  });
+
+}
+
+app.post('/api/captchaVerify', captchaCheck, (req, res) => {
+  res.json('Hello, human.');
+});
 
 //Access to API contract
 app.use("/api/docs", express.static('docs'));
