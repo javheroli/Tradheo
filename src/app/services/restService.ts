@@ -128,4 +128,18 @@ export class RestWS extends AbstractWS {
         return Promise.reject(err);
       });
   }
+
+  public captchaVerify(captchaResponse) {
+    const fd = new FormData();
+    fd.append('captchaResponse', captchaResponse);
+    return this.makePostRequest(this.path + 'api/captchaVerify/', fd)
+      .then(res => {
+        console.log('Captcha verify success');
+        return Promise.resolve(res);
+      })
+      .catch(error => {
+        console.log('Error: ' + error);
+        return Promise.reject(error);
+      });
+  }
 }

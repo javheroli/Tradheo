@@ -76,3 +76,19 @@
 .terms {
   text-align: center;
 }
+
+@media only screen and (min-width: 650px) {
+  .captcha-inner {
+    margin: auto;
+    width: 18%;
+
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .captcha-inner {
+    margin: auto;
+    width: 87%;
+
+  }
+}

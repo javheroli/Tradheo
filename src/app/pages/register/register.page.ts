@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -48,6 +48,9 @@ export class RegisterPage implements OnInit {
   isValidNumber: boolean;
   privacyPolicites: boolean;
 
+  private captchaPassed: boolean = false;
+  private captchaResponse: string;
+
   constructor(
     public navCtrl: NavController,
     public menuCtrl: MenuController,
@@ -61,7 +64,8 @@ export class RegisterPage implements OnInit {
     public events: Events,
     public usernameValidator: UsernameValidator,
     public emailValidator: CustomEmailValidator,
-    public phoneNumberValidator: PhoneNumberValidator
+    public phoneNumberValidator: PhoneNumberValidator,
+    private zone: NgZone
   ) {}
 
   ionViewWillEnter() {
@@ -108,6 +112,13 @@ export class RegisterPage implements OnInit {
     });
   }
 
+  captchaResolved(response: string): void {
+    this.zone.run(() => {
+      this.captchaPassed = true;
+      this.captchaResponse = response;
+    });
+  }
+
   confirmPasswordValidation() {
     if (this.password === this.confirmPassword) {
       return true;
@@ -148,69 +159,76 @@ export class RegisterPage implements OnInit {
     let translation3: string = this.translate.instant('REGISTER.ERROR_SIGNUP');
 
     this.dm
-      .register(
-        this.username,
-        this.password,
-        this.email,
-        this.phoneNumber,
-        this.birthDate,
-        this.firstName,
-        this.lastName,
-        this.description,
-        this.country.name,
-        this.city,
-        this.profilePic
-      )
-      .then(data => {
-        this.showLoading();
-        setTimeout(() => {
-          this.alertCtrl
-            .create({
-              header: translation1,
-              message: translation2,
-              buttons: [
-                {
-                  text: 'Ok',
-                  role: 'ok'
-                }
-              ]
-            })
-            .then(alertEl => {
-              alertEl.present();
-            });
-          this.navCtrl.navigateForward('/');
-          (this.username = ''),
-            (this.password = ''),
-            (this.confirmPassword = ''),
-            (this.email = ''),
-            (this.phoneNumber = ''),
-            (this.birthDate = ''),
-            (this.firstName = ''),
-            (this.lastName = ''),
-            (this.description = ''),
-            (this.country = ''),
-            (this.city = ''),
-            (this.profilePic = null);
-        }, 1500);
+      .captchaVerify(this.captchaResponse)
+      .then(res => {
+        this.dm
+          .register(
+            this.username,
+            this.password,
+            this.email,
+            this.phoneNumber,
+            this.birthDate,
+            this.firstName,
+            this.lastName,
+            this.description,
+            this.country.name,
+            this.city,
+            this.profilePic
+          )
+          .then(data => {
+            this.showLoading();
+            setTimeout(() => {
+              this.alertCtrl
+                .create({
+                  header: translation1,
+                  message: translation2,
+                  buttons: [
+                    {
+                      text: 'Ok',
+                      role: 'ok'
+                    }
+                  ]
+                })
+                .then(alertEl => {
+                  alertEl.present();
+                });
+              this.navCtrl.navigateForward('/');
+              (this.username = ''),
+                (this.password = ''),
+                (this.confirmPassword = ''),
+                (this.email = ''),
+                (this.phoneNumber = ''),
+                (this.birthDate = ''),
+                (this.firstName = ''),
+                (this.lastName = ''),
+                (this.description = ''),
+                (this.country = ''),
+                (this.city = ''),
+                (this.profilePic = null);
+            }, 1500);
+          })
+          .catch(error => {
+            this.showLoading();
+            setTimeout(() => {
+              this.alertCtrl
+                .create({
+                  header: 'Error',
+                  message: translation3,
+                  buttons: [
+                    {
+                      text: 'Ok',
+                      role: 'ok'
+                    }
+                  ]
+                })
+                .then(alertEl => {
+                  alertEl.present();
+                });
+            }, 1500);
+          });
       })
-      .catch(error => {
-        this.showLoading();
-        setTimeout(() => {
-          this.alertCtrl
-            .create({
-              header: 'Error',
-              message: translation3,
-              buttons: [
-                {
-                  text: 'Ok',
-                  role: 'ok'
-                }
-              ]
-            })
-            .then(alertEl => {
-              alertEl.present();
-            });
-        }, 1500);
+      .catch(errorr => {
+        console.log('No bots!');
       });
   }
 
