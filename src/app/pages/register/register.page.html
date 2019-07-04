@@ -342,6 +342,15 @@
         {{ 'REGISTER.MUST_ACCEPT_TERMS' | translate }}
       </div>
     </div>
+    <br>
+    <div clas="captcha-outer">
+      <div class="captcha-inner">
+        <re-captcha (resolved)="captchaResolved($event)" siteKey="6LdiGqwUAAAAAHghEZpQSyV3DoxGZWJ_gBOCYjBx">
+        </re-captcha>
+      </div>
+    </div>
+
+
     <br />
     <br />
     <div margin-top>
@@ -351,7 +360,8 @@
           !validateBirthdate() ||
           !isAdult() ||
           !isValidNumber ||
-          !privacyPolicites
+          !privacyPolicites ||
+          !captchaPassed
         " tappable>
         <ion-icon name="log-in"></ion-icon>
         {{ 'REGISTER.SIGN_UP' | translate }}

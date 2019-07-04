@@ -9,6 +9,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { RecaptchaModule } from 'ng-recaptcha';
+
 //Services
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { DataManagement } from './services/dataManagement';
@@ -34,6 +36,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    RecaptchaModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
     TranslateModule.forRoot({

@@ -98,4 +98,15 @@ export class DataManagement {
         return Promise.reject(error);
       });
   }
+
+  public captchaVerify(captchaResponse): Promise<any> {
+    return this.restService
+      .captchaVerify(captchaResponse)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject('error');
+      });
+  }
 }

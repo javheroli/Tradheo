@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { RegisterPage } from './register.page';
 import { IonicSelectableModule } from 'ionic-selectable';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     IonicModule,
     TranslateModule,
+    RecaptchaModule,
     RouterModule.forChild(routes)
   ],
   declarations: [RegisterPage]

@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
+require('dotenv').config();
 
 
 
@@ -17,6 +18,37 @@ router.route('/turnOnServer')
         res.end();
 
     })
+
+const captchaCheck = (req, res, next) => {
+
+    console.log("CAPTCHA middleware activated");
+
+    let urlEncodedData = 'secret=' + process.env.CAPTCHA_KEY + '&response=' + req.body.captchaResponse + '&remoteip=' + req.connection.remoteAddress;
+
+    axios.post('https://www.google.com/recaptcha/api/siteverify', urlEncodedData, {
+
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+
+    }).then((res) => {
+
+        if (res.data.success) {
+            next();
+        } else {
+            res.status(401).send({
+                message: 'No bots!'
+            });
+        }
+
+    }).catch((err) => {
+        console.log(err);
+        res.status(401).send({
+            message: 'No bots!'
+        });
+    });
+
+}
 
 //Route  /api/auth/signup
 //Authenticate user based on the data sended by user previously

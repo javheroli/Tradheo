@@ -70,6 +70,10 @@ app.use((req, res, next) => {
 //Server path to annonymous users routes
 app.use('/api', routes);
 
+app.post('/api/captchaVerify', captchaCheck, (req, res) => {
+  res.json('Hello, human.');
+});
+
 //Server path to logged users secured routes
 /*app.use('/api', passport.authenticate('jwt', {
   session: false
