@@ -8,7 +8,11 @@
     "SIGN_UP": "¡Regístrese y pruebe Tradheo 7 días gratis!",
     "USERNAME": "Usuario",
     "WAIT": "Por favor, espere...",
-    "CHAT": "CBD Chat"
+    "CHAT": "CBD Chat",
+    "LINCENCE_EXPIRED_BODY": "Actualice su licencia con nuestras increíbles ofertas para continuar disfrutando de Tradheo",
+    "LINCENCE_EXPIRED_HEADER": "Su licencia ha expirado",
+    "UPDATE_LICENCE": "Actualizar licencia",
+    "CANCEL": "Cancelar"
   },
   "REGISTER": {
     "CONFIRM_PASSWORD": "Confirmar contraseña",
@@ -24,7 +28,7 @@
     "REGISTER": "Formulario de registro",
     "REQUIRED_FIELD": "Campo obligatorio",
     "SIGN_UP": "Registro",
-    "SUCCESS": "¡Disfrute de sus 7 días de licencia gratuita en Tradheo! Una vez expirada, siéntase libre de actualizar su licencia con nuestras económicas tarifas",
+    "SUCCESS": "¡Disfrute de sus 7 días de licencia gratuita en Tradheo! Una vez expirada, siéntase libre de actualizar su licencia con nuestras increíbles ofertas",
     "THIS_FIELD_IS_REQUIRED": "Este campo es obligatorio",
     "USERNAME": "Usuario",
     "EMAIL": "Correo electrónico",

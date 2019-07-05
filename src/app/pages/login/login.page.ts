@@ -71,6 +71,14 @@ export class LoginPage implements OnInit {
 
   login() {
     let translation: string = this.translate.instant('LOGIN.FAIL');
+    let LicenceExpiredHeader: string = this.translate.instant(
+      'LOGIN.LINCENCE_EXPIRED_HEADER'
+    );
+    let LicenceExpiredBody: string = this.translate.instant(
+      'LOGIN.LINCENCE_EXPIRED_BODY'
+    );
+    let updateLicence: string = this.translate.instant('LOGIN.UPDATE_LICENCE');
+    let cancel: string = this.translate.instant('LOGIN.CANCEL');
 
     this.dm
       .login(this.registerCredentials)
@@ -86,24 +94,47 @@ export class LoginPage implements OnInit {
       })
       .catch(error => {
         this.showLoading();
-        setTimeout(() => {
-          this.alertCtrl
-            .create({
-              header: 'Error',
-              message: translation,
-              buttons: [
-                {
-                  text: 'Ok',
-                  role: 'ok'
-                }
-              ]
-            })
-            .then(alertEl => {
-              alertEl.present();
-            });
-          this.registerCredentials.username = '';
-          this.registerCredentials.password = '';
-        }, 1500);
+        if (error.status === 403) {
+          setTimeout(() => {
+            this.alertCtrl
+              .create({
+                header: LicenceExpiredHeader,
+                message: LicenceExpiredBody,
+                buttons: [
+                  {
+                    text: updateLicence,
+                    role: 'ok'
+                  },
+                  {
+                    text: cancel,
+                    role: 'cancel'
+                  }
+                ]
+              })
+              .then(alertEl => {
+                alertEl.present();
+              });
+          }, 1500);
+        } else {
+          setTimeout(() => {
+            this.alertCtrl
+              .create({
+                header: 'Error',
+                message: translation,
+                buttons: [
+                  {
+                    text: 'Ok',
+                    role: 'ok'
+                  }
+                ]
+              })
+              .then(alertEl => {
+                alertEl.present();
+              });
+            this.registerCredentials.username = '';
+            this.registerCredentials.password = '';
+          }, 1500);
+        }
       });
   }
 

@@ -105,6 +105,11 @@ router.post('/auth/login', async (req, res, next) => {
                     'An Error occured: ' + info['message']
                 ));
             }
+            const today = new Date();
+            if (today > user.licenceDate) {
+                console.log("User with licence expired")
+                return res.status(403).send('User with licence expired');
+            }
             req.login(user, {
                 session: false
             }, async (error) => {

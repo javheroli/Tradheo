@@ -16,7 +16,7 @@ export class DataManagement {
         return Promise.resolve(data);
       })
       .catch(error => {
-        return Promise.reject('error');
+        return Promise.reject(error);
       });
   }
 
@@ -62,7 +62,7 @@ export class DataManagement {
         return Promise.resolve(data);
       })
       .catch(error => {
-        return Promise.reject('error');
+        return Promise.reject(error);
       });
   }
 
@@ -106,7 +106,7 @@ export class DataManagement {
         return Promise.resolve(data);
       })
       .catch(error => {
-        return Promise.reject('error');
+        return Promise.reject(error);
       });
   }
 }

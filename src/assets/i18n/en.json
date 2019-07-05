@@ -8,7 +8,11 @@
     "SIGN_UP": "Sign up and try Tradheo 7 days for free!",
     "USERNAME": "Username",
     "WAIT": "Please wait...",
-    "CHAT": "CBD Chat"
+    "CHAT": "CBD Chat",
+    "LINCENCE_EXPIRED_BODY": "Update your licence with our affordable rates to continue enjoying Tradheo",
+    "LINCENCE_EXPIRED_HEADER": "Your licence has expired",
+    "UPDATE_LICENCE": "Update licence",
+    "CANCEL": "Cancel"
   },
   "REGISTER": {
     "CONFIRM_PASSWORD": "Confirm password",
@@ -26,7 +30,7 @@
     "REGISTER": "Sign up form",
     "REQUIRED_FIELD": "Required field",
     "SIGN_UP": "Sign up",
-    "SUCCESS": "Enjoy your 7 days Tradheo's trial licence! Once expired, feel free to update your license with our reasonable rates",
+    "SUCCESS": "Enjoy your 7 days Tradheo's trial licence! Once expired, feel free to update your license with our affordable rates",
     "THIS_FIELD_IS_REQUIRED": "This field is required",
     "USERNAME": "Username",
     "EMAIL": "Email",

@@ -31,7 +31,7 @@ export class RestWS extends AbstractWS {
         return Promise.resolve(res);
       })
       .catch(error => {
-        console.log('Error: ' + error);
+        console.log(error);
         return Promise.reject(error);
       });
   }
@@ -42,7 +42,7 @@ export class RestWS extends AbstractWS {
         return Promise.resolve(res);
       })
       .catch(err => {
-        console.log('Error: ' + err);
+        console.log(err);
         return Promise.reject(err);
       });
   }
@@ -82,7 +82,7 @@ export class RestWS extends AbstractWS {
         return Promise.resolve(res);
       })
       .catch(error => {
-        console.log('Error: ' + error);
+        console.log(error);
         return Promise.reject(error);
       });
   }
@@ -96,7 +96,7 @@ export class RestWS extends AbstractWS {
         return Promise.resolve(res);
       })
       .catch(err => {
-        console.log('Error: ' + err);
+        console.log(err);
         return Promise.reject(err);
       });
   }
@@ -110,7 +110,7 @@ export class RestWS extends AbstractWS {
         return Promise.resolve(res);
       })
       .catch(err => {
-        console.log('Error: ' + err);
+        console.log(err);
         return Promise.reject(err);
       });
   }
@@ -124,7 +124,7 @@ export class RestWS extends AbstractWS {
         return Promise.resolve(res);
       })
       .catch(err => {
-        console.log('Error: ' + err);
+        console.log(err);
         return Promise.reject(err);
       });
   }
@@ -138,7 +138,7 @@ export class RestWS extends AbstractWS {
         return Promise.resolve(res);
       })
       .catch(error => {
-        console.log('Error: ' + error);
+        console.log(error);
         return Promise.reject(error);
       });
   }

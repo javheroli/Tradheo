@@ -73,9 +73,9 @@ app.use('/api', routes);
 
 
 //Server path to logged users secured routes
-/*app.use('/api', passport.authenticate('jwt', {
+app.use('/api', passport.authenticate('jwt', {
   session: false
-}), secureRoutes);*/
+}), secureRoutes);
 
 const captchaCheck = (req, res, next) => {
 
