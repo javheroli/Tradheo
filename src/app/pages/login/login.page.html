@@ -56,9 +56,22 @@
         <ion-icon name="information-circle-outline"> </ion-icon>
         {{ 'LOGIN.REQUIRED_FIELD' | translate }}
       </div>
+      <br>
+
+      <div text-center>
+        <ion-label>
+          <ion-icon color="light" name="key"></ion-icon>
+        </ion-label>
+
+        <span (click)="forgotPassword()" class="paz" tappable>
+          <ion-text color="light">
+            {{ 'LOGIN.FORGOT_PASSWORD' | translate }}
+          </ion-text>
+        </span>
+      </div>
     </form>
 
-    <br><br>
+    <br>
 
     <div>
       <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="login()"

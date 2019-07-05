@@ -3,6 +3,8 @@ const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
+var crypto = require('crypto');
+var nodemailer = require('nodemailer');
 
 
 
@@ -76,6 +78,24 @@ router.route('/auth/signup/validationEmail/:email')
 
     })
 
+//Route  /api/auth/signup/validationEmail/:email
+//Turn on de server on heroku
+router.route('/auth/login/existEmail/:email')
+    .get((req, res) => {
+        var email = req.params.email;
+        User.findOne({
+            email: email
+        }, (err, user) => {
+            console.log("Exist email: " + email);
+            if (user !== null) {
+                res.status(200).send("Ok")
+            } else {
+                res.status(404).send('The email does not exist');
+            }
+        })
+
+    })
+
 //Route  /api/auth/signup/validationPhoneNumber/:phoneNumber
 //Turn on de server on heroku
 router.route('/auth/signup/validationPhoneNumber/:phoneNumber')
@@ -134,6 +154,49 @@ router.post('/auth/login', async (req, res, next) => {
             return next(error);
         }
     })(req, res, next);
+});
+
+router.post('/auth/forgot', function (req, res, next) {
+    async.waterfall([
+        function (done) {
+            crypto.randomBytes(20, function (err, buf) {
+                var token = buf.toString('hex');
+                done(err, token);
+            });
+        },
+        function (token, done) {
+            User.findOne({
+                email: req.body.email
+            }, function (err, user) {
+
+
+                user.resetPasswordToken = token;
+                user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+                user.save(function (err) {
+                    done(err, token, user);
+                });
+            });
+        },
+        function (token, user, done) {
+            var smtpTransport = nodemailer.createTransport('SMTP', {
+                service: 'Gmail',
+                auth: {
+                    user: 'tradheo.app@gmail.com',
+                    pass: process.env.EMAIL_PASSWORD
+                }
+            });
+            var mailOptions = {
+                to: user.email,
+                from: 'tradheo.app@gmail.com',
+                subject: 'Tradheo Password Reset',
+                text: 'You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                    'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                    'http://' + req.headers.host + '/api/auth/reset/' + token + '\n\n' +
+                    'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+            };
+        }
+    ])
 });
 
 

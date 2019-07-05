@@ -12,7 +12,12 @@
     "LINCENCE_EXPIRED_BODY": "Update your licence with our affordable rates to continue enjoying Tradheo",
     "LINCENCE_EXPIRED_HEADER": "Your licence has expired",
     "UPDATE_LICENCE": "Update licence",
-    "CANCEL": "Cancel"
+    "CANCEL": "Cancel",
+    "FORGOT_PASSWORD": "Forgot password?",
+    "RESET": "Reset",
+    "FORGOT_ALERT_MESSAGE": "Introduce the email associated with your account to reset your password, here:",
+    "INVALID_EMAIL": "Invalid email entered",
+    "EMAIL_NOTFOUND": "The email introduced is not associated with any account"
   },
   "REGISTER": {
     "CONFIRM_PASSWORD": "Confirm password",

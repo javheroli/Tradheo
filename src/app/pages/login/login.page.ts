@@ -3,7 +3,8 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
-  SelectMultipleControlValueAccessor
+  SelectMultipleControlValueAccessor,
+  EmailValidator
 } from '@angular/forms';
 import {
   NavController,
@@ -67,6 +68,77 @@ export class LoginPage implements OnInit {
     if ($event.keyCode == 13) {
       this.login();
     }
+  }
+  async showErrorToast(data: any) {
+    let toast = await this.toastCtrl.create({
+      message: data,
+      duration: 3000,
+      position: 'top',
+      cssClass: 'toast',
+      color: 'warning'
+    });
+
+    toast.present();
+  }
+
+  isEmail(search: string): boolean {
+    var serchfind: boolean;
+
+    let regexp = new RegExp(
+      // tslint:disable-next-line: max-line-length
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+    serchfind = regexp.test(search);
+    return serchfind;
+  }
+
+  forgotPassword() {
+    let cancel: string = this.translate.instant('LOGIN.CANCEL');
+    let reset: string = this.translate.instant('LOGIN.RESET');
+    let forgotAlertMessage: string = this.translate.instant(
+      'LOGIN.FORGOT_ALERT_MESSAGE'
+    );
+    let invalidEmail: string = this.translate.instant('LOGIN.INVALID_EMAIL');
+    let emailDoesNotExist: string = this.translate.instant(
+      'LOGIN.EMAIL_NOTFOUND'
+    );
+    this.alertCtrl
+      .create({
+        header: 'Forgot password?',
+        message: forgotAlertMessage,
+        inputs: [
+          {
+            name: 'email',
+            id: 'email',
+            type: 'email'
+          }
+        ],
+        buttons: [
+          {
+            text: reset,
+            handler: alertData => {
+              if (this.isEmail(alertData.email)) {
+                this.dm
+                  .existEmail(alertData.email)
+                  .then(res => {})
+                  .catch(err => {
+                    this.showErrorToast(emailDoesNotExist);
+                  });
+              } else {
+                this.showErrorToast(invalidEmail);
+                return false;
+              }
+            }
+          },
+          {
+            text: cancel,
+            role: 'cancel'
+          }
+        ]
+      })
+      .then(alertEl => {
+        alertEl.present();
+      });
   }
 
   login() {

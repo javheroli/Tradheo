@@ -88,6 +88,27 @@ export class DataManagement {
       });
   }
 
+  public existEmail(email): Promise<any> {
+    return this.restService
+      .existEmail(email)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+  public forgot(email): Promise<any> {
+    return this.restService
+      .forgot(email)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
   public validationPhoneNumber(phoneNumber): Promise<any> {
     return this.restService
       .validationPhoneNumber(phoneNumber)

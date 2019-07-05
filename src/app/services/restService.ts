@@ -115,6 +115,32 @@ export class RestWS extends AbstractWS {
       });
   }
 
+  public existEmail(email) {
+    return this.makeGetRequest(
+      this.path + 'api/auth/login/existEmail/' + email,
+      null
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
+  public forgot(email) {
+    const fd = new FormData();
+    fd.append('email', email);
+    return this.makePostRequest(this.path + 'api/auth/forgot/', fd)
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
   public validationPhoneNumber(phoneNumber) {
     return this.makeGetRequest(
       this.path + 'api/auth/signup/validationPhoneNumber/' + phoneNumber,
