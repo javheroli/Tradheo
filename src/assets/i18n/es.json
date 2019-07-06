@@ -8,7 +8,18 @@
     "SIGN_UP": "¡Regístrese y pruebe Tradheo 7 días gratis!",
     "USERNAME": "Usuario",
     "WAIT": "Por favor, espere...",
-    "CHAT": "CBD Chat"
+    "CHAT": "CBD Chat",
+    "LINCENCE_EXPIRED_BODY": "Actualice su licencia con nuestras increíbles ofertas para continuar disfrutando de Tradheo",
+    "LINCENCE_EXPIRED_HEADER": "Su licencia ha expirado",
+    "UPDATE_LICENCE": "Actualizar licencia",
+    "CANCEL": "Cancelar",
+    "FORGOT_PASSWORD": "¿Olvidaste la contraseña?",
+    "RESET": "Restablecer",
+    "FORGOT_ALERT_MESSAGE": "Introduce el email asociado a su cuenta para restablecer su contraseña, aquí:",
+    "INVALID_EMAIL": "Email introducido inválido",
+    "EMAIL_NOTFOUND": "El email introducido no está asociado a ninguna cuenta",
+    "EMAIL_SENT": "Se le ha mandado un email con instrucciones a seguir para restablecer su contraseña"
+
   },
   "REGISTER": {
     "CONFIRM_PASSWORD": "Confirmar contraseña",
@@ -24,7 +35,7 @@
     "REGISTER": "Formulario de registro",
     "REQUIRED_FIELD": "Campo obligatorio",
     "SIGN_UP": "Registro",
-    "SUCCESS": "¡Disfrute de sus 7 días de licencia gratuita en Tradheo! Una vez expirada, siéntase libre de actualizar su licencia con nuestras económicas tarifas",
+    "SUCCESS": "¡Disfrute de sus 7 días de licencia gratuita en Tradheo! Una vez expirada, siéntase libre de actualizar su licencia con nuestras increíbles ofertas",
     "THIS_FIELD_IS_REQUIRED": "Este campo es obligatorio",
     "USERNAME": "Usuario",
     "EMAIL": "Correo electrónico",
@@ -48,12 +59,20 @@
     "EMAIL_TAKEN": "Este email ya está en uso",
     "PHONENUMBER_TAKEN": "Este número de teléfono ya está en uso"
   },
+  "RESET": {
+    "RESET": "Restablecer contraseña",
+    "INTRODUCE_NEW_PASSWORD": "Introduce una nueva contraseña",
+    "TOKEN_INVALID": "El token para restablecer la contraseña es inválido o ha expirado",
+    "SUCCESS": "¡Éxito! Su contraseña se ha actualizado"
+  },
   "MENU": {
     "APP_SETTINGS": "Ajustes",
     "USERS": "Usuarios",
     "LOGOUT": "Cerrar sesión",
     "MENU": "Menú",
-    "PROFILE": "Perfil"
+    "PROFILE": "Perfil",
+    "COOKIES": " Al continuar navegando, usted está aceptando el uso de cookies. Descubra más en nuestra ",
+    "PRIVACY_POLICY": "Política de privacidad"
   },
   "SETTINGS": {
     "APP_LANGUAGE": "Idioma",

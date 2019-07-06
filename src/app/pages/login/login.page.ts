@@ -3,7 +3,8 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
-  SelectMultipleControlValueAccessor
+  SelectMultipleControlValueAccessor,
+  EmailValidator
 } from '@angular/forms';
 import {
   NavController,
@@ -68,9 +69,116 @@ export class LoginPage implements OnInit {
       this.login();
     }
   }
+  async showErrorToast(data: any) {
+    let toast = await this.toastCtrl.create({
+      message: data,
+      duration: 3000,
+      position: 'top',
+      cssClass: 'toast',
+      color: 'warning'
+    });
+
+    toast.present();
+  }
+  async showSuccessToast(data: any) {
+    let toast = await this.toastCtrl.create({
+      message: data,
+      duration: 3000,
+      position: 'top',
+      cssClass: 'toast',
+      color: 'success'
+    });
+
+    toast.present();
+  }
+
+  isEmail(search: string): boolean {
+    var serchfind: boolean;
+
+    let regexp = new RegExp(
+      // tslint:disable-next-line: max-line-length
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+    serchfind = regexp.test(search);
+    return serchfind;
+  }
+
+  forgotPassword() {
+    let cancel: string = this.translate.instant('LOGIN.CANCEL');
+    let reset: string = this.translate.instant('LOGIN.RESET');
+    let forgotAlertMessage: string = this.translate.instant(
+      'LOGIN.FORGOT_ALERT_MESSAGE'
+    );
+    let forgotAlertHeader: string = this.translate.instant(
+      'LOGIN.FORGOT_PASSWORD'
+    );
+    let invalidEmail: string = this.translate.instant('LOGIN.INVALID_EMAIL');
+    let emailDoesNotExist: string = this.translate.instant(
+      'LOGIN.EMAIL_NOTFOUND'
+    );
+    let emailSent: string = this.translate.instant('LOGIN.EMAIL_SENT');
+    this.alertCtrl
+      .create({
+        header: forgotAlertHeader,
+        message: forgotAlertMessage,
+        inputs: [
+          {
+            name: 'email',
+            id: 'email',
+            type: 'email'
+          }
+        ],
+        buttons: [
+          {
+            text: reset,
+            handler: alertData => {
+              if (this.isEmail(alertData.email)) {
+                this.dm
+                  .existEmail(alertData.email)
+                  .then(res => {
+                    this.dm
+                      .forgot(alertData.email)
+                      .then(res2 => {
+                        this.showLoading();
+                        setTimeout(() => {
+                          this.showSuccessToast(emailSent);
+                        }, 1500);
+                      })
+                      .catch(err => {
+                        console.log(err);
+                      });
+                  })
+                  .catch(err => {
+                    this.showErrorToast(emailDoesNotExist);
+                    return false;
+                  });
+              } else {
+                this.showErrorToast(invalidEmail);
+                return false;
+              }
+            }
+          },
+          {
+            text: cancel,
+            role: 'cancel'
+          }
+        ]
+      })
+      .then(alertEl => {
+        alertEl.present();
+      });
+  }
 
   login() {
     let translation: string = this.translate.instant('LOGIN.FAIL');
+    let LicenceExpiredHeader: string = this.translate.instant(
+      'LOGIN.LINCENCE_EXPIRED_HEADER'
+    );
+    let LicenceExpiredBody: string = this.translate.instant(
+      'LOGIN.LINCENCE_EXPIRED_BODY'
+    );
+    let updateLicence: string = this.translate.instant('LOGIN.UPDATE_LICENCE');
+    let cancel: string = this.translate.instant('LOGIN.CANCEL');
 
     this.dm
       .login(this.registerCredentials)
@@ -86,24 +194,47 @@ export class LoginPage implements OnInit {
       })
       .catch(error => {
         this.showLoading();
-        setTimeout(() => {
-          this.alertCtrl
-            .create({
-              header: 'Error',
-              message: translation,
-              buttons: [
-                {
-                  text: 'Ok',
-                  role: 'ok'
-                }
-              ]
-            })
-            .then(alertEl => {
-              alertEl.present();
-            });
-          this.registerCredentials.username = '';
-          this.registerCredentials.password = '';
-        }, 1500);
+        if (error.status === 403) {
+          setTimeout(() => {
+            this.alertCtrl
+              .create({
+                header: LicenceExpiredHeader,
+                message: LicenceExpiredBody,
+                buttons: [
+                  {
+                    text: updateLicence,
+                    role: 'ok'
+                  },
+                  {
+                    text: cancel,
+                    role: 'cancel'
+                  }
+                ]
+              })
+              .then(alertEl => {
+                alertEl.present();
+              });
+          }, 1500);
+        } else {
+          setTimeout(() => {
+            this.alertCtrl
+              .create({
+                header: 'Error',
+                message: translation,
+                buttons: [
+                  {
+                    text: 'Ok',
+                    role: 'ok'
+                  }
+                ]
+              })
+              .then(alertEl => {
+                alertEl.present();
+              });
+            this.registerCredentials.username = '';
+            this.registerCredentials.password = '';
+          }, 1500);
+        }
       });
   }
 

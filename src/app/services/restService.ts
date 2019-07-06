@@ -31,7 +31,7 @@ export class RestWS extends AbstractWS {
         return Promise.resolve(res);
       })
       .catch(error => {
-        console.log('Error: ' + error);
+        console.log(error);
         return Promise.reject(error);
       });
   }
@@ -42,7 +42,7 @@ export class RestWS extends AbstractWS {
         return Promise.resolve(res);
       })
       .catch(err => {
-        console.log('Error: ' + err);
+        console.log(err);
         return Promise.reject(err);
       });
   }
@@ -82,7 +82,7 @@ export class RestWS extends AbstractWS {
         return Promise.resolve(res);
       })
       .catch(error => {
-        console.log('Error: ' + error);
+        console.log(error);
         return Promise.reject(error);
       });
   }
@@ -96,7 +96,7 @@ export class RestWS extends AbstractWS {
         return Promise.resolve(res);
       })
       .catch(err => {
-        console.log('Error: ' + err);
+        console.log(err);
         return Promise.reject(err);
       });
   }
@@ -110,8 +110,34 @@ export class RestWS extends AbstractWS {
         return Promise.resolve(res);
       })
       .catch(err => {
-        console.log('Error: ' + err);
+        console.log(err);
         return Promise.reject(err);
+      });
+  }
+
+  public existEmail(email) {
+    return this.makeGetRequest(
+      this.path + 'api/auth/login/existEmail/' + email,
+      null
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
+  public forgot(email) {
+    const fd = new FormData();
+    fd.append('email', email);
+    return this.makePostRequest(this.path + 'api/auth/forgot/', fd)
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(error => {
+        return Promise.reject(error);
       });
   }
 
@@ -124,7 +150,7 @@ export class RestWS extends AbstractWS {
         return Promise.resolve(res);
       })
       .catch(err => {
-        console.log('Error: ' + err);
+        console.log(err);
         return Promise.reject(err);
       });
   }
@@ -138,7 +164,31 @@ export class RestWS extends AbstractWS {
         return Promise.resolve(res);
       })
       .catch(error => {
-        console.log('Error: ' + error);
+        console.log(error);
+        return Promise.reject(error);
+      });
+  }
+
+  public verifyReset(token) {
+    return this.makeGetRequest(this.path + 'api/auth/reset/' + token, null)
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
+  public reset(password, token) {
+    const fd = new FormData();
+    fd.append('password', password);
+    return this.makePostRequest(this.path + 'api/auth/reset/' + token, fd)
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(error => {
+        console.log(error);
         return Promise.reject(error);
       });
   }

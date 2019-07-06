@@ -8,7 +8,17 @@
     "SIGN_UP": "Sign up and try Tradheo 7 days for free!",
     "USERNAME": "Username",
     "WAIT": "Please wait...",
-    "CHAT": "CBD Chat"
+    "CHAT": "CBD Chat",
+    "LINCENCE_EXPIRED_BODY": "Update your licence with our affordable rates to continue enjoying Tradheo",
+    "LINCENCE_EXPIRED_HEADER": "Your licence has expired",
+    "UPDATE_LICENCE": "Update licence",
+    "CANCEL": "Cancel",
+    "FORGOT_PASSWORD": "Forgot password?",
+    "RESET": "Reset",
+    "FORGOT_ALERT_MESSAGE": "Introduce the email associated with your account to reset your password, here:",
+    "INVALID_EMAIL": "Invalid email entered",
+    "EMAIL_NOTFOUND": "The email introduced is not associated with any account",
+    "EMAIL_SENT": "An email has been sent to you with further instructions to reset your password"
   },
   "REGISTER": {
     "CONFIRM_PASSWORD": "Confirm password",
@@ -26,7 +36,7 @@
     "REGISTER": "Sign up form",
     "REQUIRED_FIELD": "Required field",
     "SIGN_UP": "Sign up",
-    "SUCCESS": "Enjoy your 7 days Tradheo's trial licence! Once expired, feel free to update your license with our reasonable rates",
+    "SUCCESS": "Enjoy your 7 days Tradheo's trial licence! Once expired, feel free to update your license with our affordable rates",
     "THIS_FIELD_IS_REQUIRED": "This field is required",
     "USERNAME": "Username",
     "EMAIL": "Email",
@@ -51,12 +61,21 @@
     "PHONENUMBER_TAKEN": "This phone number is already in use"
 
   },
+  "RESET": {
+    "RESET": "Reset password",
+    "INTRODUCE_NEW_PASSWORD": "Introduce a new password",
+    "TOKEN_INVALID": "Password reset token is invalid or has expired",
+    "SUCCESS": "Success! Your password has been changed"
+  },
   "MENU": {
     "APP_SETTINGS": "App settings",
     "USERS": "Users",
     "LOGOUT": "Logout",
     "MENU": "Menu",
-    "PROFILE": "Profile"
+    "PROFILE": "Profile",
+    "COOKIES": " By continuing to browse the site, you're agreeing to our use of cookies. Learn more in our ",
+    "PRIVACY_POLICY": "Privacy policy"
+
   },
   "SETTINGS": {
     "APP_LANGUAGE": "App language",

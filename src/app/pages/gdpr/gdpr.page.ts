@@ -7,6 +7,7 @@ import {
   LoadingController,
   Events
 } from '@ionic/angular';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-gdpr',
@@ -14,10 +15,18 @@ import {
   styleUrls: ['./gdpr.page.scss']
 })
 export class GdprPage implements OnInit {
-  constructor(public menuCtrl: MenuController, public navCtrl: NavController) {}
+  constructor(
+    public menuCtrl: MenuController,
+    public navCtrl: NavController,
+    private cookieService: CookieService
+  ) {}
 
   ngOnInit() {
-    this.menuCtrl.enable(false); // or true
+    if (this.cookieService.check('token')) {
+      this.menuCtrl.enable(true); // or true
+    } else {
+      this.menuCtrl.enable(false);
+    }
   }
   logout() {
     this.navCtrl.navigateRoot('/');

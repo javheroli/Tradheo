@@ -16,7 +16,7 @@ export class DataManagement {
         return Promise.resolve(data);
       })
       .catch(error => {
-        return Promise.reject('error');
+        return Promise.reject(error);
       });
   }
 
@@ -62,7 +62,7 @@ export class DataManagement {
         return Promise.resolve(data);
       })
       .catch(error => {
-        return Promise.reject('error');
+        return Promise.reject(error);
       });
   }
 
@@ -80,6 +80,27 @@ export class DataManagement {
   public validationEmail(email): Promise<any> {
     return this.restService
       .validationEmail(email)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public existEmail(email): Promise<any> {
+    return this.restService
+      .existEmail(email)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+  public forgot(email): Promise<any> {
+    return this.restService
+      .forgot(email)
       .then(data => {
         return Promise.resolve(data);
       })
@@ -106,7 +127,29 @@ export class DataManagement {
         return Promise.resolve(data);
       })
       .catch(error => {
-        return Promise.reject('error');
+        return Promise.reject(error);
+      });
+  }
+
+  public verifyReset(token): Promise<any> {
+    return this.restService
+      .verifyReset(token)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public reset(password, token): Promise<any> {
+    return this.restService
+      .reset(password, token)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
       });
   }
 }

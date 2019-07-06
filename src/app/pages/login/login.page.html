@@ -33,12 +33,13 @@
           formControlName="username">
         </ion-input>
       </ion-item>
-      <p ion-text class="text08"
-        *ngIf="onLoginForm.get('username').touched && onLoginForm.get('username').hasError('required')">
-        <ion-text color="warning">
-          {{ 'LOGIN.REQUIRED_FIELD' | translate}}
-        </ion-text>
-      </p>
+      <div class="error-message-login" *ngIf="
+              onLoginForm.get('username').touched &&
+              onLoginForm.get('username').hasError('required')
+            ">
+        <ion-icon name="information-circle-outline"> </ion-icon>
+        {{ 'LOGIN.REQUIRED_FIELD' | translate }}
+      </div>
 
       <ion-item no-padding class="animated fadeInUp">
         <ion-label position="floating">
@@ -48,15 +49,29 @@
         <ion-input [(ngModel)]="registerCredentials.password" maxlength="30" color="secondary" type="password"
           formControlName="password"></ion-input>
       </ion-item>
-      <p ion-text color="warning" class="text08"
-        *ngIf="onLoginForm.get('password').touched && onLoginForm.get('password').hasError('required')">
-        <ion-text color="warning">
-          {{ 'LOGIN.REQUIRED_FIELD' | translate}}
-        </ion-text>
-      </p>
+      <div class="error-message-login" *ngIf="
+              onLoginForm.get('password').touched &&
+              onLoginForm.get('password').hasError('required')
+            ">
+        <ion-icon name="information-circle-outline"> </ion-icon>
+        {{ 'LOGIN.REQUIRED_FIELD' | translate }}
+      </div>
+      <br>
+
+      <div text-center>
+        <ion-label>
+          <ion-icon color="light" name="key"></ion-icon>
+        </ion-label>
+
+        <span (click)="forgotPassword()" class="paz" tappable>
+          <ion-text color="light">
+            {{ 'LOGIN.FORGOT_PASSWORD' | translate }}
+          </ion-text>
+        </span>
+      </div>
     </form>
 
-    <br><br>
+    <br>
 
     <div>
       <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="login()"

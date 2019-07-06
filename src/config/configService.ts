@@ -10,8 +10,8 @@ export class ConfigService {
     let urlPrefixLocalhost = 'http://localhost:5000/';
     let urlAPI = '';
     if (environment.production) {
-      urlPrefix = 'https://tradheo.herokuapp.com/';
-      urlPrefixLocalhost = 'https://tradheo.herokuapp.com/';
+      urlPrefix = 'https://tradheo-server.herokuapp.com/';
+      urlPrefixLocalhost = 'https://tradheo-server.herokuapp.com/';
       urlAPI = '';
     }
 
