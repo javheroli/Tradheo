@@ -5,12 +5,21 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 var crypto = require('crypto');
 var nodemailer = require('nodemailer');
+var async = require('async');
+require('dotenv').config();
+var enviroment = require('../../src/environments/environmentForNode.ts');
+
+if (!enviroment.production) {
+    var serverURL = 'localhost:8100'
+} else {
+    var serverURL = 'tradheo.herokuapp.com'
+}
 
 
 
 
 //Route  /api/turnOnServer
-//Turn on de server on heroku
+//Turn on the server on heroku
 router.route('/turnOnServer')
     .get((req, res) => {
         res.json({
@@ -22,7 +31,7 @@ router.route('/turnOnServer')
     })
 
 //Route  /api/auth/signup
-//Authenticate user based on the data sended by user previously
+//Authenticate user based on the data sent by user previously
 router.post('/auth/signup', async (req, res, next) => {
     passport.authenticate('signup', async (err, user, info) => {
         try {
@@ -43,7 +52,7 @@ router.post('/auth/signup', async (req, res, next) => {
 });
 
 //Route  /api/auth/signup/validationUsername/:username
-//Turn on de server on heroku
+//Username validation for sign up
 router.route('/auth/signup/validationUsername/:username')
     .get((req, res) => {
         var username = req.params.username;
@@ -61,7 +70,7 @@ router.route('/auth/signup/validationUsername/:username')
     })
 
 //Route  /api/auth/signup/validationEmail/:email
-//Turn on de server on heroku
+//Email validation for sign up
 router.route('/auth/signup/validationEmail/:email')
     .get((req, res) => {
         var email = req.params.email;
@@ -79,7 +88,7 @@ router.route('/auth/signup/validationEmail/:email')
     })
 
 //Route  /api/auth/signup/validationEmail/:email
-//Turn on de server on heroku
+//Email validation for login
 router.route('/auth/login/existEmail/:email')
     .get((req, res) => {
         var email = req.params.email;
@@ -97,7 +106,7 @@ router.route('/auth/login/existEmail/:email')
     })
 
 //Route  /api/auth/signup/validationPhoneNumber/:phoneNumber
-//Turn on de server on heroku
+//PhoneNumber validation for sign up
 router.route('/auth/signup/validationPhoneNumber/:phoneNumber')
     .get((req, res) => {
         var phoneNumber = req.params.phoneNumber;
@@ -156,7 +165,10 @@ router.post('/auth/login', async (req, res, next) => {
     })(req, res, next);
 });
 
+//Route /api/auth/forgot
+//Token creation to reset password
 router.post('/auth/forgot', function (req, res, next) {
+    console.log("Trying to reset password");
     async.waterfall([
         function (done) {
             crypto.randomBytes(20, function (err, buf) {
@@ -179,11 +191,15 @@ router.post('/auth/forgot', function (req, res, next) {
             });
         },
         function (token, user, done) {
-            var smtpTransport = nodemailer.createTransport('SMTP', {
+            var smtpTransport = nodemailer.createTransport({
                 service: 'Gmail',
                 auth: {
+                    type: 'OAuth2',
                     user: 'tradheo.app@gmail.com',
-                    pass: process.env.EMAIL_PASSWORD
+                    clientId: '441094021375-e6m683tj61s2f4ut0kgjc8uonadigsjs.apps.googleusercontent.com',
+                    clientSecret: process.env.CLIENT_SECRET_GMAIL,
+                    refreshToken: process.env.REFRESH_TOKEN_GMAIL,
+                    accessToken: process.env.ACCESS_TOKEN_GMAIL
                 }
             });
             var mailOptions = {
@@ -192,13 +208,84 @@ router.post('/auth/forgot', function (req, res, next) {
                 subject: 'Tradheo Password Reset',
                 text: 'You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n' +
                     'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-                    'http://' + req.headers.host + '/api/auth/reset/' + token + '\n\n' +
+                    'http://' + serverURL + '/reset/' + token + '\n\n' +
                     'If you did not request this, please ignore this email and your password will remain unchanged.\n'
             };
+            smtpTransport.sendMail(mailOptions, function (err) {
+                console.log('Sent mail to reset password');
+                res.status(200).send();
+                done(err, 'done');
+            });
         }
     ])
 });
 
+router.get('/auth/reset/:token', function (req, res) {
+    User.findOne({
+        resetPasswordToken: req.params.token,
+        resetPasswordExpires: {
+            $gt: Date.now()
+        }
+    }, function (err, user) {
+        if (!user) {
+            res.status(500).send('Password reset token is invalid or has expired');
+        } else {
+            res.status(200).send('Ok');
+        }
+
+    });
+});
+
+router.post('/auth/reset/:token', function (req, res) {
+    async.waterfall([
+        function (done) {
+            User.findOne({
+                resetPasswordToken: req.params.token,
+                resetPasswordExpires: {
+                    $gt: Date.now()
+                }
+            }, function (err, user) {
+                if (!user) {
+                    res.status(500).send('Password reset token is invalid or has expired');
+                }
+
+                user.password = req.body.password;
+                user.resetPasswordToken = undefined;
+                user.resetPasswordExpires = undefined;
+
+                user.save(function (err) {
+
+                    done(err, user);
+
+                });
+            });
+        },
+        function (user, done) {
+            var smtpTransport = nodemailer.createTransport({
+                service: 'Gmail',
+                auth: {
+                    type: 'OAuth2',
+                    user: 'tradheo.app@gmail.com',
+                    clientId: '441094021375-e6m683tj61s2f4ut0kgjc8uonadigsjs.apps.googleusercontent.com',
+                    clientSecret: process.env.CLIENT_SECRET_GMAIL,
+                    refreshToken: process.env.REFRESH_TOKEN_GMAIL,
+                    accessToken: process.env.ACCESS_TOKEN_GMAIL
+                }
+            });
+            var mailOptions = {
+                to: user.email,
+                from: 'tradheo.app@gmail.com',
+                subject: 'Your password has been changed',
+                text: 'Hello,\n\n' +
+                    'This is a confirmation that the password for your account ' + user.username + ' has just been changed.\n'
+            };
+            smtpTransport.sendMail(mailOptions, function (err) {
+                res.status(200).send();
+                done(err);
+            });
+        }
+    ]);
+});
 
 
 

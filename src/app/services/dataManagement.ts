@@ -130,4 +130,26 @@ export class DataManagement {
         return Promise.reject(error);
       });
   }
+
+  public verifyReset(token): Promise<any> {
+    return this.restService
+      .verifyReset(token)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public reset(password, token): Promise<any> {
+    return this.restService
+      .reset(password, token)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
 }

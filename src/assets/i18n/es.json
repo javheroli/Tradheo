@@ -17,7 +17,9 @@
     "RESET": "Restablecer",
     "FORGOT_ALERT_MESSAGE": "Introduce el email asociado a su cuenta para restablecer su contraseña, aquí:",
     "INVALID_EMAIL": "Email introducido inválido",
-    "EMAIL_NOTFOUND": "El email introducido no está asociado a ninguna cuenta"
+    "EMAIL_NOTFOUND": "El email introducido no está asociado a ninguna cuenta",
+    "EMAIL_SENT": "Se le ha mandado un email con instrucciones a seguir para restablecer su contraseña"
+
   },
   "REGISTER": {
     "CONFIRM_PASSWORD": "Confirmar contraseña",
@@ -56,6 +58,12 @@
     "USERNAME_TAKEN": "Este usuario ya está en uso",
     "EMAIL_TAKEN": "Este email ya está en uso",
     "PHONENUMBER_TAKEN": "Este número de teléfono ya está en uso"
+  },
+  "RESET": {
+    "RESET": "Restablecer contraseña",
+    "INTRODUCE_NEW_PASSWORD": "Introduce una nueva contraseña",
+    "TOKEN_INVALID": "El token para restablecer la contraseña es inválido o ha expirado",
+    "SUCCESS": "¡Éxito! Su contraseña se ha actualizado"
   },
   "MENU": {
     "APP_SETTINGS": "Ajustes",

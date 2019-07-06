@@ -168,4 +168,28 @@ export class RestWS extends AbstractWS {
         return Promise.reject(error);
       });
   }
+
+  public verifyReset(token) {
+    return this.makeGetRequest(this.path + 'api/auth/reset/' + token, null)
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
+  public reset(password, token) {
+    const fd = new FormData();
+    fd.append('password', password);
+    return this.makePostRequest(this.path + 'api/auth/reset/' + token, fd)
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(error => {
+        console.log(error);
+        return Promise.reject(error);
+      });
+  }
 }

@@ -80,6 +80,17 @@ export class LoginPage implements OnInit {
 
     toast.present();
   }
+  async showSuccessToast(data: any) {
+    let toast = await this.toastCtrl.create({
+      message: data,
+      duration: 3000,
+      position: 'top',
+      cssClass: 'toast',
+      color: 'success'
+    });
+
+    toast.present();
+  }
 
   isEmail(search: string): boolean {
     var serchfind: boolean;
@@ -98,13 +109,17 @@ export class LoginPage implements OnInit {
     let forgotAlertMessage: string = this.translate.instant(
       'LOGIN.FORGOT_ALERT_MESSAGE'
     );
+    let forgotAlertHeader: string = this.translate.instant(
+      'LOGIN.FORGOT_PASSWORD'
+    );
     let invalidEmail: string = this.translate.instant('LOGIN.INVALID_EMAIL');
     let emailDoesNotExist: string = this.translate.instant(
       'LOGIN.EMAIL_NOTFOUND'
     );
+    let emailSent: string = this.translate.instant('LOGIN.EMAIL_SENT');
     this.alertCtrl
       .create({
-        header: 'Forgot password?',
+        header: forgotAlertHeader,
         message: forgotAlertMessage,
         inputs: [
           {
@@ -120,9 +135,22 @@ export class LoginPage implements OnInit {
               if (this.isEmail(alertData.email)) {
                 this.dm
                   .existEmail(alertData.email)
-                  .then(res => {})
+                  .then(res => {
+                    this.dm
+                      .forgot(alertData.email)
+                      .then(res2 => {
+                        this.showLoading();
+                        setTimeout(() => {
+                          this.showSuccessToast(emailSent);
+                        }, 1500);
+                      })
+                      .catch(err => {
+                        console.log(err);
+                      });
+                  })
                   .catch(err => {
                     this.showErrorToast(emailDoesNotExist);
+                    return false;
                   });
               } else {
                 this.showErrorToast(invalidEmail);

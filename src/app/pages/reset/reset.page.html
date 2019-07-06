@@ -1,0 +1,105 @@
+<ion-content padding class="login auth-page">
+  <div class="auth-content">
+    <!-- Logo -->
+    <div class="arriba">
+      <ion-item style="width:350px; float: right;">
+        <ion-icon name="md-globe" slot="start" color="light"></ion-icon>
+        <ion-label color="light">{{
+            'SETTINGS.APP_LANGUAGE' | translate
+          }}</ion-label>
+        <ion-select (ionChange)="changeLanguage($event)">
+          <ion-select-option value="es">Español</ion-select-option>
+          <ion-select-option value="en">English</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+    <div padding-horizontal text-center>
+      <div class="logo"></div>
+      <h3 no-margin>
+        <ion-text color="light" class="fw700">
+          <ion-text color="primary">{{
+              'RESET.RESET' | translate
+            }}</ion-text>
+        </ion-text>
+      </h3>
+    </div>
+
+    <!-- Register form -->
+    <br />
+    <ion-card class="form-card">
+      <ion-card-header class="bg-dark">
+        <ion-card-title>{{
+            'RESET.INTRODUCE_NEW_PASSWORD' | translate
+          }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="onResetForm">
+
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="lock" item-start></ion-icon>
+              {{ 'REGISTER.PASSWORD' | translate }}
+            </ion-label>
+            <ion-input [(ngModel)]="password" color="secondary" maxlength="25" type="password"
+              formControlName="password"></ion-input>
+          </ion-item>
+          <div class="error-message" *ngIf="
+                onResetForm.get('password').touched &&
+                onResetForm.get('password').hasError('required')
+              ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.REQUIRED_FIELD' | translate }}
+          </div>
+
+          <div class="error-message" *ngIf="
+                onResetForm.get('password').touched &&
+                onResetForm.get('password').hasError('minlength')
+              ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.MIN_LENGTH' | translate }}
+          </div>
+
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="lock" item-start></ion-icon>
+              {{ 'REGISTER.CONFIRM_PASSWORD' | translate }}
+            </ion-label>
+            <ion-input (change)="confirmPasswordValidation()" maxlength="25" [(ngModel)]="confirmPassword"
+              color="secondary" type="password" formControlName="confirmPassword">
+            </ion-input>
+          </ion-item>
+          <div class="error-message" *ngIf="
+                onResetForm.get('confirmPassword').touched &&
+                onResetForm.get('confirmPassword').hasError('required')
+              ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.REQUIRED_FIELD' | translate }}
+          </div>
+
+          <div class="error-message" *ngIf="
+                onResetForm.get('confirmPassword').touched &&
+                !confirmPasswordValidation()
+              ">
+            <ion-icon name="information-circle-outline"> </ion-icon>
+            {{ 'REGISTER.PASSWORD_VALIDATION_FALSE' | translate }}
+          </div>
+
+          <ion-item lines="none"></ion-item>
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+    <br />
+    <br />
+    <div margin-top>
+      <ion-button icon-left size="medium" expand="full" shape="round" color="dark" (click)="reset()" [disabled]="
+            !onResetForm.valid ||
+            !confirmPasswordValidation() 
+          " tappable>
+        <ion-icon name="refresh"></ion-icon>
+        {{ 'RESET.RESET' | translate }}
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>

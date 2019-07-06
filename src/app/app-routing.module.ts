@@ -8,7 +8,16 @@ const routes: Routes = [
     path: 'signup',
     loadChildren: './pages/register/register.module#RegisterPageModule'
   },
-  { path: 'gdpr', loadChildren: './pages/gdpr/gdpr.module#GdprPageModule' }
+  { path: 'gdpr', loadChildren: './pages/gdpr/gdpr.module#GdprPageModule' },
+  {
+    path: 'reset',
+    children: [
+      {
+        path: ':token',
+        loadChildren: './pages/reset/reset.module#ResetPageModule'
+      }
+    ]
+  }
 ];
 
 @NgModule({

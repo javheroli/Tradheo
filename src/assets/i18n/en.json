@@ -17,7 +17,8 @@
     "RESET": "Reset",
     "FORGOT_ALERT_MESSAGE": "Introduce the email associated with your account to reset your password, here:",
     "INVALID_EMAIL": "Invalid email entered",
-    "EMAIL_NOTFOUND": "The email introduced is not associated with any account"
+    "EMAIL_NOTFOUND": "The email introduced is not associated with any account",
+    "EMAIL_SENT": "An email has been sent to you with further instructions to reset your password"
   },
   "REGISTER": {
     "CONFIRM_PASSWORD": "Confirm password",
@@ -59,6 +60,12 @@
     "EMAIL_TAKEN": "This email is already in use",
     "PHONENUMBER_TAKEN": "This phone number is already in use"
 
+  },
+  "RESET": {
+    "RESET": "Reset password",
+    "INTRODUCE_NEW_PASSWORD": "Introduce a new password",
+    "TOKEN_INVALID": "Password reset token is invalid or has expired",
+    "SUCCESS": "Success! Your password has been changed"
   },
   "MENU": {
     "APP_SETTINGS": "App settings",
