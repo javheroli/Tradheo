@@ -16,15 +16,18 @@ info:
 
 tags:
   - name: User
-    description: Everything about how to access to authenticated methods by signing up with credentials, log in with them receiving a session Bearer token and once authenticated display your own profile.
+    description: Everything about how to access to authenticated methods by signing up with credentials, log in to receive a session Bearer token and once authenticated display user's profiles.
+
+  - name: Captcha
+    description: Google ReCaptcha V2 verification to avoid bots on sign up through Turing test
 
 paths:
-  /user/login:
+  /auth/signup:
     post:
       tags:
-        - user
-      summary: Logs user into the system. The system responds with a valid token.
-      operationId: loginUser
+        - User
+      summary: Sign up as a new User in the system, if the username is not already taken, the User is created with the data introduced.
+      operationId: signupUser
       requestBody:
         $ref: '#/components/requestBodies/User'
       responses:
@@ -33,10 +36,187 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Token'
+                $ref: '#/components/schemas/User'
+        '409':
+          description: 'Conflict:  An Error occured: Username already exists'
 
+  /auth/signup/validationUsername/{username}:
+    get:
+      tags:
+        - User
+      summary: Route to make an asynchronous validation to verify if an username is already taken in the system.
+      operationId: signupValidationUsername
+      parameters:
+        - name: username
+          in: path
+          description: Username to validate
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Ok'
+
+        '409':
+          description: 'Conflict: Username already taken'
+
+  /auth/signup/validationEmail/{email}:
+    get:
+      tags:
+        - User
+      summary: Route to make an asynchronous validation to verify if an email is already taken in the system.
+      operationId: signupValidationEmail
+      parameters:
+        - name: email
+          in: path
+          description: Email to validate
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Ok'
+
+        '409':
+          description: 'Conflict: Email already taken'
+
+  /auth/signup/validationPhoneNumber/{phoneNumber}:
+    get:
+      tags:
+        - User
+      summary: Route to make an asynchronous validation to verify if an phone number is already taken in the system.
+      operationId: signupValidationPhoneNumber
+      parameters:
+        - name: phoneNumber
+          in: path
+          description: Phone number to validate
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Ok'
+
+        '409':
+          description: 'Conflict: Phone number already taken'
+
+  /auth/login:
+    post:
+      tags:
+        - User
+      summary: Logs a User into the system with the credentials provided. The system responds with a valid token if the credentials were correct.
+      operationId: loginUser
+      requestBody:
+        $ref: '#/components/requestBodies/Credentials'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
         '401':
           description: 'Unauthorized:  An Error occured: Wrong Password / User not found'
+        '403':
+          description: 'Forbidden:  User with licence expired'
+
+  /auth/forgot:
+    post:
+      tags:
+        - User
+      summary: Route to send an email with further intructions to an user who has requested to reset his account's password
+      operationId: forgot
+      requestBody:
+        $ref: '#/components/requestBodies/Email'
+      responses:
+        '200':
+          description: Ok
+
+  /auth/login/existEmail/{email}:
+    get:
+      tags:
+        - User
+      summary: Route to make an asynchronous validation to verify if an email exists in the system to request a password reset.
+      operationId: existEmail
+      parameters:
+        - name: email
+          in: path
+          description: Email to validate
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Ok'
+
+        '404':
+          description: 'Not found: The email does not exist'
+
+  /auth/reset/{token}:
+    get:
+      tags:
+        - User
+      summary: Route to verify that the token is correct so the User accesing to reset view is trully the one who has requested previously.
+      operationId: resetGet
+      parameters:
+        - name: token
+          in: path
+          description: Token sent by the system in the email previously
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Ok'
+
+        '400':
+          description: 'Error: Password reset token is invalid or has expired'
+
+  /auth/reset:
+    post:
+      tags:
+        - User
+      summary: Route to send a new password an complete the reset request.
+      operationId: resetPost
+      requestBody:
+        $ref: '#/components/requestBodies/Password'
+      responses:
+        '200':
+          description: 'Ok'
+        '400':
+          description: 'Error: Password reset token is invalid or has expired'
+
+  /getUserLogged:
+    get:
+      tags:
+        - User
+      summary: Route to get the logged User by using the authorization token introduced in http headers
+      operationId: 'getUserLogged'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+      security:
+        - bearerAuth: []
+
+  /captchaVerify:
+    post:
+      tags:
+        - Captcha
+      summary: Route to verify that the captcha response returned by google for Turing test is correct
+      operationId: captcha
+      requestBody:
+        $ref: '#/components/requestBodies/CaptchaResponse'
+      responses:
+        '200':
+          description: Hello human!
+
+        '401':
+          description: 'Unauthorized:  No bots!'
 
 components:
   schemas:
@@ -47,12 +227,99 @@ components:
           type: string
         password:
           type: string
+          format: password
+        resetPasswordToken:
+          type: string
+        resetPasswordExpires:
+          type: string
+          format: date
+        email:
+          type: string
+          format: email
+        phoneNumber:
+          type: string
+        birthdate:
+          type: string
+          format: date
+        registrationDate:
+          type: string
+          format: date
+        licence:
+          type: boolean
+        licenceDate:
+          type: string
+          format: date
+        firstName:
+          type: string
+        lastName:
+          type: string
+        description:
+          type: string
+        country:
+          type: string
+        city:
+          type: string
+        admin:
+          type: boolean
+        image:
+          type: string
+          format: uri
+
+      required:
+        - username
+        - password
+        - email
+        - phoneNumber
+        - birthdate
+        - registrationDate
+        - licence
+        - licenceDate
+        - firstName
+        - lastName
+        - description
+        - country
+        - city
+        - admin
+        - image
+
+    Credentials:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          format: password
+      required:
+        - username
+        - password
+
     Token:
       type: object
       properties:
         token:
           type: string
         message:
+          type: string
+
+    Email:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+
+    Password:
+      type: object
+      properties:
+        password:
+          type: string
+          format: password
+
+    CaptchaResponse:
+      type: object
+      properties:
+        captchaResponse:
           type: string
 
   requestBodies:
@@ -63,6 +330,42 @@ components:
             $ref: '#/components/schemas/User'
 
       description: User object stored in DB
+      required: true
+
+    Credentials:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Credentials'
+
+      description: Credentials to log as a user
+      required: true
+
+    Email:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Email'
+
+      description: Email
+      required: true
+
+    Password:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Password'
+
+      description: New password to reset
+      required: true
+
+    CaptchaResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CaptchaResponse'
+
+      description: Google captcha response for Turing test
       required: true
 
   securitySchemes:

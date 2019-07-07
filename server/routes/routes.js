@@ -36,7 +36,7 @@ router.post('/auth/signup', async (req, res, next) => {
     passport.authenticate('signup', async (err, user, info) => {
         try {
             if (err || !user) {
-                return next(res.status(500).send(
+                return next(res.status(409).send(
                     'An Error occured: ' + info['message']
                 ));
             } else {
@@ -130,7 +130,7 @@ router.post('/auth/login', async (req, res, next) => {
 
         try {
             if (err || !user) {
-                return next(res.status(500).send(
+                return next(res.status(401).send(
                     'An Error occured: ' + info['message']
                 ));
             }
@@ -228,7 +228,7 @@ router.get('/auth/reset/:token', function (req, res) {
         }
     }, function (err, user) {
         if (!user) {
-            res.status(500).send('Password reset token is invalid or has expired');
+            res.status(400).send('Password reset token is invalid or has expired');
         } else {
             res.status(200).send('Ok');
         }
@@ -246,7 +246,7 @@ router.post('/auth/reset/:token', function (req, res) {
                 }
             }, function (err, user) {
                 if (!user) {
-                    res.status(500).send('Password reset token is invalid or has expired');
+                    res.status(400).send('Password reset token is invalid or has expired');
                 }
 
                 user.password = req.body.password;

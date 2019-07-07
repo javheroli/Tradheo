@@ -68,6 +68,7 @@ app.use((req, res, next) => {
   }
 });
 
+
 const captchaCheck = (req, res, next) => {
 
   console.log("CAPTCHA middleware activated");
@@ -106,16 +107,14 @@ app.post('/api/captchaVerify', captchaCheck, (req, res) => {
 //Server path to annonymous users routes
 app.use('/api', routes);
 
+//Access to API contract
+app.use("/api/docs", express.static('docs'));
 
 //Server path to logged users secured routes
 app.use('/api', passport.authenticate('jwt', {
   session: false
 }), secureRoutes);
 
-
-
-//Access to API contract
-app.use("/api/docs", express.static('docs'));
 
 const port = process.env.PORT || 5000;
 app.listen(port);
