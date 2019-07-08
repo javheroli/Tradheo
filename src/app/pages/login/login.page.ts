@@ -172,10 +172,10 @@ export class LoginPage implements OnInit {
   login() {
     let translation: string = this.translate.instant('LOGIN.FAIL');
     let LicenceExpiredHeader: string = this.translate.instant(
-      'LOGIN.LINCENCE_EXPIRED_HEADER'
+      'LOGIN.LICENSE_EXPIRED_HEADER'
     );
     let LicenceExpiredBody: string = this.translate.instant(
-      'LOGIN.LINCENCE_EXPIRED_BODY'
+      'LOGIN.LICENSE_EXPIRED_BODY'
     );
     let updateLicence: string = this.translate.instant('LOGIN.UPDATE_LICENCE');
     let cancel: string = this.translate.instant('LOGIN.CANCEL');
@@ -188,7 +188,7 @@ export class LoginPage implements OnInit {
           this.cookieService.set('token', data.token);
           this.dm.getUserLogged(data.token).then(user => {
             this.events.publish('user:logged', user);
-            this.navCtrl.navigateRoot('/users');
+            this.navCtrl.navigateRoot('/live-data');
           });
         }, 1500);
       })

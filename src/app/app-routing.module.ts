@@ -17,6 +17,11 @@ const routes: Routes = [
         loadChildren: './pages/reset/reset.module#ResetPageModule'
       }
     ]
+  },
+  {
+    path: 'live-data',
+    loadChildren: './pages/live-data/live-data.module#LiveDataPageModule',
+    canLoad: [AuthGuard]
   }
 ];
 

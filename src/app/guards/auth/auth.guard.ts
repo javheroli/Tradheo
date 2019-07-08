@@ -9,7 +9,7 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,8 @@ import { AlertController } from '@ionic/angular';
 export class AuthGuard implements CanLoad {
   constructor(
     private cookieService: CookieService,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public navCtrl: NavController
   ) {}
   canLoad(
     route: Route,
@@ -25,6 +26,7 @@ export class AuthGuard implements CanLoad {
   ): Observable<boolean> | Promise<boolean> | boolean {
     const check = this.cookieService.check('token');
     if (!check) {
+      this.navCtrl.navigateForward('/');
       this.alertCtrl
         .create({
           header: 'Unathenticated!',

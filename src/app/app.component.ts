@@ -40,10 +40,34 @@ export class AppComponent {
 
     this.appPages = [
       {
-        title: 'Users',
-        url: '/users',
+        title: 'Live Data',
+        url: '/live-data',
         direct: 'forward',
-        icon: 'contact'
+        icon: 'pulse'
+      },
+      {
+        title: 'Charts',
+        url: '/charts',
+        direct: 'forward',
+        icon: 'stats'
+      },
+      {
+        title: 'Simulator',
+        url: '/simulator',
+        direct: 'forward',
+        icon: 'logo-usd'
+      },
+      {
+        title: 'Licence',
+        url: '/licence',
+        direct: 'forward',
+        icon: 'cart'
+      },
+      {
+        title: 'App Settings',
+        url: '/settings',
+        direct: 'forward',
+        icon: 'settings'
       }
     ];
     this.initializeApp();
@@ -60,7 +84,7 @@ export class AppComponent {
     });
 
     if (this.cookieService.check('token')) {
-      this.navCtrl.navigateForward('users');
+      this.navCtrl.navigateForward('live-data');
     }
 
     this.translateService.setDefaultLang('en');

@@ -38,8 +38,17 @@
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item [routerLink]="[p.url]" color="primary">
               <ion-icon slot="start" [name]="p.icon" color="light"></ion-icon>
-              <ion-label *ngIf="[p.title]=='Users'">
-                {{ 'MENU.USERS' | translate }}
+              <ion-label *ngIf="[p.title]=='Live Data'">
+                {{ 'MENU.LIVE_DATA' | translate }}
+              </ion-label>
+              <ion-label *ngIf="[p.title]=='Charts'">
+                {{ 'MENU.CHARTS' | translate }}
+              </ion-label>
+              <ion-label *ngIf="[p.title]=='Simulator'">
+                {{ 'MENU.SIMULATOR' | translate }}
+              </ion-label>
+              <ion-label *ngIf="[p.title]=='Licence'">
+                {{ 'MENU.LICENSE' | translate }}
               </ion-label>
               <ion-label *ngIf="[p.title]=='App Settings'">
                 {{ 'MENU.APP_SETTINGS' | translate }}
