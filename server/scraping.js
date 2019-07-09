@@ -1,7 +1,7 @@
-const rp = require('request-promise');
 const $ = require('cheerio');
 const MarketModel = require('./models/marketModel');
 const mongoose = require('mongoose');
+const puppeteer = require('puppeteer');
 
 //Connection to DataBase:
 //To connect to Development environment DB (Comment line below if not using it)
@@ -16,7 +16,7 @@ mongoose.connection.on('error', error => console.log(error));
 mongoose.Promise = global.Promise;
 
 getMarketData = function () {
-    console.log("Web scrapping to get market data...")
+    console.log("Web scraping to get market data...")
 
     let markets = []
     let marketSpain = {
@@ -30,36 +30,19 @@ getMarketData = function () {
         companies: []
     }
 
-    rp({
-        uri: 'https://uk.investing.com/equities/spain',
-        headers: {
-            'User-Agent': 'Request-Promise'
-        }
-    }).then(html => {
-        $("table[class='genTbl closedTbl crossRatesTbl elpTbl elp30'] > tbody > tr", html).each((i, elem) => {
-            marketSpain.companies.push({
-                name: $("td[class='bold left noWrap elp plusIconTd'] > a", html).eq(i).html(),
-                last: $("td", elem).eq(2).text(),
-                high: $("td", elem).eq(3).text(),
-                low: $("td", elem).eq(4).text(),
-                change: $("td", elem).eq(5).text(),
-                changePerCent: $("td", elem).eq(6).text(),
-                volume: $("td", elem).eq(7).text(),
-                time: $("td", elem).eq(8).text(),
-                purchase: false,
-                sale: false
+    puppeteer
+        .launch()
+        .then(function (browser) {
+            return browser.newPage();
+        })
+        .then(function (page) {
+            return page.goto('https://uk.investing.com/equities/spain').then(function () {
+                return page.content();
             });
-        });
-        markets.push(marketSpain);
-
-        rp({
-            uri: 'https://uk.investing.com/equities/germany',
-            headers: {
-                'User-Agent': 'Request-Promise'
-            }
-        }).then(html => {
+        })
+        .then(function (html) {
             $("table[class='genTbl closedTbl crossRatesTbl elpTbl elp30'] > tbody > tr", html).each((i, elem) => {
-                marketGermany.companies.push({
+                marketSpain.companies.push({
                     name: $("td[class='bold left noWrap elp plusIconTd'] > a", html).eq(i).html(),
                     last: $("td", elem).eq(2).text(),
                     high: $("td", elem).eq(3).text(),
@@ -72,26 +55,51 @@ getMarketData = function () {
                     sale: false
                 });
             });
-            markets.push(marketGermany)
+            markets.push(marketSpain);
 
-            MarketModel.create({
-                markets,
-            }, (err) => {
-                if (err) return handleError(err);
-            })
+            puppeteer
+                .launch()
+                .then(function (browser) {
+                    return browser.newPage();
+                })
+                .then(function (page) {
+                    return page.goto('https://uk.investing.com/equities/germany').then(function () {
+                        return page.content();
+                    });
+                })
+                .then(function (html) {
+                    $("table[class='genTbl closedTbl crossRatesTbl elpTbl elp30'] > tbody > tr", html).each((i, elem) => {
+                        marketGermany.companies.push({
+                            name: $("td[class='bold left noWrap elp plusIconTd'] > a", html).eq(i).html(),
+                            last: $("td", elem).eq(2).text(),
+                            high: $("td", elem).eq(3).text(),
+                            low: $("td", elem).eq(4).text(),
+                            change: $("td", elem).eq(5).text(),
+                            changePerCent: $("td", elem).eq(6).text(),
+                            volume: $("td", elem).eq(7).text(),
+                            time: $("td", elem).eq(8).text(),
+                            purchase: false,
+                            sale: false
+                        });
+                    });
+                    markets.push(marketGermany)
 
-            console.log("Done!")
+                    MarketModel.create({
+                        markets,
+                    }, (err) => {
+                        if (err) return handleError(err);
+                    })
 
+                    console.log("Done!")
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
 
-        }).catch(error => {
-            console.log(error);
         })
-
-
-
-    }).catch(err => {
-        console.log(err);
-    })
+        .catch(function (err) {
+            console.log(err);
+        });
 }
 
 getMarketData();
