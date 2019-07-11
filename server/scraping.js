@@ -3,6 +3,10 @@ const MarketModel = require('./models/marketModel');
 const mongoose = require('mongoose');
 const puppeteer = require('puppeteer');
 var schedule = require('node-schedule');
+const {
+    Cluster
+} = require('puppeteer-cluster');
+
 
 //Connection to DataBase:
 //To connect to Development environment DB (Comment line below if not using it)
@@ -31,75 +35,80 @@ getMarketData = async () => {
         companies: []
     }
 
-    try {
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.goto('https://uk.investing.com/equities/spain', {
+
+    const cluster = await Cluster.launch({
+        concurrency: Cluster.CONCURRENCY_CONTEXT,
+        maxConcurrency: 2,
+    });
+
+    await cluster.task(async ({
+        page,
+        data: url
+    }) => {
+        await page.goto(url, {
             timeout: 3000000,
             waitUntil: 'networkidle2'
         });
         const html = await page.content();
-        console.log('Spain data page content loaded');
-        $("table[class='genTbl closedTbl crossRatesTbl elpTbl elp30'] > tbody > tr", html).each((i, elem) => {
-            marketSpain.companies.push({
-                name: $("td[class='bold left noWrap elp plusIconTd'] > a", html).eq(i).html(),
-                last: $("td", elem).eq(2).text(),
-                high: $("td", elem).eq(3).text(),
-                low: $("td", elem).eq(4).text(),
-                change: $("td", elem).eq(5).text(),
-                changePerCent: $("td", elem).eq(6).text(),
-                volume: $("td", elem).eq(7).text(),
-                time: $("td", elem).eq(8).text(),
-                purchase: false,
-                sale: false
+        if (url === 'https://uk.investing.com/equities/spain') {
+            console.log('Spain data page content loaded');
+            $("table[class='genTbl closedTbl crossRatesTbl elpTbl elp30'] > tbody > tr", html).each((i, elem) => {
+                marketSpain.companies.push({
+                    name: $("td[class='bold left noWrap elp plusIconTd'] > a", html).eq(i).html(),
+                    last: $("td", elem).eq(2).text(),
+                    high: $("td", elem).eq(3).text(),
+                    low: $("td", elem).eq(4).text(),
+                    change: $("td", elem).eq(5).text(),
+                    changePerCent: $("td", elem).eq(6).text(),
+                    volume: $("td", elem).eq(7).text(),
+                    time: $("td", elem).eq(8).text(),
+                    purchase: false,
+                    sale: false
+                });
             });
-        });
-        markets.push(marketSpain);
-
-        await page.goto('https://uk.investing.com/equities/germany', {
-            timeout: 3000000,
-            waitUntil: 'networkidle2'
-        });
-        const html2 = await page.content();
-        console.log('Germany data page content loaded');
-        $("table[class='genTbl closedTbl crossRatesTbl elpTbl elp30'] > tbody > tr", html2).each((i, elem) => {
-            marketGermany.companies.push({
-                name: $("td[class='bold left noWrap elp plusIconTd'] > a", html2).eq(i).html(),
-                last: $("td", elem).eq(2).text(),
-                high: $("td", elem).eq(3).text(),
-                low: $("td", elem).eq(4).text(),
-                change: $("td", elem).eq(5).text(),
-                changePerCent: $("td", elem).eq(6).text(),
-                volume: $("td", elem).eq(7).text(),
-                time: $("td", elem).eq(8).text(),
-                purchase: false,
-                sale: false
+            markets.push(marketSpain);
+        } else {
+            console.log('Germany data page content loaded');
+            $("table[class='genTbl closedTbl crossRatesTbl elpTbl elp30'] > tbody > tr", html).each((i, elem) => {
+                marketGermany.companies.push({
+                    name: $("td[class='bold left noWrap elp plusIconTd'] > a", html).eq(i).html(),
+                    last: $("td", elem).eq(2).text(),
+                    high: $("td", elem).eq(3).text(),
+                    low: $("td", elem).eq(4).text(),
+                    change: $("td", elem).eq(5).text(),
+                    changePerCent: $("td", elem).eq(6).text(),
+                    volume: $("td", elem).eq(7).text(),
+                    time: $("td", elem).eq(8).text(),
+                    purchase: false,
+                    sale: false
+                });
             });
-        });
-        await browser.close();
-        markets.push(marketGermany);
+            markets.push(marketGermany);
+        }
+        if (markets.length === 2) {
+            MarketModel.create({
+                markets,
+            }, (err) => {
+                if (err) return handleError(err);
+            })
 
-        MarketModel.create({
-            markets,
-        }, (err) => {
-            if (err) return handleError(err);
-        })
+            console.log("Done!")
+        }
+    });
 
-        console.log("Done!")
+    cluster.queue('https://uk.investing.com/equities/spain');
+    cluster.queue('https://uk.investing.com/equities/germany');
 
-    } catch (err) {
-        console.log(err);
+    await cluster.idle();
+    await cluster.close();
+
+}
+
+
+var j = schedule.scheduleJob('*/10 * 8-17 * * 1-5', function () {
+    const now = new Date();
+    //Checks that time is between 8:30 - 17:35 (schedule of the stock exchange)
+    if (now.getHours() >= 8 && !(now.getHours() == 8 && now.getMinutes() < 30) && now.getHours() <= 17 && !(now.getHours() == 17 && now.getMinutes() > 35)) {
+        getMarketData();
     }
-}
-
-
-var j = schedule.scheduleJob('*/10 * 8-18 * * 1-5', function () {
-    getMarketData();
 });
-/*
-const now = new Date();
-//Checks that time is between 8:30 - 17:35 (schedule of the stock exchange)
-if (now.getHours() >= 8 && !(now.getHours() == 8 && now.getMinutes() < 30) && now.getHours() <= 17 && !(now.getHours() == 17 && now.getMinutes() > 35)) {
-    getMarketData();
-}
-*/

@@ -28,7 +28,8 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "puppeteer": "^1.18.1"
+    "puppeteer": "^1.18.1",
+    "puppeteer-cluster": "^0.16.0"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
