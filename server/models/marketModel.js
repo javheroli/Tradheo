@@ -6,7 +6,7 @@ const MarketSchema = new Schema({
     date: {
         type: Date,
         required: true,
-        default: Date.now()
+        default: Date.now
 
     },
     markets: [{
