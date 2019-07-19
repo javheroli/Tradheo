@@ -8,7 +8,7 @@
     "SIGN_UP": "¡Regístrese y pruebe Tradheo 7 días gratis!",
     "USERNAME": "Usuario",
     "WAIT": "Por favor, espere...",
-    "CHAT": "CBD Chat",
+    "TRADHEO": "Tradheo",
     "LICENSE_EXPIRED_BODY": "Actualice su licencia con nuestras increíbles ofertas para continuar disfrutando de Tradheo",
     "LICENSE_EXPIRED_HEADER": "Su licencia ha expirado",
     "UPDATE_LICENCE": "Actualizar licencia",
@@ -65,9 +65,27 @@
     "TOKEN_INVALID": "El token para restablecer la contraseña es inválido o ha expirado",
     "SUCCESS": "¡Éxito! Su contraseña se ha actualizado"
   },
+  "LIVE_DATA": {
+    "HEADER": "Bolsa en directo",
+    "SPAIN": "España",
+    "GERMANY": "Alemania",
+    "NAME": "Nombre",
+    "LAST": "Último",
+    "HIGH": "Máximo",
+    "LOW": "Mínimo",
+    "CHANGE": "Variación",
+    "CHANGEPERCENT": "Variación(%)",
+    "VOLUME": "Volumen",
+    "TIME": "Hora",
+    "ACTIONS": "Acciones",
+    "CANCEL": "Cancelar",
+    "LAST_UPDATE": "Última actualización",
+    "LAST_DATE": "Últ. Fecha"
+  },
+
   "MENU": {
     "APP_SETTINGS": "Ajustes",
-    "LIVE_DATA": "Mercado en directo",
+    "LIVE_DATA": "Bolsa en directo",
     "CHARTS": "Gráficas",
     "SIMULATOR": "Simulador de inversiones",
     "LICENSE": "Actualizar licencia",

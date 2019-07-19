@@ -152,4 +152,15 @@ export class DataManagement {
         return Promise.reject(error);
       });
   }
+
+  public marketLiveData(country): Promise<any> {
+    return this.restService
+      .marketLiveData(country)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
 }

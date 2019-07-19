@@ -37,7 +37,7 @@ getMarketData = async () => {
 
 
     const cluster = await Cluster.launch({
-        concurrency: Cluster.CONCURRENCY_CONTEXT,
+        concurrency: Cluster.CONCURRENCY_PAGE,
         maxConcurrency: 2,
     });
 

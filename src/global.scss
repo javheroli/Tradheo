@@ -59,6 +59,7 @@ ion-item {
 
 .fw700 {
     font-weight: 700 !important;
+    font-family: Helvetica;
 }
 
 .text08 {
@@ -166,6 +167,7 @@ ion-card {
         }
     }
 
+
     .auth-content {
         margin: 0 5%;
 
@@ -174,7 +176,7 @@ ion-card {
             height: 60px;
             margin: 20px auto 8px;
             border-radius: 10%;
-            background: url("/assets/img/logocircle.png") no-repeat;
+            background: url("/assets/img/logoTradheo.png") no-repeat;
             background-size: 100%;
         }
 
@@ -182,7 +184,7 @@ ion-card {
             width: 120px;
             height: 120px;
             margin: 20px auto 8px;
-            background: url("/assets/img/logocircle.png") no-repeat;
+            background: url("/assets/img/logoTradheo.png") no-repeat;
             background-size: 100%;
         }
 
@@ -260,4 +262,168 @@ ion-select {
 
 .toast {
     text-align: center;
+}
+
+.text-secondary {
+    color: var(--ion-color-secondary);
+}
+
+.menu-text {
+    color: var(--ion-color-secondary);
+    width: 92%;
+    font-weight: bold;
+}
+
+
+.datatable-header {
+    background: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
+    text-align: center;
+
+    @media screen and (min-width: 800px) {
+        max-width: 100%;
+    }
+
+}
+
+@media screen and (min-width: 800px) {
+    .datatable-header-inner {
+        max-width: 100%;
+    }
+
+
+    .datatable-row-center {
+        max-width: 100%;
+    }
+
+}
+
+.margin-left-for-first-column {
+    margin-left: 20px;
+
+}
+
+.margin-right-for-last-column {
+    margin-right: 20px;
+}
+
+.datatable-header-cell {
+
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--ion-color-light);
+}
+
+.datatable-body-row {
+    border-top: 1px solid #DADADA;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: rgb(218, 218, 218);
+    padding: 0;
+
+    @media screen and (min-width: 800px) {
+        max-width: 100%;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .datatable-scroll {
+        max-width: 100%;
+    }
+}
+
+.datatable-body-row:hover {
+    background: rgb(245, 216, 178);
+}
+
+.datatable-row-even {
+    background: rgb(229, 236, 248);
+}
+
+.datatable-row-odd {
+    background: rgba(255, 255, 255, 1);
+}
+
+.datatable-body-cell {
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+    text-align: center;
+}
+
+
+// Style footer appearance
+.datatable-footer {
+    margin-left: 20px;
+    background: rgba(218, 226, 234, 1);
+    padding: 0 1em 0 1em;
+    font-size: 14px;
+
+    .pager {
+        li {
+            padding: 0 1em !important;
+
+            a {
+                color: rgba(68, 68, 68, 1);
+                text-decoration: none;
+            }
+        }
+    }
+}
+
+
+// Style rules for the footer pagination elements
+.sort-desc:after {
+    content: "▲";
+}
+
+.sort-asc:after {
+    content: "▼";
+}
+
+.datatable-icon-done-all:before {
+    content: ">>";
+}
+
+.datatable-icon-left:before {
+    content: "<";
+}
+
+.datatable-icon-right:before {
+    content: ">";
+}
+
+.datatable-icon-skip:before {
+    content: ">>";
+}
+
+.datatable-icon-prev:before {
+    content: "<<";
+}
+
+.is-positive {
+    color: green;
+    font-weight: bold;
+}
+
+.is-negative {
+    font-weight: bold;
+    color: red;
+}
+
+.is-neutral {
+    font-weight: bold;
+    color: black;
+}
+
+.greenBackground {
+    background-color: #C2F2C2;
+    border-right: 1px solid #DADADA;
+    border-left: 1px solid #DADADA;
+    border-bottom: 1px solid #DADADA;
+}
+
+.redBackground {
+    background-color: rgb(247, 202, 202);
+    border-right: 1px solid #DADADA;
+    border-left: 1px solid #DADADA;
+    border-bottom: 1px solid #DADADA;
 }

@@ -36,7 +36,7 @@ const MarketSchema = new Schema({
                 required: true
             },
             change: {
-                type: Number,
+                type: String,
                 required: true
             },
             changePerCent: {

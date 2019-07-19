@@ -11,15 +11,15 @@
               <img src="{{userLogged.image}}" alt="{{ 'MENU.PROFILE' | translate }}">
             </ion-avatar>
             <ion-label>
-              <ion-text color="medium">
+              <ion-text color="light">
                 <h1><strong>{{ userLogged.username }}</strong></h1>
               </ion-text>
               <ion-menu-toggle class="mto" auto-hide="false">
                 <ion-text color="secondary"> | </ion-text>
                 <a class="text08" tappable (click)="logout()">
                   <ion-text color="medium">
-                    <ion-icon name="log-out"></ion-icon>
-                    <strong>{{ 'MENU.LOGOUT' | translate }}</strong>
+                    <ion-icon color="secondary" name="log-out"></ion-icon>
+                    <strong class="text-secondary">{{ 'MENU.LOGOUT' | translate }}</strong>
                   </ion-text>
                 </a>
               </ion-menu-toggle>
@@ -31,8 +31,8 @@
 
       <ion-content class="bg-profile">
         <ion-list>
-          <ion-list-header color="dark">
-            <ion-label>{{ 'MENU.MENU' | translate }}</ion-label>
+          <ion-list-header style="text-align: center" color="dark">
+            <h4 class="menu-text">{{ 'MENU.MENU' | translate }}</h4>
           </ion-list-header>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
@@ -53,9 +53,20 @@
               <ion-label *ngIf="[p.title]=='App Settings'">
                 {{ 'MENU.APP_SETTINGS' | translate }}
               </ion-label>
+              <ion-label *ngIf="[p.title]=='Privacy Policy'">
+                {{ 'MENU.PRIVACY_POLICY' | translate }}
+              </ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
+        <div padding-horizontal text-center class="animated fadeInDown">
+          <div class="logoCircle"></div>
+          <h4 no-margin>
+            <ion-text color="light" class="fw700">
+              {{ 'LOGIN.TRADHEO' | translate}}
+            </ion-text>
+          </h4>
+        </div>
 
       </ion-content>
     </ion-menu>

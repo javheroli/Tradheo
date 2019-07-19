@@ -8,7 +8,7 @@
     "SIGN_UP": "Sign up and try Tradheo 7 days for free!",
     "USERNAME": "Username",
     "WAIT": "Please wait...",
-    "CHAT": "CBD Chat",
+    "TRADHEO": "Tradheo",
     "LICENSE_EXPIRED_BODY": "Update your license with our affordable rates to continue enjoying Tradheo",
     "LICENSE_EXPIRED_HEADER": "Your license has expired",
     "UPDATE_LICENCE": "Update license",
@@ -67,6 +67,24 @@
     "TOKEN_INVALID": "Password reset token is invalid or has expired",
     "SUCCESS": "Success! Your password has been changed"
   },
+  "LIVE_DATA": {
+    "HEADER": "Live market",
+    "SPAIN": "Spain",
+    "GERMANY": "Germany",
+    "NAME": "Name",
+    "LAST": "Last",
+    "HIGH": "High",
+    "LOW": "Low",
+    "CHANGE": "Change",
+    "CHANGEPERCENT": "Change(%)",
+    "VOLUME": "Volume",
+    "TIME": "Time",
+    "ACTIONS": "Actions",
+    "CANCEL": "Cancel",
+    "LAST_UPDATE": "Last update",
+    "LAST_DATE": "Last date"
+  },
+
   "MENU": {
     "APP_SETTINGS": "App settings",
     "LIVE_DATA": "Live Market",

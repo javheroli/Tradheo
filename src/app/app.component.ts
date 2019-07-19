@@ -68,6 +68,12 @@ export class AppComponent {
         url: '/settings',
         direct: 'forward',
         icon: 'settings'
+      },
+      {
+        title: 'Privacy Policy',
+        url: '/gdpr',
+        direct: 'forward',
+        icon: 'document'
       }
     ];
     this.initializeApp();

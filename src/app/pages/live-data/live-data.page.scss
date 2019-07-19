@@ -1,0 +1,20 @@
+:host {
+    ion-content {
+        --background: linear-gradient(-135deg, var(--ion-color-medium), var(--ion-color-light))
+    }
+
+    ion-tab-bar {
+        height: 65px;
+    }
+
+    .live-data-header {
+        color: var(--ion-color-light);
+        display: inline;
+    }
+}
+
+.menuIcon {
+    cursor: pointer;
+    font-size: 21px;
+
+}

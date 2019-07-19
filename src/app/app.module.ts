@@ -27,6 +27,8 @@ import { UsernameValidator } from './validators/username.validator';
 import { CustomEmailValidator } from './validators/email.validator';
 import { PhoneNumberValidator } from './validators/phonenumber.validator';
 import { CookieLawModule } from 'angular2-cookie-law';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, '../assets/i18n/', '.json');
@@ -43,6 +45,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AppRoutingModule,
     HttpClientModule,
     CookieLawModule,
+    DeviceDetectorModule.forRoot(),
+    NgxDatatableModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
