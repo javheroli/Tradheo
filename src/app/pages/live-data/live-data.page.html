@@ -30,13 +30,13 @@
 <ion-content>
   <ion-tabs style="width: 101%">
     <ion-tab-bar style="width: 100%" slot="top">
-      <ion-tab-button (click)="onClickFabSpain()" tab="Spain">
+      <ion-tab-button (click)="onClickFabSpain()">
         <img src="../../../assets/img/spain.png" />
         <ion-label>{{ 'LIVE_DATA.SPAIN' | translate }}</ion-label>
         <ion-label>IBEX 35</ion-label>
       </ion-tab-button>
 
-      <ion-tab-button (click)="onClickFabGermany()" tab="Germany">
+      <ion-tab-button (click)="onClickFabGermany()">
         <img src="../../../assets/img/germany.png" />
         <ion-label>{{ 'LIVE_DATA.GERMANY' | translate }}</ion-label>
         <ion-label>DAX</ion-label>
@@ -45,9 +45,9 @@
   </ion-tabs>
 
   <div style="margin-top: 67px;" *ngIf="isReady && isMobile">
-    <ngx-datatable [sortType]="'multi'" [headerHeight]="24" [footerHeight]="17" [rowHeight]="24"
-      [rows]="data.market.companies" [columnMode]="'force'" [limit]="35" [scrollbarH]="true" [reorderable]="reorderable"
-      [swapColumns]="swapColumns" [targetMarkerTemplate]="targetMarkerTemplate">
+    <ngx-datatable [sortType]="'multi'" [headerHeight]="24" [footerHeight]="17" [rowHeight]="24" [rows]="data.companies"
+      [columnMode]="'force'" [limit]="35" [scrollbarH]="true" [reorderable]="reorderable" [swapColumns]="swapColumns"
+      [targetMarkerTemplate]="targetMarkerTemplate">
       <ngx-datatable-column name="{{ columns[8].name }}" sortable="false" prop="name"
         [cellClass]="getMarginLeftForFirstColumn" [headerClass]="getMarginLeftForFirstColumn" [width]="58"
         [flexGrow]="1">
@@ -89,9 +89,9 @@
   </div>
 
   <div style="margin-top: 67px;" *ngIf="isReady && !isMobile">
-    <ngx-datatable [sortType]="'multi'" [headerHeight]="24" [footerHeight]="17" [rowHeight]="24"
-      [rows]="data.market.companies" [columnMode]="'force'" [limit]="35" [reorderable]="reorderable"
-      [swapColumns]="swapColumns" [targetMarkerTemplate]="targetMarkerTemplate">
+    <ngx-datatable [sortType]="'multi'" [headerHeight]="24" [footerHeight]="17" [rowHeight]="24" [rows]="data.companies"
+      [columnMode]="'force'" [limit]="35" [reorderable]="reorderable" [swapColumns]="swapColumns"
+      [targetMarkerTemplate]="targetMarkerTemplate">
       <ngx-datatable-column name="{{ columns[8].name }}" sortable="false" prop="name" [flexGrow]="1">
         <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
           {{ column.name }}

@@ -21,7 +21,9 @@ module.exports = router;
 router.route('/market/live/:country').get((req, res) => {
     var country = req.params.country;
 
-    Market.findOne({}, {
+    Market.findOne({
+        country: country
+    }, {
         _id: 0
     }).sort({
         date: -1
@@ -29,12 +31,10 @@ router.route('/market/live/:country').get((req, res) => {
         if (err) {
             res.status(500).send('Error getting live market data for the country ' + country)
         } else {
-            const marketData = market.markets.filter(x => x.country === country)[0];
-            res.json({
-                date: market.date,
-                market: marketData
+            res.json(
+                market
 
-            });
+            );
             console.log(
                 'Getting live market data for the country ' + country
             );

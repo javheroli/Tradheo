@@ -48,7 +48,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
   ]
 })
 export class LiveDataPage implements OnInit {
-  public intervallTimer = interval(10000);
+  public intervallTimer = interval(1000);
   private subscription;
   country: string = 'Spain';
   data = null;
@@ -111,8 +111,8 @@ export class LiveDataPage implements OnInit {
       .then(res => {
         res.date = String(new Date(res.date)).split(' GMT')[0];
         this.previousData = res;
-        this.isReady = true;
         this.data = res;
+        this.isReady = true;
       })
       .catch(err => {
         console.log(err);
@@ -199,7 +199,7 @@ export class LiveDataPage implements OnInit {
     }
   }
   getCellClassForLast = ({ row, column, value }): any => {
-    const previousCompanyData = this.previousData.market.companies.find(
+    const previousCompanyData = this.previousData.companies.find(
       x => x.name === row.name
     );
     if (value > previousCompanyData.last) {
