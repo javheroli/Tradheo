@@ -1,0 +1,131 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="secondary"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div *ngIf="isReady">
+        <img style="margin-right: 17px; float: left;" *ngIf="country === 'Spain'" src="../../../assets/img/spain.png" />
+        <img style="margin-right: 17px; float: left;" *ngIf="country === 'Germany'"
+          src="../../../assets/img/germany.png" />
+        <h4 *ngIf="!isSmallScreen" class="live-data-header">
+          {{ 'LIVE_DATA.HEADER' | translate }} ({{
+            'LIVE_DATA.LAST_UPDATE' | translate
+          }}: {{ data.date }})
+        </h4>
+        <div *ngIf="isSmallScreen">
+          <h6 class="live-data-header">
+            {{ 'LIVE_DATA.HEADER' | translate }}
+          </h6>
+          <br />
+          <h6 class="live-data-header">
+            {{ 'LIVE_DATA.LAST_DATE' | translate }}: {{ data.date }}
+          </h6>
+        </div>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-tabs style="width: 101%">
+    <ion-tab-bar style="width: 100%" slot="top">
+      <ion-tab-button (click)="onClickFabSpain()">
+        <img src="../../../assets/img/spain.png" />
+        <ion-label>{{ 'LIVE_DATA.SPAIN' | translate }}</ion-label>
+        <ion-label>IBEX 35</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="onClickFabGermany()">
+        <img src="../../../assets/img/germany.png" />
+        <ion-label>{{ 'LIVE_DATA.GERMANY' | translate }}</ion-label>
+        <ion-label>DAX</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+
+  <div style="margin-top: 67px;" *ngIf="isReady && isMobile">
+    <ngx-datatable [sortType]="'multi'" [headerHeight]="24" [footerHeight]="17" [rowHeight]="24" [rows]="data.companies"
+      [columnMode]="'force'" [limit]="35" [scrollbarH]="true" [reorderable]="reorderable" [swapColumns]="swapColumns"
+      [targetMarkerTemplate]="targetMarkerTemplate">
+      <ngx-datatable-column name="{{ columns[8].name }}" sortable="false" prop="name"
+        [cellClass]="getMarginLeftForFirstColumn" [headerClass]="getMarginLeftForFirstColumn" [width]="58"
+        [flexGrow]="1">
+        <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+          {{ column.name }}
+        </ng-template>
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <ion-icon slot="start" name="add-circle-outline" class="menuIcon" (click)="presentActionSheet(value)">
+          </ion-icon>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ columns[0].name }}" prop="{{ columns[0].prop }}" [width]="140" [flexGrow]="1">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ columns[1].name }}" prop="{{ columns[1].prop }}" [width]="65"
+        [cellClass]="getCellClassForLast" [flexGrow]="1">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ columns[2].name }}" prop="{{ columns[2].prop }}" [width]="65" [flexGrow]="1">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ columns[3].name }}" prop="{{ columns[3].prop }}" [width]="65" [flexGrow]="1">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ columns[4].name }}" prop="{{ columns[4].prop }}" [cellClass]="getCellClass"
+        [width]="65" [flexGrow]="1">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ columns[5].name }}" prop="{{ columns[5].prop }}" [cellClass]="getCellClass"
+        [width]="80" [flexGrow]="1">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ columns[6].name }}" prop="{{ columns[6].prop }}" [width]="65" [flexGrow]="1">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ columns[7].name }}" prop="{{ columns[7].prop }}" [width]="65"
+        [cellClass]="getMarginRightForLastColumn" [headerClass]="getMarginRightForLastColumn" [flexGrow]="1">
+      </ngx-datatable-column>
+    </ngx-datatable>
+    <ng-template #targetMarkerTemplate let-class="class">
+      <div [ngClass]="class">
+        <div class="icon datatable-icon-down"></div>
+        <div class="icon datatable-icon-up"></div>
+      </div>
+    </ng-template>
+  </div>
+
+  <div style="margin-top: 67px;" *ngIf="isReady && !isMobile">
+    <ngx-datatable [sortType]="'multi'" [headerHeight]="24" [footerHeight]="17" [rowHeight]="24" [rows]="data.companies"
+      [columnMode]="'force'" [limit]="35" [reorderable]="reorderable" [swapColumns]="swapColumns"
+      [targetMarkerTemplate]="targetMarkerTemplate">
+      <ngx-datatable-column name="{{ columns[8].name }}" sortable="false" prop="name" [flexGrow]="1">
+        <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+          {{ column.name }}
+        </ng-template>
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <ion-icon slot="start" name="add-circle-outline" class="menuIcon" (click)="presentActionSheet(value)">
+          </ion-icon>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ columns[0].name }}" prop="{{ columns[0].prop }}" [flexGrow]="1">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ columns[1].name }}" prop="{{ columns[1].prop }}" [cellClass]="getCellClassForLast"
+        [flexGrow]="1">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ columns[2].name }}" prop="{{ columns[2].prop }}" [flexGrow]="1">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ columns[3].name }}" prop="{{ columns[3].prop }}" [flexGrow]="1">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ columns[4].name }}" prop="{{ columns[4].prop }}" [cellClass]="getCellClass"
+        [flexGrow]="1">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ columns[5].name }}" prop="{{ columns[5].prop }}" [cellClass]="getCellClass"
+        [flexGrow]="1">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ columns[6].name }}" prop="{{ columns[6].prop }}" [flexGrow]="1">
+      </ngx-datatable-column>
+      <ngx-datatable-column name="{{ columns[7].name }}" prop="{{ columns[7].prop }}" [flexGrow]="1">
+      </ngx-datatable-column>
+    </ngx-datatable>
+    <ng-template #targetMarkerTemplate let-class="class">
+      <div [ngClass]="class">
+        <div class="icon datatable-icon-down"></div>
+        <div class="icon datatable-icon-up"></div>
+      </div>
+    </ng-template>
+  </div>
+</ion-content>

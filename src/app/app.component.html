@@ -1,3 +1,83 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+
+
+  <ion-split-pane>
+    <ion-menu>
+      <ion-header>
+        <ion-toolbar *ngIf="userLogged != null" color="dark" class="user-profile">
+
+          <ion-item margin-bottom>
+            <ion-avatar slot="start" class="user-avatar">
+              <img src="{{userLogged.image}}" alt="{{ 'MENU.PROFILE' | translate }}">
+            </ion-avatar>
+            <ion-label>
+              <ion-text color="light">
+                <h1><strong>{{ userLogged.username }}</strong></h1>
+              </ion-text>
+              <ion-menu-toggle class="mto" auto-hide="false">
+                <ion-text color="secondary"> | </ion-text>
+                <a class="text08" tappable (click)="logout()">
+                  <ion-text color="medium">
+                    <ion-icon color="secondary" name="log-out"></ion-icon>
+                    <strong class="text-secondary">{{ 'MENU.LOGOUT' | translate }}</strong>
+                  </ion-text>
+                </a>
+              </ion-menu-toggle>
+            </ion-label>
+          </ion-item>
+
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="bg-profile">
+        <ion-list>
+          <ion-list-header style="text-align: center" color="dark">
+            <h4 class="menu-text">{{ 'MENU.MENU' | translate }}</h4>
+          </ion-list-header>
+
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+            <ion-item [routerLink]="[p.url]" color="primary">
+              <ion-icon slot="start" [name]="p.icon" color="light"></ion-icon>
+              <ion-label *ngIf="[p.title]=='Live Data'">
+                {{ 'MENU.LIVE_DATA' | translate }}
+              </ion-label>
+              <ion-label *ngIf="[p.title]=='Charts'">
+                {{ 'MENU.CHARTS' | translate }}
+              </ion-label>
+              <ion-label *ngIf="[p.title]=='Simulator'">
+                {{ 'MENU.SIMULATOR' | translate }}
+              </ion-label>
+              <ion-label *ngIf="[p.title]=='Licence'">
+                {{ 'MENU.LICENSE' | translate }}
+              </ion-label>
+              <ion-label *ngIf="[p.title]=='App Settings'">
+                {{ 'MENU.APP_SETTINGS' | translate }}
+              </ion-label>
+              <ion-label *ngIf="[p.title]=='Privacy Policy'">
+                {{ 'MENU.PRIVACY_POLICY' | translate }}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+        <div padding-horizontal text-center class="animated fadeInDown">
+          <div class="logoCircle"></div>
+          <h4 no-margin>
+            <ion-text color="light" class="fw700">
+              {{ 'LOGIN.TRADHEO' | translate}}
+            </ion-text>
+          </h4>
+        </div>
+
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet main></ion-router-outlet>
+  </ion-split-pane>
+
+
 </ion-app>
+
+<cookie-law>
+  {{ 'MENU.COOKIES' | translate }}
+
+  <a href="/gdpr" target="_blank">{{ 'MENU.PRIVACY_POLICY' | translate }}.</a>
+</cookie-law>
