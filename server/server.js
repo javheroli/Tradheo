@@ -13,12 +13,14 @@ const axios = require('axios');
 
 //Connection to DataBase:
 //To connect to Development environment DB (Comment line below if not using it)
-mongoose.connect('mongodb://localhost:27017/Tradheo', {
+/*mongoose.connect('mongodb://localhost:27017/Tradheo', {
   useNewUrlParser: true
-});
+});*/
 
 //To connect to DB in cloud:
-//mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true
+});
 
 mongoose.connection.on('error', error => console.log(error));
 mongoose.Promise = global.Promise;
