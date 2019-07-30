@@ -1,0 +1,2 @@
+% Launch!
+worker: sh -c 'node scraping.js'
