@@ -5,6 +5,7 @@ var schedule = require('node-schedule');
 const numCPUs = require('os').cpus().length;
 const cluster = require('cluster');
 const rp = require('request-promise');
+require('dotenv').config();
 
 //Connection to DataBase:
 //To connect to Development environment DB (Comment line below if not using it)
