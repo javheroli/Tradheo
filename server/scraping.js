@@ -91,6 +91,8 @@ getMarketData = async (workerId) => {
         !(now.getHours() == 17 && now.getMinutes() > 35)
       ) {
         return getMarketData(workerId);
+      } else {
+        console.log("Today's scraping job finished (Worker: " + workerId.toString() + ")");
       }
     }).catch(err => {
       console.log(err);
@@ -125,6 +127,8 @@ getMarketData = async (workerId) => {
         !(now.getHours() == 17 && now.getMinutes() > 35)
       ) {
         return getMarketData(workerId);
+      } else {
+        console.log("Today's scraping job finished (Worker: " + workerId.toString() + ")");
       }
     }).catch(err => {
       console.log(err);
@@ -140,7 +144,7 @@ if (cluster.isMaster) {
   cluster.fork();
   cluster.fork();
 } else {
-  var j = schedule.scheduleJob('59 16 * * 1-5', function () {
+  var j = schedule.scheduleJob('30 8 * * 1-5', function () {
     if (cluster.worker.id < 3) {
       getMarketData(cluster.worker.id);
     } else {
