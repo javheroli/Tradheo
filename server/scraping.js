@@ -135,7 +135,7 @@ getMarketData = async (workerId) => {
 
 //var j = schedule.scheduleJob('30 8 * * 1-5', function () {
 if (cluster.isMaster) {
-  for (let i = 0; i < numCPUs / 2; i++) {
+  for (let i = 0; i < 4 / 2; i++) {
     setTimeout(() => {
       cluster.fork();
       cluster.fork();
