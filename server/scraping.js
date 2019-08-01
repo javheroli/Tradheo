@@ -2,7 +2,6 @@ const $ = require('cheerio');
 const MarketModel = require('./models/marketModel');
 const mongoose = require('mongoose');
 var schedule = require('node-schedule');
-const numCPUs = require('os').cpus().length;
 const cluster = require('cluster');
 const rp = require('request-promise');
 require('dotenv').config();
@@ -133,15 +132,15 @@ getMarketData = async (workerId) => {
   }
 };
 
-//var j = schedule.scheduleJob('30 8 * * 1-5', function () {
-if (cluster.isMaster) {
-  for (let i = 0; i < 4 / 2; i++) {
-    setTimeout(() => {
-      cluster.fork();
-      cluster.fork();
-    }, i * 2500);
+var j = schedule.scheduleJob('18 13 * * 1-5', function () {
+  if (cluster.isMaster) {
+    for (let i = 0; i < 4 / 2; i++) {
+      setTimeout(() => {
+        cluster.fork();
+        cluster.fork();
+      }, i * 2500);
+    }
+  } else {
+    getMarketData(cluster.worker.id);
   }
-} else {
-  getMarketData(cluster.worker.id);
-}
-//});
+});
