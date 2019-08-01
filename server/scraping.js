@@ -58,7 +58,7 @@ scraper = (companies, html) => {
   return companies;
 };
 
-getMarketData = async (workerId) => {
+getMarketData = async workerId => {
   console.log('Starting web scraping job');
 
   if (workerId % 2 === 1) {
@@ -67,76 +67,84 @@ getMarketData = async (workerId) => {
       headers: {
         'User-Agent': 'Request-Promise'
       }
-    }).then(html => {
-      let companies = [];
-      companies = scraper(companies, html);
-      MarketModel.create({
-          country: 'Spain',
-          name: 'IBEX 35',
-          companies
-        },
-        err => {
-          if (err) return console.log(err);
+    })
+      .then(html => {
+        let companies = [];
+        companies = scraper(companies, html);
+        MarketModel.create(
+          {
+            country: 'Spain',
+            name: 'IBEX 35',
+            companies
+          },
+          err => {
+            if (err) return console.log(err);
+            console.log(
+              'Spanish market data saved (Worker: ' + workerId.toString() + ')'
+            );
+          }
+        );
+        const now = new Date();
+        //Checks that time is before 17:35 (close of the stock exchange)
+        if (
+          now.getHours() <= 17 &&
+          !(now.getHours() == 17 && now.getMinutes() > 40)
+        ) {
+          return getMarketData(workerId);
+        } else {
           console.log(
-            'Spanish market data saved (Worker: ' +
-            workerId.toString() +
-            ')'
+            "Today's scraping job finished (Worker: " +
+              workerId.toString() +
+              ')'
           );
         }
-      );
-      const now = new Date();
-      //Checks that time is before 17:35 (close of the stock exchange)
-      if (
-        now.getHours() <= 17 &&
-        !(now.getHours() == 17 && now.getMinutes() > 35)
-      ) {
-        return getMarketData(workerId);
-      } else {
-        console.log("Today's scraping job finished (Worker: " + workerId.toString() + ")");
-      }
-    }).catch(err => {
-      console.log(err);
-    })
+      })
+      .catch(err => {
+        console.log(err);
+      });
   } else {
     rp({
       uri: 'https://uk.investing.com/equities/germany',
       headers: {
         'User-Agent': 'Request-Promise'
       }
-    }).then(html => {
-      let companies = [];
-      companies = scraper(companies, html);
-      MarketModel.create({
-          country: 'Germany',
-          name: 'DAX',
-          companies
-        },
-        err => {
-          if (err) return console.log(err);
+    })
+      .then(html => {
+        let companies = [];
+        companies = scraper(companies, html);
+        MarketModel.create(
+          {
+            country: 'Germany',
+            name: 'DAX',
+            companies
+          },
+          err => {
+            if (err) return console.log(err);
+            console.log(
+              'German market data saved (Worker: ' + workerId.toString() + ')'
+            );
+          }
+        );
+        const now = new Date();
+        //Checks that time is before 17:35 (close of the stock exchange)
+        if (
+          now.getHours() <= 17 &&
+          !(now.getHours() == 17 && now.getMinutes() > 40)
+        ) {
+          return getMarketData(workerId);
+        } else {
           console.log(
-            'German market data saved (Worker: ' +
-            workerId.toString() +
-            ')'
+            "Today's scraping job finished (Worker: " +
+              workerId.toString() +
+              ')'
           );
         }
-      );
-      const now = new Date();
-      //Checks that time is before 17:35 (close of the stock exchange)
-      if (
-        now.getHours() <= 17 &&
-        !(now.getHours() == 17 && now.getMinutes() > 35)
-      ) {
-        return getMarketData(workerId);
-      } else {
-        console.log("Today's scraping job finished (Worker: " + workerId.toString() + ")");
-      }
-    }).catch(err => {
-      console.log(err);
-    })
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 };
-
-
 
 if (cluster.isMaster) {
   cluster.fork();
@@ -144,15 +152,13 @@ if (cluster.isMaster) {
   cluster.fork();
   cluster.fork();
 } else {
-  var j = schedule.scheduleJob('30 8 * * 1-5', function () {
+  var j = schedule.scheduleJob('30 8 * * 1-5', function() {
     if (cluster.worker.id < 3) {
       getMarketData(cluster.worker.id);
     } else {
       setTimeout(() => {
         getMarketData(cluster.worker.id);
-      }, 2500)
+      }, 2500);
     }
-
   });
-
 }
