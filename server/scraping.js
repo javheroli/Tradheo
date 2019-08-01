@@ -2,19 +2,20 @@ const $ = require('cheerio');
 const MarketModel = require('./models/marketModel');
 const mongoose = require('mongoose');
 var schedule = require('node-schedule');
-const numCPUs = require('os').cpus().length;
 const cluster = require('cluster');
 const rp = require('request-promise');
 require('dotenv').config();
 
 //Connection to DataBase:
 //To connect to Development environment DB (Comment line below if not using it)
-mongoose.connect('mongodb://localhost:27017/Tradheo', {
+/*mongoose.connect('mongodb://localhost:27017/Tradheo', {
   useNewUrlParser: true
-});
+});*/
 
 //To connect to DB in cloud:
-//mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true });
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true
+});
 
 mongoose.connection.on('error', error => console.log(error));
 mongoose.Promise = global.Promise;
@@ -90,6 +91,8 @@ getMarketData = async (workerId) => {
         !(now.getHours() == 17 && now.getMinutes() > 35)
       ) {
         return getMarketData(workerId);
+      } else {
+        console.log("Today's scraping job finished (Worker: " + workerId.toString() + ")");
       }
     }).catch(err => {
       console.log(err);
@@ -124,6 +127,8 @@ getMarketData = async (workerId) => {
         !(now.getHours() == 17 && now.getMinutes() > 35)
       ) {
         return getMarketData(workerId);
+      } else {
+        console.log("Today's scraping job finished (Worker: " + workerId.toString() + ")");
       }
     }).catch(err => {
       console.log(err);
@@ -131,15 +136,23 @@ getMarketData = async (workerId) => {
   }
 };
 
-var j = schedule.scheduleJob('30 8 * * 1-5', function () {
-  if (cluster.isMaster) {
-    for (let i = 0; i < numCPUs / 2; i++) {
+
+
+if (cluster.isMaster) {
+  cluster.fork();
+  cluster.fork();
+  cluster.fork();
+  cluster.fork();
+} else {
+  var j = schedule.scheduleJob('30 8 * * 1-5', function () {
+    if (cluster.worker.id < 3) {
+      getMarketData(cluster.worker.id);
+    } else {
       setTimeout(() => {
-        cluster.fork();
-        cluster.fork();
-      }, i * 2500);
+        getMarketData(cluster.worker.id);
+      }, 2500)
     }
-  } else {
-    getMarketData(cluster.worker.id);
-  }
-});
+
+  });
+
+}
