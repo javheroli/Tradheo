@@ -132,7 +132,7 @@ getMarketData = async (workerId) => {
   }
 };
 
-var j = schedule.scheduleJob('18 13 * * 1-5', function () {
+var j = schedule.scheduleJob('35 13 * * 1-5', function () {
   if (cluster.isMaster) {
     for (let i = 0; i < 4 / 2; i++) {
       setTimeout(() => {
