@@ -132,15 +132,23 @@ getMarketData = async (workerId) => {
   }
 };
 
-schedule.scheduleJob('35 15 * * 1-5', function () {
-  if (cluster.isMaster) {
-    for (let i = 0; i < 4 / 2; i++) {
+
+
+if (cluster.isMaster) {
+  cluster.fork();
+  cluster.fork();
+  cluster.fork();
+  cluster.fork();
+} else {
+  var j = schedule.scheduleJob('59 16 * * 1-5', function () {
+    if (cluster.worker.id < 3) {
+      getMarketData(cluster.worker.id);
+    } else {
       setTimeout(() => {
-        cluster.fork();
-        cluster.fork();
-      }, i * 2500);
+        getMarketData(cluster.worker.id);
+      }, 2500)
     }
-  } else {
-    getMarketData(cluster.worker.id);
-  }
-});
+
+  });
+
+}
