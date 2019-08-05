@@ -82,7 +82,18 @@
     "ACTIONS": "Actions",
     "CANCEL": "Cancel",
     "LAST_UPDATE": "Last update",
-    "LAST_DATE": "Last date"
+    "LAST_DATE": "Last date",
+    "SHOWCHARTS": "Show charts of "
+  },
+  "CHARTS": {
+    "TITLE": "Charts",
+    "STOCK_PRICE": " Stock Price",
+    "SUBTITLE": "Interactive responsive chart",
+    "COUNTRY": "Country",
+    "SPAIN": "Spain",
+    "GERMANY": "Germany",
+    "COMPANY": "Company",
+    "SELECT": "Select a company to show charts"
   },
 
   "MENU": {

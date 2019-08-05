@@ -1,4 +1,4 @@
-<ion-content padding class="animated fadeIn login auth-page" (keypress)="keypress($event)">
+<ion-content *ngIf="isReady" padding class="animated fadeIn login auth-page" (keypress)="keypress($event)">
   <div class="theme-bg"></div>
   <div class="auth-content altoCompleto">
     <div class="arriba">

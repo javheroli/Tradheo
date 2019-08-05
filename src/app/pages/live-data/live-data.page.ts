@@ -117,7 +117,9 @@ export class LiveDataPage implements OnInit {
       .catch(err => {
         console.log(err);
       });
+  }
 
+  ionViewWillEnter() {
     this.subscription = this.intervallTimer.subscribe(x => {
       if (this.first) {
         this.first = false;
@@ -134,6 +136,10 @@ export class LiveDataPage implements OnInit {
           console.log(err);
         });
     });
+  }
+
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -231,10 +237,19 @@ export class LiveDataPage implements OnInit {
     const translationActions: string = this.translate.instant(
       'LIVE_DATA.ACTIONS'
     );
-
+    const showChart: string = this.translate.instant('LIVE_DATA.SHOWCHARTS');
     const actionSheet = await this.actionSheetController.create({
       header: translationActions,
       buttons: [
+        {
+          text: showChart + message,
+          icon: 'stats',
+          handler: () => {
+            this.navCtrl.navigateForward(
+              '/charts/' + this.country + '/' + message
+            );
+          }
+        },
         {
           text: translationCancel,
           icon: 'close',

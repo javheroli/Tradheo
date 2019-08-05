@@ -63,16 +63,15 @@ getMarketData = async workerId => {
 
   if (workerId % 2 === 1) {
     rp({
-      uri: 'https://uk.investing.com/equities/spain',
-      headers: {
-        'User-Agent': 'Request-Promise'
-      }
-    })
+        uri: 'https://uk.investing.com/equities/spain',
+        headers: {
+          'User-Agent': 'Request-Promise'
+        }
+      })
       .then(html => {
         let companies = [];
         companies = scraper(companies, html);
-        MarketModel.create(
-          {
+        MarketModel.create({
             country: 'Spain',
             name: 'IBEX 35',
             companies
@@ -94,8 +93,8 @@ getMarketData = async workerId => {
         } else {
           console.log(
             "Today's scraping job finished (Worker: " +
-              workerId.toString() +
-              ')'
+            workerId.toString() +
+            ')'
           );
         }
       })
@@ -104,16 +103,15 @@ getMarketData = async workerId => {
       });
   } else {
     rp({
-      uri: 'https://uk.investing.com/equities/germany',
-      headers: {
-        'User-Agent': 'Request-Promise'
-      }
-    })
+        uri: 'https://uk.investing.com/equities/germany',
+        headers: {
+          'User-Agent': 'Request-Promise'
+        }
+      })
       .then(html => {
         let companies = [];
         companies = scraper(companies, html);
-        MarketModel.create(
-          {
+        MarketModel.create({
             country: 'Germany',
             name: 'DAX',
             companies
@@ -135,8 +133,8 @@ getMarketData = async workerId => {
         } else {
           console.log(
             "Today's scraping job finished (Worker: " +
-              workerId.toString() +
-              ')'
+            workerId.toString() +
+            ')'
           );
         }
       })
@@ -152,7 +150,12 @@ if (cluster.isMaster) {
   cluster.fork();
   cluster.fork();
 } else {
-  var j = schedule.scheduleJob('30 8 * * 1-5', function() {
+  getMarketData(cluster.worker.id);
+  setTimeout(() => {
+    getMarketData(cluster.worker.id);
+  }, 2500);
+
+  var j = schedule.scheduleJob('30 8 * * 1-5', function () {
     if (cluster.worker.id < 3) {
       getMarketData(cluster.worker.id);
     } else {

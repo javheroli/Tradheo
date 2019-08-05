@@ -80,13 +80,27 @@
     "ACTIONS": "Acciones",
     "CANCEL": "Cancelar",
     "LAST_UPDATE": "Última actualización",
-    "LAST_DATE": "Últ. Fecha"
+    "LAST_DATE": "Últ. Fecha",
+    "SHOWCHARTS": "Mostrar gráficos de "
+  },
+
+  "CHARTS": {
+    "TITLE": "Gráficos",
+    "STOCK_PRICE": " Precio Acciones",
+    "SUBTITLE": "Gráfico interactivo multiplataforma",
+    "COUNTRY": "País",
+    "SPAIN": "España",
+    "GERMANY": "Alemania",
+    "COMPANY": "Empresa",
+    "SELECT": "Selecciona una empresa"
+
+
   },
 
   "MENU": {
     "APP_SETTINGS": "Ajustes",
     "LIVE_DATA": "Bolsa en directo",
-    "CHARTS": "Gráficas",
+    "CHARTS": "Gráficos",
     "SIMULATOR": "Simulador de inversiones",
     "LICENSE": "Actualizar licencia",
     "LOGOUT": "Cerrar sesión",
