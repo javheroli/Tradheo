@@ -150,10 +150,13 @@ if (cluster.isMaster) {
   cluster.fork();
   cluster.fork();
 } else {
-  getMarketData(cluster.worker.id);
-  setTimeout(() => {
+  if (cluster.worker.id < 3) {
     getMarketData(cluster.worker.id);
-  }, 2500);
+  } else {
+    setTimeout(() => {
+      getMarketData(cluster.worker.id);
+    }, 2500);
+  }
 
   var j = schedule.scheduleJob('30 8 * * 1-5', function () {
     if (cluster.worker.id < 3) {
