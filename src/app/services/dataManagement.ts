@@ -163,4 +163,15 @@ export class DataManagement {
         return Promise.reject(error);
       });
   }
+
+  public getChartData(company, interval): Promise<any> {
+    return this.restService
+      .getChartData(company, interval)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
 }

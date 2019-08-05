@@ -195,7 +195,27 @@ export class RestWS extends AbstractWS {
 
   public marketLiveData(country) {
     const token = this.cookieService.get('token');
-    return this.makeGetRequest(this.path + 'api/market/live/'+country, null, token)
+    return this.makeGetRequest(
+      this.path + 'api/market/live/' + country,
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
+  public getChartData(company, interval) {
+    const token = this.cookieService.get('token');
+    return this.makeGetRequest(
+      this.path + 'api/chart/getData/' + company + '/' + interval,
+      null,
+      token
+    )
       .then(res => {
         return Promise.resolve(res);
       })

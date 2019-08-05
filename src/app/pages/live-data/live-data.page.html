@@ -59,7 +59,10 @@
           </ion-icon>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="{{ columns[0].name }}" prop="{{ columns[0].prop }}" [width]="140" [flexGrow]="1">
+      <ngx-datatable-column name="{{ columns[0].name }}" prop="{{ columns[0].prop }}" [width]="160" [flexGrow]="1">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <a [routerLink]="['/charts', this.country, value]">{{ value }}</a>
+        </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="{{ columns[1].name }}" prop="{{ columns[1].prop }}" [width]="65"
         [cellClass]="getCellClassForLast" [flexGrow]="1">
@@ -102,6 +105,9 @@
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="{{ columns[0].name }}" prop="{{ columns[0].prop }}" [flexGrow]="1">
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+          <a [routerLink]="['/charts', this.country, value]">{{ value }}</a>
+        </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="{{ columns[1].name }}" prop="{{ columns[1].prop }}" [cellClass]="getCellClassForLast"
         [flexGrow]="1">

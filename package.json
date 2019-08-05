@@ -31,6 +31,7 @@
     "angular2-cookie-law": "^7.0.1",
     "core-js": "^2.5.4",
     "google-libphonenumber": "^3.2.3",
+    "highcharts": "^7.1.2",
     "ionic-selectable": "^4.4.1",
     "ng-recaptcha": "^4.3.0",
     "ngx-cookie-service": "^2.2.0",

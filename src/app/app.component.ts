@@ -89,10 +89,6 @@ export class AppComponent {
       this.splashScreen.hide();
     });
 
-    if (this.cookieService.check('token')) {
-      this.navCtrl.navigateForward('live-data');
-    }
-
     this.translateService.setDefaultLang('en');
     if (this.cookieService.check('lang')) {
       let language = this.cookieService.get('lang');

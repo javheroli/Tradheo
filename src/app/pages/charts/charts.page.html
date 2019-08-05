@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="secondary"></ion-menu-button>
+      <ion-back-button color="secondary"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="light">{{ 'CHARTS.TITLE' | translate}}</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header class="card-header-charts">
+      <ion-card-title color="light">{{ 'CHARTS.SELECT' | translate }}</ion-card-title>
+
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-label>
+          <ion-icon name="map" item-start></ion-icon>
+          {{ 'CHARTS.COUNTRY' | translate }}
+        </ion-label>
+        <ion-select [(ngModel)]="country" (ionChange)="onChangeCountry()">
+          <ion-select-option value="Spain">{{ 'CHARTS.SPAIN' | translate}}</ion-select-option>
+          <ion-select-option value="Germany">{{ 'CHARTS.GERMANY' | translate}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item lines="none" style="margin-top: 2px;">
+        <ion-label>
+          <ion-icon name="business" item-start></ion-icon>
+          {{ 'CHARTS.COMPANY' | translate }}
+        </ion-label>
+        <ion-select [(ngModel)]="company" (ionChange)="onChangeCompany()">
+          <ion-select-option *ngFor="let company of companies">{{company}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+
+
+
+  <div [hidden]="candlestick" #container id="container" style="text-align: center"></div>
+  <div [hidden]="!candlestick" #containerCandle id="container" style="text-align: center"></div>
+
+  <br>
+
+  <ion-button *ngIf="!isMobile" (click)="chartSize('large')" id="large">Large</ion-button>
+  <ion-button *ngIf="!isMobile" (click)="chartSize('small')" id="small">Small</ion-button>
+  <ion-button *ngIf="!isMobile" (click)="chartSize('auto')" id="auto">Auto</ion-button>
+  <ion-button (click)="changeChartMode()" id="auto">Chart type</ion-button>
+
+  <br>
+  <br>
+
+
+</ion-content>

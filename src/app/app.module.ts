@@ -20,6 +20,7 @@ import { ConfigService } from 'src/config/configService';
 
 //Components
 import { AuthGuard } from './guards/auth/auth.guard';
+import { NoAuthGuard } from './guards/auth/no-auth.guard';
 import { CookieService } from 'ngx-cookie-service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -59,6 +60,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     StatusBar,
     SplashScreen,
     AuthGuard,
+    NoAuthGuard,
     CookieService,
     ConfigService,
     DataManagement,
