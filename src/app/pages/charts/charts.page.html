@@ -46,10 +46,10 @@
 
   <br>
 
-  <ion-button *ngIf="!isMobile" (click)="chartSize('large')" id="large">Large</ion-button>
-  <ion-button *ngIf="!isMobile" (click)="chartSize('small')" id="small">Small</ion-button>
+  <ion-button *ngIf="!isMobile" (click)="chartSize('large')" id="large">{{ 'CHARTS.LARGE' | translate }}</ion-button>
+  <ion-button *ngIf="!isMobile" (click)="chartSize('small')" id="small">{{ 'CHARTS.SMALL' | translate }}</ion-button>
   <ion-button *ngIf="!isMobile" (click)="chartSize('auto')" id="auto">Auto</ion-button>
-  <ion-button (click)="changeChartMode()" id="auto">Chart type</ion-button>
+  <ion-button (click)="changeChartMode()" id="auto">{{ 'CHARTS.MODE' | translate }}</ion-button>
 
   <br>
   <br>

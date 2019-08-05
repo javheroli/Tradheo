@@ -93,7 +93,10 @@
     "SPAIN": "Spain",
     "GERMANY": "Germany",
     "COMPANY": "Company",
-    "SELECT": "Select a company to show charts"
+    "SELECT": "Select a company to show charts",
+    "LARGE": "Large",
+    "SMALL": "Small",
+    "MODE": "Mode"
   },
 
   "MENU": {

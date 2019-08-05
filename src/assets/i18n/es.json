@@ -92,7 +92,10 @@
     "SPAIN": "España",
     "GERMANY": "Alemania",
     "COMPANY": "Empresa",
-    "SELECT": "Selecciona una empresa"
+    "SELECT": "Selecciona una empresa",
+    "LARGE": "Grande",
+    "SMALL": "Pequeño",
+    "MODE": "Modo"
 
 
   },
