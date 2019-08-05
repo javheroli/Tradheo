@@ -435,3 +435,9 @@ ion-select {
     border-left: 1px solid #DADADA;
     border-bottom: 1px solid #DADADA;
 }
+
+@media screen and (min-width: 1200px) {
+    .loadingChart {
+        margin-left: 28%;
+    }
+}

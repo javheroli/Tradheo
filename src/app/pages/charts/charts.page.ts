@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import * as Highcharts from 'highcharts/highstock';
 import * as HC_exporting from 'highcharts/modules/exporting';
-import { MenuController } from '@ionic/angular';
+import { MenuController, LoadingController } from '@ionic/angular';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { DataManagement } from 'src/app/services/dataManagement';
 
@@ -105,7 +105,8 @@ export class ChartsPage implements OnInit {
     private translate: TranslateService,
     public menuCtrl: MenuController,
     private deviceService: DeviceDetectorService,
-    public dm: DataManagement
+    public dm: DataManagement,
+    public loadingCtrl: LoadingController
   ) {
     this.onResize();
     if (!this.isMobile) {
@@ -144,12 +145,14 @@ export class ChartsPage implements OnInit {
           rangeSelector: {
             buttons: [
               {
+                type: 'minute',
+                count: 15,
                 text: '1m',
                 events: {
                   click: () => {
-                    this.stock.series[0].remove();
+                    this.showLoading();
                     this.dm.getChartData(this.company, '1m').then(res => {
-                      this.stock.addSeries({
+                      this.stock.series[0].update({
                         name: this.company,
                         type: 'areaspline',
                         threshold: null,
@@ -168,9 +171,9 @@ export class ChartsPage implements OnInit {
                 text: '5m',
                 events: {
                   click: () => {
-                    this.stock.series[0].remove();
+                    this.showLoading();
                     this.dm.getChartData(this.company, '5m').then(res => {
-                      this.stock.addSeries({
+                      this.stock.series[0].update({
                         name: this.company,
                         type: 'areaspline',
                         threshold: null,
@@ -184,14 +187,14 @@ export class ChartsPage implements OnInit {
                 }
               },
               {
-                type: 'hour',
-                count: 1,
+                type: 'minute',
+                count: 60,
                 text: '15m',
                 events: {
                   click: () => {
-                    this.stock.series[0].remove();
+                    this.showLoading();
                     this.dm.getChartData(this.company, '15m').then(res => {
-                      this.stock.addSeries({
+                      this.stock.series[0].update({
                         name: this.company,
                         type: 'areaspline',
                         threshold: null,
@@ -205,14 +208,14 @@ export class ChartsPage implements OnInit {
                 }
               },
               {
-                type: 'hour',
-                count: 2,
+                type: 'minute',
+                count: 120,
                 text: '30m',
                 events: {
                   click: () => {
-                    this.stock.series[0].remove();
+                    this.showLoading();
                     this.dm.getChartData(this.company, '30m').then(res => {
-                      this.stock.addSeries({
+                      this.stock.series[0].update({
                         name: this.company,
                         type: 'areaspline',
                         threshold: null,
@@ -231,9 +234,9 @@ export class ChartsPage implements OnInit {
                 text: '1h',
                 events: {
                   click: () => {
-                    this.stock.series[0].remove();
+                    this.showLoading();
                     this.dm.getChartData(this.company, '1h').then(res => {
-                      this.stock.addSeries({
+                      this.stock.series[0].update({
                         name: this.company,
                         type: 'areaspline',
                         threshold: null,
@@ -252,9 +255,9 @@ export class ChartsPage implements OnInit {
                 text: '1D',
                 events: {
                   click: () => {
-                    this.stock.series[0].remove();
+                    this.showLoading();
                     this.dm.getChartData(this.company, '1D').then(res => {
-                      this.stock.addSeries({
+                      this.stock.series[0].update({
                         name: this.company,
                         type: 'areaspline',
                         threshold: null,
@@ -273,6 +276,7 @@ export class ChartsPage implements OnInit {
                 text: '1W',
                 events: {
                   click: () => {
+                    this.showLoading();
                     this.stock.series[0].remove();
                     this.dm.getChartData(this.company, '1W').then(res => {
                       this.stock.addSeries({
@@ -294,6 +298,7 @@ export class ChartsPage implements OnInit {
                 text: '1M',
                 events: {
                   click: () => {
+                    this.showLoading();
                     this.stock.series[0].remove();
                     this.dm.getChartData(this.company, '1M').then(res => {
                       this.stock.addSeries({
@@ -374,38 +379,174 @@ export class ChartsPage implements OnInit {
             rangeSelector: {
               buttons: [
                 {
-                  type: 'all',
-                  text: '1m'
+                  type: 'minute',
+                  count: 15,
+                  text: '1m',
+                  events: {
+                    click: () => {
+                      this.showLoading();
+                      this.dm.getChartData(this.company, '1m').then(res => {
+                        this.stockCandle.series[0].update({
+                          name: this.company,
+                          type: 'candlestick',
+                          threshold: null,
+                          tooltip: {
+                            valueDecimals: 3
+                          },
+                          data: res
+                        });
+                      });
+                    }
+                  }
                 },
                 {
-                  type: 'all',
-                  text: '5m'
+                  type: 'minute',
+                  count: 30,
+                  text: '5m',
+                  events: {
+                    click: () => {
+                      this.showLoading();
+                      this.dm.getChartData(this.company, '5m').then(res => {
+                        this.stockCandle.series[0].update({
+                          name: this.company,
+                          type: 'candlestick',
+                          threshold: null,
+                          tooltip: {
+                            valueDecimals: 3
+                          },
+                          data: res
+                        });
+                      });
+                    }
+                  }
                 },
                 {
-                  type: 'all',
-                  text: '15m'
+                  type: 'hour',
+                  count: 1,
+                  text: '15m',
+                  events: {
+                    click: () => {
+                      this.showLoading();
+                      this.dm.getChartData(this.company, '15m').then(res => {
+                        this.stockCandle.series[0].update({
+                          name: this.company,
+                          type: 'candlestick',
+                          threshold: null,
+                          tooltip: {
+                            valueDecimals: 3
+                          },
+                          data: res
+                        });
+                      });
+                    }
+                  }
                 },
                 {
-                  type: 'all',
-                  text: '30m'
+                  type: 'hour',
+                  count: 2,
+                  text: '30m',
+                  events: {
+                    click: () => {
+                      this.showLoading();
+                      this.dm.getChartData(this.company, '30m').then(res => {
+                        this.stockCandle.series[0].update({
+                          name: this.company,
+                          type: 'candlestick',
+                          threshold: null,
+                          tooltip: {
+                            valueDecimals: 3
+                          },
+                          data: res
+                        });
+                      });
+                    }
+                  }
                 },
-
                 {
-                  type: 'all',
-                  text: '1h'
+                  type: 'day',
+                  count: 1,
+                  text: '1h',
+                  events: {
+                    click: () => {
+                      this.showLoading();
+                      this.dm.getChartData(this.company, '1h').then(res => {
+                        this.stockCandle.series[0].update({
+                          name: this.company,
+                          type: 'candlestick',
+                          threshold: null,
+                          tooltip: {
+                            valueDecimals: 3
+                          },
+                          data: res
+                        });
+                      });
+                    }
+                  }
                 },
                 {
                   type: 'week',
                   count: 1,
-                  text: '1D'
+                  text: '1D',
+                  events: {
+                    click: () => {
+                      this.showLoading();
+                      this.dm.getChartData(this.company, '1D').then(res => {
+                        this.stockCandle.series[0].update({
+                          name: this.company,
+                          type: 'candlestick',
+                          threshold: null,
+                          tooltip: {
+                            valueDecimals: 3
+                          },
+                          data: res
+                        });
+                      });
+                    }
+                  }
                 },
                 {
-                  type: 'all',
-                  text: '1W'
+                  type: 'month',
+                  count: 1,
+                  text: '1W',
+                  events: {
+                    click: () => {
+                      this.showLoading();
+                      this.stockCandle.series[0].remove();
+                      this.dm.getChartData(this.company, '1W').then(res => {
+                        this.stockCandle.addSeries({
+                          name: this.company,
+                          type: 'candlestick',
+                          threshold: null,
+                          tooltip: {
+                            valueDecimals: 3
+                          },
+                          data: res
+                        });
+                      });
+                    }
+                  }
                 },
                 {
-                  type: 'all',
-                  text: '1M'
+                  type: 'year',
+                  count: 1,
+                  text: '1M',
+                  events: {
+                    click: () => {
+                      this.showLoading();
+                      this.stockCandle.series[0].remove();
+                      this.dm.getChartData(this.company, '1M').then(res => {
+                        this.stockCandle.addSeries({
+                          name: this.company,
+                          type: 'candlestick',
+                          threshold: null,
+                          tooltip: {
+                            valueDecimals: 3
+                          },
+                          data: res
+                        });
+                      });
+                    }
+                  }
                 }
               ],
               selected: 5,
@@ -515,5 +656,48 @@ export class ChartsPage implements OnInit {
     } else {
       this.companies = germanCompanies;
     }
+  }
+
+  onChangeCompany() {
+    const stockprice: string = this.translate.instant('CHARTS.STOCK_PRICE');
+
+    this.showLoading();
+    this.dm.getChartData(this.company, '1D').then(res => {
+      this.stock.setTitle({ text: this.company + stockprice });
+      this.stockCandle.setTitle({ text: this.company + stockprice });
+
+      this.stock.series[0].update({
+        name: this.company,
+        type: 'areaspline',
+        threshold: null,
+        tooltip: {
+          valueDecimals: 3
+        },
+        data: res
+      });
+      this.stockCandle.series[0].update({
+        name: this.company,
+        type: 'candlestick',
+        threshold: null,
+        tooltip: {
+          valueDecimals: 3
+        },
+        data: res
+      });
+    });
+  }
+
+  showLoading() {
+    let translation2: string = this.translate.instant('LOGIN.WAIT');
+    this.loadingCtrl
+      .create({
+        message: translation2,
+        showBackdrop: true,
+        cssClass: 'loadingChart',
+        duration: 1500
+      })
+      .then(loadingEl => {
+        loadingEl.present();
+      });
   }
 }
