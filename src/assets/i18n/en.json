@@ -117,7 +117,19 @@
     "APP_SETTINGS": "App settings",
     "GENERAL": "General",
     "LOGOUT": "Logout",
-    "PROFILE": "Profile"
+    "PROFILE": "Profile",
+    "EXPORT": "Data export",
+    "EXPLICATION_EXPORT": "If you continue, we will send all your data in a message to your email account.",
+    "CONFIRM_QUESTION": "Do you wish to continue?",
+    "EXPORT_ERROR_1": "Sorry, an error has ocurred while we were exporting your data.",
+    "EXPORT_ERROR_2": "If the error persists, please contact Support with Tradheo's Community tools.",
+    "EXPORT_OK_1": "All data was exported successfully",
+    "EXPORT_OK_2": "Thank you very much for trusting Tradheo.",
+    "EXPORT_DATA": "Export your data",
+    "SEND_EMAIL": "Notification",
+    "SEND_OK_1": "The notifacation order has been sent",
+    "SEND_OK_2": "Users will receive the email in a few moments",
+    "YES": "Yes"
   },
   "GDPR": {
     "GO_OUT": "Go out",

@@ -1,0 +1,24 @@
+:host {
+  ion-content {
+    --background: linear-gradient(-135deg, var(--ion-color-medium), var(--ion-color-light))
+  }
+
+
+}
+
+ion-avatar {
+  width: 68px;
+  height: 68px;
+}
+
+.export_data_btn {
+  --background: var(--ion-color-primary, #3880ff);
+  --background-focused: rgb(241, 182, 105);
+  --background-hover: rgb(243, 167, 67);
+}
+
+.logout_btn {
+  --background: var(--ion-color-primary, #3880ff);
+  --background-focused: rgb(241, 182, 105);
+  --background-hover: rgb(243, 167, 67);
+}

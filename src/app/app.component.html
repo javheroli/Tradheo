@@ -14,6 +14,11 @@
               <ion-text color="light">
                 <h1><strong>{{ userLogged.username }}</strong></h1>
               </ion-text>
+              <ion-text color="secondary">
+                <h3>
+                  {{ userLogged.email }}
+                </h3>
+              </ion-text>
               <ion-menu-toggle class="mto" auto-hide="false">
                 <ion-text color="secondary"> | </ion-text>
                 <a class="text08" tappable (click)="logout()">

@@ -113,11 +113,23 @@
     "PRIVACY_POLICY": "Política de privacidad"
   },
   "SETTINGS": {
-    "APP_LANGUAGE": "Idioma",
-    "APP_SETTINGS": "Ajustes",
+    "APP_LANGUAGE": "Idioma de la aplicación",
+    "APP_SETTINGS": "Configuración de la aplicación",
     "GENERAL": "General",
     "LOGOUT": "Cerrar sesión",
-    "PROFILE": "Perfil"
+    "PROFILE": "Perfil",
+    "EXPORT": "Exportar información",
+    "EXPLICATION_EXPORT": "Si continúa, se enviará un mensaje con todos sus datos a su correo electrónico.",
+    "CONFIRM_QUESTION": "¿Desea contiuar?",
+    "EXPORT_ERROR_1": "Lo sentimos, ha ocurrido un error mientras exportábamos los datos.",
+    "EXPORT_ERROR_2": "Si el error persiste contacte con Soporte mediante las herramientas de Comunidad",
+    "EXPORT_OK_1": "Se han exportado todos sus datos correctamente",
+    "EXPORT_OK_2": "Muchas gracias por confiar en Tradheo.",
+    "EXPORT_DATA": "Exportar tus datos",
+    "SEND_EMAIL": "Notificación",
+    "SEND_OK_1": "Se ha dado la orden de envio",
+    "SEND_OK_2": "Los usuarios recibirán el correo en breves momentos",
+    "YES": "Sí"
   },
   "GDPR": {
     "GO_OUT": "Salir",

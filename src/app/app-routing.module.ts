@@ -48,6 +48,11 @@ const routes: Routes = [
         ]
       }
     ]
+  },
+  {
+    path: 'settings',
+    loadChildren: './pages/settings/settings.module#SettingsPageModule',
+    canLoad: [AuthGuard]
   }
 ];
 
