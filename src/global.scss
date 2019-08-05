@@ -86,6 +86,10 @@ ion-item {
     color: #fff;
 }
 
+.highcharts-container {
+    display: inline-block;
+}
+
 .text-primary {
     color: var(--ion-color-primary);
 }
@@ -274,6 +278,9 @@ ion-select {
     font-weight: bold;
 }
 
+.card-header-charts {
+    background: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
+}
 
 .datatable-header {
     background: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));

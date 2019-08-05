@@ -26,6 +26,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class LoginPage implements OnInit {
   public onLoginForm: FormGroup;
   registerCredentials = { username: '', password: '' };
+  isReady = false;
 
   constructor(
     public navCtrl: NavController,
@@ -43,6 +44,12 @@ export class LoginPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    const check = this.cookieService.check('token');
+    if (check) {
+      this.navCtrl.navigateForward('/live-data');
+    } else {
+      this.isReady = true;
+    }
     this.menuCtrl.enable(false);
   }
 
