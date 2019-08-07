@@ -228,4 +228,186 @@ router.route('/chart/getData/:company/:interval').get((req, res) => {
     })
 });
 
+//API Route /api/getUser/:username
+//GET: Getting all users from DB
+router.route('/getUser/:username').get((req, res) => {
+    var username = req.params.username;
+    User.findOne({
+        username: username
+    }, (err, user) => {
+        if (err) {
+            res.status(404).send('User with username ' + username + ' not found');
+        } else {
+            res.json(user);
+            console.log('Getting user by username: ' + username);
+            res.end();
+        }
+    });
+});
+
+
+//API Route /api/deleteUser
+//GET: Mark user account as deleted
+router.route('/deleteUser').get((req, res) => {
+    var id = req.user._id;
+    User.findByIdAndUpdate(id, {
+        isDeleted: true
+    }, (err, user) => {
+        res.status(204).send();
+    });
+});
+
+//Route  /api/editUser
+//Edit user personal data
+router.route('/editUser').post((req, res) => {
+    var id = req.user._id;
+    var username = req.body.username;
+    var email = req.body.email;
+    var phoneNumber = req.body.phoneNumber;
+    var birthdate = req.body.birthdate;
+    var firstName = req.body.firstName;
+    var lastName = req.body.lastName;
+    var description = req.body.description;
+    var country = req.body.country;
+    var city = req.body.city;
+
+    if (req.file !== undefined) {
+        var image = req.file.url;
+        User.findByIdAndUpdate(id, {
+            username: username,
+            email: email,
+            phoneNumber: phoneNumber,
+            birthdate: birthdate,
+            firstName: firstName,
+            lastName: lastName,
+            description: description,
+            country: country,
+            city: city,
+            image: image
+        }, (err, user) => {
+            if (err) {
+                return res.status(500).send()
+            }
+            res.json(user);
+        });
+    } else {
+        User.findByIdAndUpdate(id, {
+            username: username,
+            email: email,
+            phoneNumber: phoneNumber,
+            birthdate: birthdate,
+            firstName: firstName,
+            lastName: lastName,
+            description: description,
+            country: country,
+            city: city,
+        }, (err, user) => {
+            if (err) {
+                return res.status(500).send()
+            }
+            res.json(user);
+        });
+    }
+
+});
+
+//Route  /api/editUser/validationUsername/:username
+//Username validation for edit user
+router.route('/editUser/validationUsername/:username')
+    .get((req, res) => {
+        var username = req.params.username;
+        var id = req.user._id;
+        User.findById(id, (err, userLogged) => {
+            User.findOne({
+                username: username
+            }, (err, user) => {
+                console.log("Validate username: " + username);
+                if (userLogged.username === username) {
+                    return res.status(200).send("Ok")
+                }
+
+                if (user !== null) {
+                    res.status(409).send('Username already taken');
+                } else {
+                    res.status(200).send("Ok")
+                }
+            })
+        })
+    })
+
+//Route  /api/editUser/validationEmail/:email
+//Email validation for editUser
+router.route('/editUser/validationEmail/:email')
+    .get((req, res) => {
+        var email = req.params.email;
+        var id = req.user._id;
+        User.findById(id, (err, userLogged) => {
+            User.findOne({
+                email: email
+            }, (err, user) => {
+                console.log("Validate email: " + email);
+                if (userLogged.email === email) {
+                    return res.status(200).send("Ok")
+                }
+                if (user !== null) {
+                    res.status(409).send('Email already taken');
+                } else {
+                    res.status(200).send("Ok")
+                }
+
+            })
+        })
+
+    })
+
+//Route  /api/editUser/validationPhoneNumber/:phoneNumber
+//PhoneNumber validation for edit user
+router.route('/editUser/validationPhoneNumber/:phoneNumber')
+    .get((req, res) => {
+        var phoneNumber = req.params.phoneNumber;
+        var id = req.user._id;
+        User.findById(id, (err, userLogged) => {
+            User.findOne({
+                phoneNumber: phoneNumber
+            }, (err, user) => {
+                console.log("Validate phoneNumber: " + phoneNumber);
+
+                if (userLogged.phoneNumber === phoneNumber) {
+                    return res.status(200).send("Ok")
+                }
+
+                if (user !== null) {
+                    res.status(409).send('phoneNumber already taken');
+                } else {
+                    res.status(200).send("Ok")
+                }
+            })
+        })
+
+    })
+
+//API Route /api/users
+//GET: Getting all users from DB
+router.route('/users').get((req, res) => {
+    var _id = req.user._id;
+    User.findById(_id, (err, userLogged) => {
+        var blockeds = [...new Set([...userLogged.blockedUsersByMe, ...userLogged.usersWhoHasBlockedMe])];
+        User.find({
+                _id: {
+                    $ne: _id
+                },
+                username: {
+                    $nin: blockeds
+                }
+            },
+            (err, users) => {
+                res.json(users);
+                console.log('Getting all but the current user and blockeds');
+                res.end();
+            }
+        );
+    })
+
+});
+
 module.exports = router;

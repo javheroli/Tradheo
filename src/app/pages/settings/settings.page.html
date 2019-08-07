@@ -42,7 +42,7 @@
     <ion-item>
       <ion-icon name="settings" slot="start" color="primary"></ion-icon>
       <ion-label color="primary">{{ 'SETTINGS.APP_LANGUAGE' | translate}}</ion-label>
-      <ion-select [(ngModel)]="idioma" (ionChange)="changeLanguage($event)">
+      <ion-select (ionChange)="changeLanguage($event)">
         <ion-select-option value="es">Español</ion-select-option>
         <ion-select-option value="en">English</ion-select-option>
       </ion-select>

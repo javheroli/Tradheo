@@ -8,7 +8,8 @@
 
           <ion-item margin-bottom>
             <ion-avatar slot="start" class="user-avatar">
-              <img src="{{userLogged.image}}" alt="{{ 'MENU.PROFILE' | translate }}">
+              <img style="cursor: pointer" src="{{userLogged.image}}" alt="{{ 'MENU.PROFILE' | translate }}"
+                (click)="goTo('user-profile/')">
             </ion-avatar>
             <ion-label>
               <ion-text color="light">
@@ -52,6 +53,9 @@
               <ion-label *ngIf="[p.title]=='Simulator'">
                 {{ 'MENU.SIMULATOR' | translate }}
               </ion-label>
+              <ion-label *ngIf="[p.title]=='Community'">
+                {{ 'MENU.COMMUNITY' | translate }}
+              </ion-label>
               <ion-label *ngIf="[p.title]=='Licence'">
                 {{ 'MENU.LICENSE' | translate }}
               </ion-label>
@@ -61,6 +65,7 @@
               <ion-label *ngIf="[p.title]=='Privacy Policy'">
                 {{ 'MENU.PRIVACY_POLICY' | translate }}
               </ion-label>
+
             </ion-item>
           </ion-menu-toggle>
         </ion-list>

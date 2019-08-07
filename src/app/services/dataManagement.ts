@@ -174,4 +174,92 @@ export class DataManagement {
         return Promise.reject(error);
       });
   }
+
+  public getUserBy(username, token): Promise<any> {
+    return this.restService
+      .getUserBy(username, token)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public deleteUser(): Promise<any> {
+    return this.restService
+      .deleteUser()
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public validationUsernameForEdit(username): Promise<any> {
+    return this.restService
+      .validationUsernameForEdit(username)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public validationEmailForEdit(email): Promise<any> {
+    return this.restService
+      .validationEmailForEdit(email)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public validationPhoneNumberForEdit(phoneNumber): Promise<any> {
+    return this.restService
+      .validationPhoneNumberForEdit(phoneNumber)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public editUser(
+    username: string,
+    email: string,
+    phoneNumber: string,
+    birthDate: string,
+    firstName: string,
+    lastName: string,
+    description: string,
+    country: string,
+    city: string,
+    profilePic
+  ): Promise<any> {
+    return this.restService
+      .editUser(
+        username,
+        email,
+        phoneNumber,
+        birthDate,
+        firstName,
+        lastName,
+        description,
+        country,
+        city,
+        profilePic
+      )
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
 }

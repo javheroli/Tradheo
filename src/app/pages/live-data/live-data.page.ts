@@ -126,15 +126,24 @@ export class LiveDataPage implements OnInit {
       } else {
         this.previousData = this.data;
       }
-      this.dm
-        .marketLiveData(this.country)
-        .then(res => {
-          res.date = String(new Date(res.date)).split(' GMT')[0];
-          this.data = res;
-        })
-        .catch(err => {
-          console.log(err);
-        });
+
+      const now = new Date();
+      if (
+        now.getHours() >= 8 &&
+        !(now.getHours() == 8 && now.getMinutes() < 25) &&
+        now.getHours() <= 17 &&
+        !(now.getHours() == 17 && now.getMinutes() > 45)
+      ) {
+        this.dm
+          .marketLiveData(this.country)
+          .then(res => {
+            res.date = String(new Date(res.date)).split(' GMT')[0];
+            this.data = res;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     });
   }
 

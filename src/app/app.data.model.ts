@@ -4,13 +4,15 @@ export class User {
   email: string;
   phoneNumber: string;
   birthDate: Date;
-  registrationDate: Date;
+  registrationDate: string;
   licence: boolean;
-  licenceDate: Date;
+  licenceDate: string;
   firstName: string;
   lastName: string;
   description: string;
   country: string;
   city: string;
   image: string;
+  isDeleted: boolean;
+  age: boolean;
 }

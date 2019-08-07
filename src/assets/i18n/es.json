@@ -18,7 +18,12 @@
     "FORGOT_ALERT_MESSAGE": "Introduce el email asociado a su cuenta para restablecer su contraseña, aquí:",
     "INVALID_EMAIL": "Email introducido inválido",
     "EMAIL_NOTFOUND": "El email introducido no está asociado a ninguna cuenta",
-    "EMAIL_SENT": "Se le ha mandado un email con instrucciones a seguir para restablecer su contraseña"
+    "EMAIL_SENT": "Se le ha mandado un email con instrucciones a seguir para restablecer su contraseña",
+    "OK": "De acuerdo",
+    "USER_DELETED_HEADER": "Usuario borrado",
+    "USER_DELETED_BODY": "Esta cuenta fue marcada como borrada por su propietario",
+    "DELETE_SUCCESS_HEADER": "Cuenta borrada correctamente",
+    "DELETE_SUCCESS_BODY": "Su cuenta y datos personales ya no estarán activos en Tradheo"
 
   },
   "REGISTER": {
@@ -58,6 +63,11 @@
     "USERNAME_TAKEN": "Este usuario ya está en uso",
     "EMAIL_TAKEN": "Este email ya está en uso",
     "PHONENUMBER_TAKEN": "Este número de teléfono ya está en uso"
+  },
+  "EDIT_USER": {
+    "TITLE": "Editar perfil",
+    "HEADER_SUCCESS_EDIT": "Perfil de usuario editado",
+    "SUCCESS_EDIT": "Sus datos personales han sido modificados correctamente"
   },
   "RESET": {
     "RESET": "Restablecer contraseña",
@@ -110,7 +120,8 @@
     "MENU": "Menú",
     "PROFILE": "Perfil",
     "COOKIES": " Al continuar navegando, usted está aceptando el uso de cookies. Descubra más en nuestra ",
-    "PRIVACY_POLICY": "Política de privacidad"
+    "PRIVACY_POLICY": "Política de privacidad",
+    "COMMUNITY": "Comunidad & Soporte"
   },
   "SETTINGS": {
     "APP_LANGUAGE": "Idioma de la aplicación",
@@ -130,6 +141,33 @@
     "SEND_OK_1": "Se ha dado la orden de envio",
     "SEND_OK_2": "Los usuarios recibirán el correo en breves momentos",
     "YES": "Sí"
+  },
+  "PROFILE": {
+    "ADMIN": "Administrador",
+    "AGE": "Edad",
+    "ALERT": "CUIDADO",
+    "CITY": "Ciudad",
+    "CONTACT": "Contactar",
+    "CREATOR_DELETED": "Usuario borrado",
+    "DELETED": "Usuario borrado",
+    "DELETE_BUTTON": "Eliminar cuenta",
+    "DELETE_ERROR_1": "Lo sentimos, la operación ha fallado.",
+    "DELETE_ERROR_2": "Si no puede borrar sus datos, póngase en contacto con un administrador en way.team.soft@gmail.com.",
+    "DELETE_USER_1": "Está a punto de borrar todos sus datos de la aplicación.",
+    "DELETE_USER_2": "Esta operación no se podrá deshacer, y no podrá volver a acceder a la aplicación con esta cuenta.",
+    "DELETE_USER_3": "¿Desea continuar?",
+    "EDIT_PROFILE": "Editar perfil",
+    "ELIMINATED": "Este usuario ha decidido eliminar su cuenta en Tradheo.",
+    "EMAIL": "Correo electrónico",
+    "FULL_NAME": "Nombre completo",
+    "SORRY": "Lo sentimos",
+    "YES": "Sí",
+    "COUNTRY": "País",
+    "PHONE": "Teléfono",
+    "MEMBER_SINCE": "Miembro desde",
+    "LICENCE_EXPIRES": "Licencia expira en"
+
+
   },
   "GDPR": {
     "GO_OUT": "Salir",

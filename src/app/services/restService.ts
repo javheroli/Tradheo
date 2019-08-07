@@ -16,6 +16,14 @@ export class RestWS extends AbstractWS {
     super(http);
     this.path = this.config.config().restUrlPrefixLocalhost;
   }
+
+  private calculateAge(birthday) {
+    // birthday is a date
+    var birthdayDate = new Date(birthday);
+    var ageDifMs = Date.now() - birthdayDate.getTime();
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
   // Methods
   public turnOnServer() {
     this.makeGetRequest(this.path + 'api/turnOnServer/', null);
@@ -39,6 +47,7 @@ export class RestWS extends AbstractWS {
   public getUserLogged(token) {
     return this.makeGetRequest(this.path + 'api/getUserLogged/', null, token)
       .then(res => {
+        res.age = this.calculateAge(res.birthDate);
         return Promise.resolve(res);
       })
       .catch(err => {
@@ -222,6 +231,122 @@ export class RestWS extends AbstractWS {
       .catch(err => {
         console.log(err);
         return Promise.reject(err);
+      });
+  }
+
+  public getUserBy(username, token) {
+    return this.makeGetRequest(
+      this.path + 'api/getUser/' + username,
+      null,
+      token
+    )
+      .then(res => {
+        res.age = this.calculateAge(res.birthDate);
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
+  public deleteUser() {
+    const token = this.cookieService.get('token');
+    return this.makeGetRequest(this.path + 'api/deleteUser', null, token)
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
+  public validationUsernameForEdit(username) {
+    const token = this.cookieService.get('token');
+    return this.makeGetRequest(
+      this.path + 'api/editUser/validationUsername/' + username,
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
+  public validationEmailForEdit(email) {
+    const token = this.cookieService.get('token');
+    return this.makeGetRequest(
+      this.path + 'api/editUser/validationEmail/' + email,
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
+  public validationPhoneNumberForEdit(phoneNumber) {
+    const token = this.cookieService.get('token');
+    return this.makeGetRequest(
+      this.path + 'api/editUser/validationPhoneNumber/' + phoneNumber,
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
+  public editUser(
+    username: string,
+    email: string,
+    phoneNumber: string,
+    birthDate: string,
+    firstName: string,
+    lastName: string,
+    description: string,
+    country: string,
+    city: string,
+    profilePic
+  ) {
+    const token = this.cookieService.get('token');
+
+    const fd = new FormData();
+    fd.append('username', username);
+    fd.append('email', email);
+    fd.append('phoneNumber', phoneNumber);
+    fd.append('birthDate', birthDate);
+    fd.append('firstName', firstName);
+    fd.append('lastName', lastName);
+    fd.append('description', description);
+    fd.append('country', country);
+    fd.append('city', city);
+    if (profilePic !== null) {
+      console.log(profilePic);
+      fd.append('image', profilePic);
+    }
+
+    return this.makePostRequest(this.path + 'api/editUser/', fd, token)
+      .then(res => {
+        console.log('Sign up successfully');
+        return Promise.resolve(res);
+      })
+      .catch(error => {
+        console.log(error);
+        return Promise.reject(error);
       });
   }
 }
