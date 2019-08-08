@@ -92,8 +92,10 @@ export class AppComponent {
     this.initializeApp();
   }
   logout() {
-    this.cookieService.delete('token');
-    this.navCtrl.navigateRoot('/');
+    this.cookieService.delete('token', '/');
+    setTimeout(() => {
+      this.navCtrl.navigateRoot('/');
+    }, 1000);
   }
 
   initializeApp() {

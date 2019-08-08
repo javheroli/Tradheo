@@ -151,6 +151,22 @@
     "SEND_OK_2": "Los usuarios recibirán el correo en breves momentos",
     "YES": "Sí"
   },
+  "CHAT": {
+    "ME": "Yo",
+    "TYPE_A_MESSAGE": "Escribe un mensaje...",
+    "OK": "Vale",
+    "CANCEL": "Cancelar",
+    "DELETE_CONFIRMATION_HEADER": "Confirmar borrado",
+    "DELETE_CONFIRMATION_MESSAGE": "¿Está seguro de borrar este mensaje?",
+    "EDIT_CONFIRMATION_HEADER": "Confirmar editar",
+    "EDIT_CONFIRMATION_MESSAGE": "¿Está seguro de editar este mensaje?",
+    "ACTIONS": "Acciones",
+    "DELETE": "Borrar",
+    "EDIT": "Editar",
+    "EDITED": "Editado: ",
+    "EDIT_THIS_MESSAGE": "Editando el mensaje: "
+
+  },
   "PROFILE": {
     "ADMIN": "Administrador",
     "AGE": "Edad",

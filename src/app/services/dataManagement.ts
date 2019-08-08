@@ -295,4 +295,52 @@ export class DataManagement {
         return Promise.reject(error);
       });
   }
+
+  public getMessages(sender: string, receiver: string): Promise<any> {
+    return this.restService
+      .getMessages(sender, receiver)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject('error');
+      });
+  }
+
+  public sendMessage(
+    sender: string,
+    receiver: string,
+    message: string
+  ): Promise<any> {
+    return this.restService
+      .sendMessage(sender, receiver, message)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject('error');
+      });
+  }
+
+  public deleteMessages(messageId): Promise<any> {
+    return this.restService
+      .deleteMessages(messageId)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public editMessages(message): Promise<any> {
+    return this.restService
+      .editMessages(message)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
 }

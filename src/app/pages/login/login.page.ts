@@ -45,6 +45,7 @@ export class LoginPage implements OnInit {
 
   ionViewWillEnter() {
     const check = this.cookieService.check('token');
+    console.log(check);
     if (check) {
       this.navCtrl.navigateForward('/live-data');
     } else {

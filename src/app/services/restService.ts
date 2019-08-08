@@ -402,4 +402,76 @@ export class RestWS extends AbstractWS {
         return Promise.reject(err);
       });
   }
+
+  public getMessages(sender: string, receiver: string) {
+    let token: string;
+    token = this.cookieService.get('token');
+
+    return this.makeGetRequest(
+      this.path + 'api/messages/' + sender + '/' + receiver + '/',
+      false,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(error => {
+        console.log('Error: ' + error);
+        return Promise.reject(error);
+      });
+  }
+
+  public sendMessage(sender: string, receiver: string, message: string) {
+    const fd = new FormData();
+    let token: string;
+    token = this.cookieService.get('token');
+    fd.append('sender', sender);
+    fd.append('receiver', receiver);
+    fd.append('message', message);
+
+    return this.makePostRequest(this.path + 'api/messages/', fd, token)
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(error => {
+        console.log('Error: ' + error);
+        return Promise.reject(error);
+      });
+  }
+
+  public deleteMessages(messageId) {
+    let token: string;
+    token = this.cookieService.get('token');
+    return this.makeGetRequest(
+      this.path + 'api/deleteMessages/' + messageId,
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public editMessages(message) {
+    const fd = new FormData();
+    let token: string;
+    token = this.cookieService.get('token');
+    fd.append('message', message.message);
+    return this.makePostRequest(
+      this.path + 'api/editMessages/' + message._id,
+      fd,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
 }

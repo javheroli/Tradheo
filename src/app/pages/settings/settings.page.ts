@@ -44,8 +44,10 @@ export class SettingsPage implements OnInit {
   ngOnInit() {}
 
   logout() {
-    this.cookieService.delete('token');
-    this.navCtrl.navigateRoot('/');
+    this.cookieService.delete('token', '/');
+    setTimeout(() => {
+      this.navCtrl.navigateRoot('/');
+    }, 1000);
   }
 
   goTo(destination: string) {
