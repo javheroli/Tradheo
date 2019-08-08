@@ -124,6 +124,19 @@
     "COMMUNITY": "Community & Support"
 
   },
+  "COMMUNITY": {
+    "SEARCH_USERS": "Search users",
+    "BLOCK_SURE_HEADER": "Block user",
+    "BLOCK_SURE_BODY": "Are you sure of blocking this user? He will not be able to contact you again or see your profile",
+    "CANCEL": "Cancel",
+    "CONTINUE": "Continue",
+    "BLOCK_SUCCESS_HEADER": "Block user",
+    "BLOCK_SUCCESS_BODY": "You have blocked this user successfuly from your Tradeho account",
+    "UNBLOCK_SURE_HEADER": "Unblock user",
+    "UNBLOCK_SURE_BODY": "Are you sure of unblocking this user? He will be able to contact you again and see your profile",
+    "UNBLOCK_SUCCESS_HEADER": "Unblock user",
+    "UNBLOCK_SUCCESS_BODY": "You have unblocked this user successfuly from your Tradeho account"
+  },
   "SETTINGS": {
     "APP_LANGUAGE": "App language",
     "APP_SETTINGS": "App settings",

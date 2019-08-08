@@ -391,13 +391,12 @@ router.route('/editUser/validationPhoneNumber/:phoneNumber')
 router.route('/users').get((req, res) => {
     var _id = req.user._id;
     User.findById(_id, (err, userLogged) => {
-        var blockeds = [...new Set([...userLogged.blockedUsersByMe, ...userLogged.usersWhoHasBlockedMe])];
         User.find({
                 _id: {
                     $ne: _id
                 },
                 username: {
-                    $nin: blockeds
+                    $nin: userLogged.usersWhoHasBlockedMe
                 }
             },
             (err, users) => {
@@ -409,5 +408,118 @@ router.route('/users').get((req, res) => {
     })
 
 });
+
+//API Route /api/users/search?keyword=*
+//GET: Getting all users from DB that contain the keyword in their username, first name or last name
+router.route('/users/search/:keyword?').get((req, res) => {
+    var _id = req.user._id;
+    var keyword = req.query.keyword;
+    var query;
+    User.findById(_id, (err, userLogged) => {
+        if (keyword === undefined || keyword == '') {
+            query = {
+                _id: {
+                    $ne: _id
+                },
+                username: {
+                    $nin: userLogged.usersWhoHasBlockedMe
+                }
+
+            };
+        } else {
+            query = {
+                $and: [{
+                        $or: [{
+                                username: {
+                                    $regex: keyword,
+                                    $options: 'i'
+                                }
+                            },
+                            {
+                                firstName: {
+                                    $regex: keyword,
+                                    $options: 'i'
+                                }
+                            },
+                            {
+                                lastName: {
+                                    $regex: keyword,
+                                    $options: 'i'
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        _id: {
+                            $ne: _id
+                        },
+                        username: {
+                            $nin: userLogged.usersWhoHasBlockedMe
+                        }
+                    }
+                ]
+            };
+        }
+
+
+        User.find(query,
+            (err, users) => {
+                res.json(users);
+                console.log('Getting all but the current user that contain the keyword in their username, first name or last name');
+                res.end();
+            }
+        );
+    });
+});
+
+//Route  /api/blockUser/:username
+//Block user for chat
+router.route('/blockUser/:username')
+    .get((req, res) => {
+        var username = req.params.username;
+        var id = req.user._id;
+        User.findByIdAndUpdate(id, {
+            $push: {
+                blockedUsersByMe: username
+            }
+        }, (err, userLogged) => {
+            User.findOneAndUpdate({
+                username: username
+            }, {
+                $push: {
+                    usersWhoHasBlockedMe: userLogged.username
+                }
+            }, (error, user) => {
+                console.log("User " + userLogged.username + " blocking " + username)
+                res.status(200).send("User blocked");
+            })
+        })
+
+    })
+
+//Route  /api/unblockUser/:username
+//Unblock user for chat
+router.route('/unblockUser/:username')
+    .get((req, res) => {
+        var username = req.params.username;
+        var id = req.user._id;
+        User.findByIdAndUpdate(id, {
+            $pull: {
+                blockedUsersByMe: username
+            }
+        }, (err, userLogged) => {
+            User.findOneAndUpdate({
+                username: username
+            }, {
+                $pull: {
+                    usersWhoHasBlockedMe: userLogged.username
+                }
+            }, (error, user) => {
+                console.log("User " + userLogged.username + " unblocking " + username)
+                res.status(200).send("User unblocked");
+            })
+        })
+
+    })
 
 module.exports = router;

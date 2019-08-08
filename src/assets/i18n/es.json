@@ -123,6 +123,15 @@
     "PRIVACY_POLICY": "Política de privacidad",
     "COMMUNITY": "Comunidad & Soporte"
   },
+  "COMMUNITY": {
+    "SEARCH_USERS": "Buscar usuarios",
+    "BLOCK_SURE_HEADER": "Bloquear usuario",
+    "BLOCK_SURE_BODY": "¿Está seguro de bloquear a este usuario? No podrá volver a contactar con usted de nuevo ni visualizar su perfil, sin embargo, esta operación no se puede deshacer",
+    "CANCEL": "Cancelar",
+    "CONTINUE": "Continuar",
+    "BLOCK_SUCCESS_HEADER": "Bloquear usuario",
+    "BLOCK_SUCCESS_BODY": "Ha bloqueado con éxito a este usuario de su perfil en Tradheo"
+  },
   "SETTINGS": {
     "APP_LANGUAGE": "Idioma de la aplicación",
     "APP_SETTINGS": "Configuración de la aplicación",

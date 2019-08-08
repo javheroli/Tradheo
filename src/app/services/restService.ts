@@ -349,4 +349,57 @@ export class RestWS extends AbstractWS {
         return Promise.reject(error);
       });
   }
+
+  public listUsers(keyword: string) {
+    const token = this.cookieService.get('token');
+    let url = '';
+    if (keyword == null) {
+      url = 'api/users/';
+    } else {
+      url = 'api/users/search?keyword=' + keyword;
+    }
+
+    return this.makeGetRequest(this.path + url, null, token)
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public blockUser(username: string) {
+    const token = this.cookieService.get('token');
+
+    return this.makeGetRequest(
+      this.path + 'api/blockUser/' + username,
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public unblockUser(username: string) {
+    const token = this.cookieService.get('token');
+
+    return this.makeGetRequest(
+      this.path + 'api/unblockUser/' + username,
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
 }

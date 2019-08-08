@@ -66,7 +66,8 @@ const routes: Routes = [
       './pages/user-profile/user-profile.module#UserProfilePageModule',
     canLoad: [AuthGuard]
   },
-  { path: 'edit-user', loadChildren: './pages/edit-user/edit-user.module#EditUserPageModule' }
+  { path: 'edit-user', loadChildren: './pages/edit-user/edit-user.module#EditUserPageModule' },
+  { path: 'community', loadChildren: './pages/community/community.module#CommunityPageModule' }
 ];
 
 @NgModule({

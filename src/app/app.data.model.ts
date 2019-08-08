@@ -15,4 +15,6 @@ export class User {
   image: string;
   isDeleted: boolean;
   age: boolean;
+  blockedUsersByMe: Array<string>;
+  usersWhoHasBlockedMe: Array<string>;
 }

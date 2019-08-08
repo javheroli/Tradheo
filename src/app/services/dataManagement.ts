@@ -262,4 +262,37 @@ export class DataManagement {
         return Promise.reject(error);
       });
   }
+
+  public listUsers(keyword: string): Promise<any> {
+    return this.restService
+      .listUsers(keyword)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public blockUser(username: string): Promise<any> {
+    return this.restService
+      .blockUser(username)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public unblockUser(username: string): Promise<any> {
+    return this.restService
+      .unblockUser(username)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
 }
