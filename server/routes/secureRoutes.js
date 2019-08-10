@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/userModel');
 const Market = require('../models/marketModel');
 const Message = require('../models/messageModel');
+const chatNotifications = require('../models/chatNotificationsModel');
 require('dotenv').config();
 const rp = require('request-promise');
 
@@ -539,6 +540,24 @@ router.route('/messages').post((req, res) => {
             }
             message.save(function (err) {
                 if (err) return res.status(500).send(err);
+                chatNotifications.findOne({
+                    username: message.receiver
+                }, (error, cN) => {
+                    if (error) return res.status(500).send(err);
+                    if (cN === null) {
+                        cN = new chatNotifications();
+                        cN.username = message.receiver;
+                        cN.notifications = {};
+                        cN.notifications.set(message.sender, 1);
+                    } else {
+                        if (cN.notifications.has(message.sender)) {
+                            cN.notifications.set(message.sender, cN.notifications.get(message.sender) + 1)
+                        } else {
+                            cN.notifications.set(message.sender, 1);
+                        }
+                    }
+                    cN.save();
+                })
                 res.status(201).send(message);
                 console.log('Message stored successfully');
             });
@@ -640,6 +659,45 @@ router.route('/messages/:sender/:receiver').get((req, res) => {
             );
             res.end();
         });
+});
+
+//API Route /api/chatNotifications/
+//Get: Get chatNotifications for logged user
+router.route('/chatNotifications').get((req, res) => {
+    var userId = req.user._id;
+    User.findById(userId, (error, user) => {
+        chatNotifications.findOne({
+            username: user.username
+        }, (err, cN) => {
+            if (cN === null) {
+                cN = new chatNotifications();
+                cN.username = user.username;
+                cN.notifications = {};
+                cN.save();
+            }
+            console.log('Getting chat notifications for ' + user.username);
+            return res.json(cN);
+        })
+    });
+});
+
+//API Route /api/resetChatNotifications/:username
+//Get: Reset to 0 chatNotifications of user with username equals to :username for logged user 
+router.route('/resetChatNotifications/:username').get((req, res) => {
+    var userId = req.user._id;
+    var username = req.params.username;
+    User.findById(userId, (error, user) => {
+        chatNotifications.findOne({
+            username: user.username
+        }, (err, cN) => {
+            if (cN.notifications.has(username)) {
+                cN.notifications.delete(username, 0);
+                cN.save();
+                console.log('Reseting chat notifications of ' + username + ' for ' + user.username)
+            }
+            return res.status(200).send();
+        })
+    });
 });
 
 module.exports = router;

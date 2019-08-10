@@ -50,6 +50,8 @@ div#footer div.elem:first-child {
     flex-grow: 1;
 }
 
+
+
 div#footer {
     display: flex;
     flex-direction: row;
@@ -73,70 +75,55 @@ ion-item {
 }
 
 .meMessages {
-    margin-right: 45px;
+    text-align: left;
+    width: max-content;
+    max-width: 100%;
 }
 
 .heMessages {
-    margin-left: 45px;
+    text-align: left;
+    width: max-content;
+    max-width: 100%;
+
 }
 
 .menuIcon {
-    margin-right: 8px;
     cursor: pointer;
     font-size: 23px;
     margin-left: 15px;
 }
 
-.chat-status {
-    min-height: 49px;
 
-    .chat-date {
-        display: block;
-        font-size: 10px;
-        font-style: italic;
-        color: #fff;
-        text-shadow: 0px -1px 0px #222, 0px 1px 0px #aaa;
-        height: 15px;
-        left: 10%;
-        right: 10%;
-    }
-
-    .chat-content-center {
-        padding: 5px 10px;
-        background-color: #e1e1f7;
-        border-radius: 6px;
-        font-size: 12px;
-        color: #555;
-        height: 34px;
-        left: 10%;
-        right: 10%;
-    }
+.chat-list {
+    margin-bottom: 25px;
 }
 
+
 .chat-message {
-    width: 80%;
-    min-height: 40px;
+    width: 100%;
+    display: inline-block;
+    padding-left: 9%;
+    padding-right: 9%;
+
 
     .right-bubble {
+        border: 1px solid #ddd;
+        max-width: 100%;
+        float: right;
         position: relative;
         background: #dcf8c6;
         border-top-left-radius: .4em;
         border-bottom-left-radius: .4em;
         border-bottom-right-radius: .4em;
-        padding: 5px 10px 10px;
-        left: 15%;
+        padding: 5px 25px 10px;
 
         span.msg-name {
             font-size: 12px;
             font-weight: bold;
             color: green;
-            margin-right: 1%;
-            margin-left: 1%;
+            margin-right: 7px;
+            margin-left: 7px;
 
-            @media only screen and (max-width : 450px) {
-                margin-right: 3%;
-                margin-left: 3%;
-            }
         }
 
         span.msg-date {
@@ -160,25 +147,22 @@ ion-item {
     }
 
     .left-bubble {
+        border: 1px solid #ddd;
+        max-width: 100%;
+        float: left;
         position: relative;
         background: #cbd7ff;
-        border-top-right-radius: .4em;
+        border-top-left-radius: .4em;
         border-bottom-left-radius: .4em;
         border-bottom-right-radius: .4em;
-        padding: 5px 10px 10px;
-        left: 5%;
+        padding: 5px 25px 10px;
 
         span.msg-name {
             font-size: 12px;
             font-weight: bold;
             color: blue;
-            margin-right: 1%;
-            margin-left: 1%;
-
-            @media only screen and (max-width : 450px) {
-                margin-right: 3%;
-                margin-left: 3%;
-            }
+            margin-right: 7px;
+            margin-left: 7px;
         }
 
         span.msg-date {
@@ -200,4 +184,47 @@ ion-item {
         margin-top: -13.5px;
         margin-left: -27px;
     }
+}
+
+.edit-wrapper {
+    margin-bottom: 5px;
+}
+
+.edit-reply {
+    padding-left: 25px;
+}
+
+.edit-border {
+    background: #7eaad1;
+    height: 33px;
+    width: 2px;
+    position: absolute;
+    margin-left: -14px;
+}
+
+.edit-title {
+    font-weight: 700;
+    color: #3a6d99;
+    line-height: 16px;
+    margin-bottom: 3px;
+    font-size: 15px;
+}
+
+.edit-body {
+    line-height: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-bottom: 1px;
+}
+
+.edit-close {
+    float: right;
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin-right: 13px;
+    margin-top: 5px;
+    padding-top: 7px;
+    cursor: pointer;
 }

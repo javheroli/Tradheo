@@ -59,6 +59,7 @@ export class ChatPage implements OnInit {
     });
   }
   ionViewWillLeave() {
+    this.dm.resetChatNotifications(this.otherUsername).then(res => {});
     this.subscription.unsubscribe();
     this.mutationObserver.disconnect();
   }
@@ -204,6 +205,7 @@ export class ChatPage implements OnInit {
                     handler: () => {
                       this.editMessage = Object.create(message);
                       this.editMessageForPlaceHolder = message.message;
+                      this.editMessage.message = '';
                       this.edit = true;
                     }
                   },

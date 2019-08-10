@@ -11,6 +11,7 @@ import { DataManagement } from '../../services/dataManagement';
 import { CookieService } from 'ngx-cookie-service';
 import { TranslateService } from '@ngx-translate/core';
 import { NullVisitor } from '@angular/compiler/src/render3/r3_ast';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-community',
@@ -22,6 +23,7 @@ export class CommunityPage implements OnInit {
   logged: User;
   keyword: string;
   isReady: boolean = false;
+  notifications;
 
   constructor(
     public navCtrl: NavController,
@@ -38,27 +40,79 @@ export class CommunityPage implements OnInit {
       .then(res => {
         this.logged = res;
         this.listUsers(null);
-        this.isReady = true;
       })
       .catch(err => {
         console.log('Error: ' + err);
       });
   }
+  public intervallTimer = interval(1000);
+  private subscription;
 
   ngOnInit() {}
+
+  ionViewWillEnter() {
+    this.menuCtrl.enable(true);
+    this.subscription = this.intervallTimer.subscribe(x => {
+      this.dM.getChatNotifications().then(res => {
+        this.notifications = res.notifications;
+        this.sortingUsers();
+      });
+    });
+  }
+  ionViewWillLeave() {
+    this.subscription.unsubscribe();
+  }
 
   goTo(destination: string) {
     this.navCtrl.navigateForward(destination);
   }
+  sortingUsers() {
+    this.users.sort((x, y) => {
+      if (x.username === 'Support') {
+        return -9007199254740991;
+      } else if (y.username === 'Support') {
+        return 9007199254740991;
+      } else if (
+        this.notifications[x.username] > this.notifications[y.username]
+      ) {
+        return -10 * this.notifications[x.username];
+      } else if (
+        this.notifications[x.username] < this.notifications[y.username]
+      ) {
+        return 10 * this.notifications[y.username];
+      } else if (
+        this.notifications[x.username] !== undefined &&
+        this.notifications[y.username] === undefined
+      ) {
+        return -1;
+      } else if (
+        this.notifications[x.username] === undefined &&
+        this.notifications[y.username] !== undefined
+      ) {
+        return 1;
+      } else if (
+        this.logged.blockedUsersByMe.includes(x.username) &&
+        !this.logged.blockedUsersByMe.includes(y.username)
+      ) {
+        return 1;
+      } else if (
+        !this.logged.blockedUsersByMe.includes(x.username) &&
+        this.logged.blockedUsersByMe.includes(y.username)
+      ) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+  }
 
   chat(otherUsername) {
+    this.notifications[otherUsername] = 0;
+
     this.navCtrl.navigateForward(
       '/chat/' + this.logged.username + '/' + otherUsername
     );
-  }
-
-  ionViewWillEnter() {
-    this.menuCtrl.enable(true);
+    this.dM.resetChatNotifications(otherUsername).then(res => {});
   }
 
   private listUsers(keyword: string): void {
@@ -66,6 +120,11 @@ export class CommunityPage implements OnInit {
       .listUsers(keyword)
       .then((data: any) => {
         this.users = data;
+        this.dM.getChatNotifications().then(res => {
+          this.notifications = res.notifications;
+          this.sortingUsers();
+          this.isReady = true;
+        });
       })
       .catch(error => {});
   }
@@ -89,6 +148,8 @@ export class CommunityPage implements OnInit {
             text: continuee,
             handler: () => {
               this.dM.blockUser(username).then(res => {
+                this.notifications[username] = 0;
+                this.dM.resetChatNotifications(username).then(res => {});
                 const token = this.cookieService.get('token');
                 this.dM
                   .getUserLogged(token)

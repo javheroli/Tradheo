@@ -4,7 +4,7 @@
       <ion-menu-button color="secondary"></ion-menu-button>
       <ion-back-button color="secondary"></ion-back-button>
     </ion-buttons>
-    <ion-title color="light">{{ 'MENU.COMMUNITY' | translate}}</ion-title>
+    <ion-title color="light">{{ 'MENU.COMMUNITY' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,7 +15,7 @@
         <ion-row>
           <ion-col size="auto">
             <ion-searchbar [(ngModel)]="keyword" (ngModelChange)="searchUsers()" color="primary" debounce="500"
-              placeholder="{{ 'COMMUNITY.SEARCH_USERS' | translate}}">
+              placeholder="{{ 'COMMUNITY.SEARCH_USERS' | translate }}">
             </ion-searchbar>
           </ion-col>
         </ion-row>
@@ -38,11 +38,18 @@
                 <br />
               </ion-buttons>
 
-              <ion-avatar slot="start">
-                <img style="cursor: pointer" [routerLink]="'/user-profile/'+ user.username" routerDirection="forward"
-                  src="{{ user.image }}" class="user-avatar" />
-              </ion-avatar>
-
+              <div class="fab-container">
+                <ion-fab vertical="top">
+                  <ion-badge *ngIf="notifications[user.username] !== undefined && notifications[user.username] !== 0"
+                    color="secondary" style="cursor: pointer" [routerLink]="'/user-profile/' + user.username"
+                    routerDirection="forward">
+                    {{notifications[user.username]}}</ion-badge>
+                </ion-fab>
+                <ion-avatar slot="start">
+                  <img style="cursor: pointer" [routerLink]="'/user-profile/' + user.username" routerDirection="forward"
+                    src="{{ user.image }}" class="user-avatar" />
+                </ion-avatar>
+              </div>
 
               <ion-label>
                 <ion-text color="dark">
@@ -52,13 +59,10 @@
                   <span class="username">
                     (<em>{{ user.username }}</em>)</span>
                   <h4 style="font-weight: bold">
-                    {{user.city}} ({{user.country}})
+                    {{ user.city }} ({{ user.country }})
                   </h4>
-
                 </ion-text>
               </ion-label>
-
-
             </ion-item>
 
             <ion-item *ngIf="logged.blockedUsersByMe.includes(user.username)" class="blockeds" no-margin>
@@ -72,10 +76,9 @@
               </ion-buttons>
 
               <ion-avatar slot="start">
-                <img style="cursor: pointer" [routerLink]="'/user-profile/'+ user.username" routerDirection="forward"
+                <img style="cursor: pointer" [routerLink]="'/user-profile/' + user.username" routerDirection="forward"
                   src="{{ user.image }}" class="user-avatar" />
               </ion-avatar>
-
 
               <ion-label>
                 <ion-text color="dark">
@@ -85,13 +88,10 @@
                   <span class="username">
                     (<em>{{ user.username }}</em>)</span>
                   <h4 style="font-weight: bold">
-                    {{user.city}} ({{user.country}})
+                    {{ user.city }} ({{ user.country }})
                   </h4>
-
                 </ion-text>
               </ion-label>
-
-
             </ion-item>
           </div>
         </ion-card-content>

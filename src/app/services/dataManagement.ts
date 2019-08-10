@@ -343,4 +343,26 @@ export class DataManagement {
         return Promise.reject(error);
       });
   }
+
+  public getChatNotifications(): Promise<any> {
+    return this.restService
+      .getChatNotifications()
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public resetChatNotifications(username): Promise<any> {
+    return this.restService
+      .resetChatNotifications(username)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
 }
