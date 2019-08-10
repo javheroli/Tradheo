@@ -18,7 +18,12 @@
     "FORGOT_ALERT_MESSAGE": "Introduce the email associated with your account to reset your password, here:",
     "INVALID_EMAIL": "Invalid email entered",
     "EMAIL_NOTFOUND": "The email introduced is not associated with any account",
-    "EMAIL_SENT": "An email has been sent to you with further instructions to reset your password"
+    "EMAIL_SENT": "An email has been sent to you with further instructions to reset your password",
+    "OK": "Ok",
+    "USER_DELETED_HEADER": "User deleted",
+    "USER_DELETED_BODY": "This account was marked as deleted by his owner",
+    "DELETE_SUCCESS_HEADER": "Account deleted successfuly",
+    "DELETE_SUCCESS_BODY": "Your account and personal data won't be active on Tradheo anymore"
   },
   "REGISTER": {
     "CONFIRM_PASSWORD": "Confirm password",
@@ -60,6 +65,12 @@
     "EMAIL_TAKEN": "This email is already in use",
     "PHONENUMBER_TAKEN": "This phone number is already in use"
 
+  },
+
+  "EDIT_USER": {
+    "TITLE": "Edit profile",
+    "HEADER_SUCCESS_EDIT": "User profile edited",
+    "SUCCESS_EDIT": "Your personal data has been modified successfuly"
   },
   "RESET": {
     "RESET": "Reset password",
@@ -109,15 +120,82 @@
     "MENU": "Menu",
     "PROFILE": "Profile",
     "COOKIES": " By continuing to browse the site, you're agreeing to our use of cookies. Learn more in our ",
-    "PRIVACY_POLICY": "Privacy policy"
+    "PRIVACY_POLICY": "Privacy policy",
+    "COMMUNITY": "Community & Support"
 
+  },
+  "COMMUNITY": {
+    "SEARCH_USERS": "Search users",
+    "BLOCK_SURE_HEADER": "Block user",
+    "BLOCK_SURE_BODY": "Are you sure of blocking this user? He will not be able to contact you again or see your profile",
+    "CANCEL": "Cancel",
+    "CONTINUE": "Continue",
+    "BLOCK_SUCCESS_HEADER": "Block user",
+    "BLOCK_SUCCESS_BODY": "You have blocked this user successfuly from your Tradeho account",
+    "UNBLOCK_SURE_HEADER": "Unblock user",
+    "UNBLOCK_SURE_BODY": "Are you sure of unblocking this user? He will be able to contact you again and see your profile",
+    "UNBLOCK_SUCCESS_HEADER": "Unblock user",
+    "UNBLOCK_SUCCESS_BODY": "You have unblocked this user successfuly from your Tradeho account"
   },
   "SETTINGS": {
     "APP_LANGUAGE": "App language",
     "APP_SETTINGS": "App settings",
     "GENERAL": "General",
     "LOGOUT": "Logout",
-    "PROFILE": "Profile"
+    "PROFILE": "Profile",
+    "EXPORT": "Data export",
+    "EXPLICATION_EXPORT": "If you continue, we will send all your data in a message to your email account.",
+    "CONFIRM_QUESTION": "Do you wish to continue?",
+    "EXPORT_ERROR_1": "Sorry, an error has ocurred while we were exporting your data.",
+    "EXPORT_ERROR_2": "If the error persists, please contact Support with Tradheo's Community tools.",
+    "EXPORT_OK_1": "All data was exported successfully",
+    "EXPORT_OK_2": "Thank you very much for trusting Tradheo.",
+    "EXPORT_DATA": "Export your data",
+    "SEND_EMAIL": "Notification",
+    "SEND_OK_1": "The notifacation order has been sent",
+    "SEND_OK_2": "Users will receive the email in a few moments",
+    "YES": "Yes"
+  },
+  "CHAT": {
+    "ME": "Me",
+    "TYPE_A_MESSAGE": "Write a message...",
+    "OK": "Ok",
+    "CANCEL": "Cancel",
+    "DELETE_CONFIRMATION_HEADER": "Confirm delete",
+    "DELETE_CONFIRMATION_MESSAGE": "Are you sure of deleting this message?",
+    "EDIT_CONFIRMATION_HEADER": "Confirm edit",
+    "EDIT_CONFIRMATION_MESSAGE": "Are you sure of editing this message?",
+    "ACTIONS": "Actions",
+    "DELETE": "Delete",
+    "EDIT": "Edit message",
+    "EDITED": "Edited: ",
+    "EDIT_THIS_MESSAGE": "Editing the message: "
+  },
+  "PROFILE": {
+    "ADMIN": "Admin",
+    "AGE": "Age",
+    "ALERT": "ALERT",
+    "CITY": "City",
+    "CONTACT": "Contact",
+    "CREATOR_DELETED": "User deleted",
+    "DELETED": "User deleted",
+    "DELETE_BUTTON": "Delete account",
+    "DELETE_ERROR_1": "Sorry, current operation failed.",
+    "DELETE_ERROR_2": "If you can not delete your data, contact an administrator at way.team.soft@gmail.com.",
+    "DELETE_USER_1": "You are about to delete all your data stored in our application.",
+    "DELETE_USER_2": "This operation can not be undone and you will not be able to access the application with this account anymore.",
+    "DELETE_USER_3": " Do you wish to continue?",
+    "EDIT_PROFILE": "Edit profile",
+    "ELIMINATED": "This user has decided to delete his Tradheo's account",
+    "EMAIL": "Email",
+    "FEMALE": "Female",
+    "FULL_NAME": "Full name",
+    "SORRY": "Sorry",
+    "YES": "YES",
+    "COUNTRY": "Country",
+    "PHONE": "Phone number",
+    "MEMBER_SINCE": "Member since",
+    "LICENCE_EXPIRES": "Licence expires"
   },
   "GDPR": {
     "GO_OUT": "Go out",

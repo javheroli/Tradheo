@@ -28,6 +28,13 @@ export class AppComponent {
     events.subscribe('user:logged', user => {
       this.userLogged = user;
     });
+    events.subscribe('user:edited', () => {
+      this.dm.getUserLogged(this.cookieService.get('token')).then(res => {
+        this.userLogged = res;
+        this.events.publish('user:rechargeImage');
+        this.navCtrl.navigateForward('/user-profile/' + res.username);
+      });
+    });
 
     if (!this.cookieService.check('token')) {
       this.userLogged = null;
@@ -49,13 +56,19 @@ export class AppComponent {
         title: 'Charts',
         url: '/charts',
         direct: 'forward',
-        icon: 'stats'
+        icon: 'analytics'
       },
       {
         title: 'Simulator',
         url: '/simulator',
         direct: 'forward',
         icon: 'logo-usd'
+      },
+      {
+        title: 'Community',
+        url: '/community',
+        direct: 'forward',
+        icon: 'contacts'
       },
       {
         title: 'Licence',
@@ -79,8 +92,10 @@ export class AppComponent {
     this.initializeApp();
   }
   logout() {
-    this.cookieService.delete('token');
-    this.navCtrl.navigateRoot('/');
+    this.cookieService.delete('token', '/');
+    setTimeout(() => {
+      this.navCtrl.navigateRoot('/');
+    }, 1000);
   }
 
   initializeApp() {
@@ -96,5 +111,8 @@ export class AppComponent {
     } else {
       this.translateService.use('en');
     }
+  }
+  goTo(destination: string) {
+    this.navCtrl.navigateForward(destination);
   }
 }

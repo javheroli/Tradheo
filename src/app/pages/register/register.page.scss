@@ -31,6 +31,14 @@
   margin-top: 3%;
 }
 
+.selectable {
+  color: var(--ion-color-secondary)
+}
+
+.datetime {
+  color: var(--ion-color-secondary)
+}
+
 @media only screen and (max-width: 600px) {
   .imageCard1 {
     width: 100%;

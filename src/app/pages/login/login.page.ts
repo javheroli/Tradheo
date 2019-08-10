@@ -45,6 +45,7 @@ export class LoginPage implements OnInit {
 
   ionViewWillEnter() {
     const check = this.cookieService.check('token');
+    console.log(check);
     if (check) {
       this.navCtrl.navigateForward('/live-data');
     } else {
@@ -187,6 +188,14 @@ export class LoginPage implements OnInit {
     let updateLicence: string = this.translate.instant('LOGIN.UPDATE_LICENCE');
     let cancel: string = this.translate.instant('LOGIN.CANCEL');
 
+    let ok: string = this.translate.instant('LOGIN.OK');
+    let UserDeletedHeader: string = this.translate.instant(
+      'LOGIN.USER_DELETED_HEADER'
+    );
+    let UserDeletedBody: string = this.translate.instant(
+      'LOGIN.USER_DELETED_BODY'
+    );
+
     this.dm
       .login(this.registerCredentials)
       .then(data => {
@@ -215,6 +224,23 @@ export class LoginPage implements OnInit {
                   {
                     text: cancel,
                     role: 'cancel'
+                  }
+                ]
+              })
+              .then(alertEl => {
+                alertEl.present();
+              });
+          }, 1500);
+        } else if (error.status === 409) {
+          setTimeout(() => {
+            this.alertCtrl
+              .create({
+                header: UserDeletedHeader,
+                message: UserDeletedBody,
+                buttons: [
+                  {
+                    text: ok,
+                    role: 'ok'
                   }
                 ]
               })

@@ -16,6 +16,14 @@ export class RestWS extends AbstractWS {
     super(http);
     this.path = this.config.config().restUrlPrefixLocalhost;
   }
+
+  private calculateAge(birthday) {
+    // birthday is a date
+    var birthdayDate = new Date(birthday);
+    var ageDifMs = Date.now() - birthdayDate.getTime();
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+  }
   // Methods
   public turnOnServer() {
     this.makeGetRequest(this.path + 'api/turnOnServer/', null);
@@ -39,6 +47,7 @@ export class RestWS extends AbstractWS {
   public getUserLogged(token) {
     return this.makeGetRequest(this.path + 'api/getUserLogged/', null, token)
       .then(res => {
+        res.age = this.calculateAge(res.birthDate);
         return Promise.resolve(res);
       })
       .catch(err => {
@@ -221,6 +230,281 @@ export class RestWS extends AbstractWS {
       })
       .catch(err => {
         console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
+  public getUserBy(username, token) {
+    return this.makeGetRequest(
+      this.path + 'api/getUser/' + username,
+      null,
+      token
+    )
+      .then(res => {
+        res.age = this.calculateAge(res.birthDate);
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
+  public deleteUser() {
+    const token = this.cookieService.get('token');
+    return this.makeGetRequest(this.path + 'api/deleteUser', null, token)
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
+  public validationUsernameForEdit(username) {
+    const token = this.cookieService.get('token');
+    return this.makeGetRequest(
+      this.path + 'api/editUser/validationUsername/' + username,
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
+  public validationEmailForEdit(email) {
+    const token = this.cookieService.get('token');
+    return this.makeGetRequest(
+      this.path + 'api/editUser/validationEmail/' + email,
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
+  public validationPhoneNumberForEdit(phoneNumber) {
+    const token = this.cookieService.get('token');
+    return this.makeGetRequest(
+      this.path + 'api/editUser/validationPhoneNumber/' + phoneNumber,
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
+  public editUser(
+    username: string,
+    email: string,
+    phoneNumber: string,
+    birthDate: string,
+    firstName: string,
+    lastName: string,
+    description: string,
+    country: string,
+    city: string,
+    profilePic
+  ) {
+    const token = this.cookieService.get('token');
+
+    const fd = new FormData();
+    fd.append('username', username);
+    fd.append('email', email);
+    fd.append('phoneNumber', phoneNumber);
+    fd.append('birthDate', birthDate);
+    fd.append('firstName', firstName);
+    fd.append('lastName', lastName);
+    fd.append('description', description);
+    fd.append('country', country);
+    fd.append('city', city);
+    if (profilePic !== null) {
+      console.log(profilePic);
+      fd.append('image', profilePic);
+    }
+
+    return this.makePostRequest(this.path + 'api/editUser/', fd, token)
+      .then(res => {
+        console.log('Sign up successfully');
+        return Promise.resolve(res);
+      })
+      .catch(error => {
+        console.log(error);
+        return Promise.reject(error);
+      });
+  }
+
+  public listUsers(keyword: string) {
+    const token = this.cookieService.get('token');
+    let url = '';
+    if (keyword == null) {
+      url = 'api/users/';
+    } else {
+      url = 'api/users/search?keyword=' + keyword;
+    }
+
+    return this.makeGetRequest(this.path + url, null, token)
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public blockUser(username: string) {
+    const token = this.cookieService.get('token');
+
+    return this.makeGetRequest(
+      this.path + 'api/blockUser/' + username,
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public unblockUser(username: string) {
+    const token = this.cookieService.get('token');
+
+    return this.makeGetRequest(
+      this.path + 'api/unblockUser/' + username,
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public getMessages(sender: string, receiver: string) {
+    let token: string;
+    token = this.cookieService.get('token');
+
+    return this.makeGetRequest(
+      this.path + 'api/messages/' + sender + '/' + receiver + '/',
+      false,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(error => {
+        console.log('Error: ' + error);
+        return Promise.reject(error);
+      });
+  }
+
+  public sendMessage(sender: string, receiver: string, message: string) {
+    const fd = new FormData();
+    let token: string;
+    token = this.cookieService.get('token');
+    fd.append('sender', sender);
+    fd.append('receiver', receiver);
+    fd.append('message', message);
+
+    return this.makePostRequest(this.path + 'api/messages/', fd, token)
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(error => {
+        console.log('Error: ' + error);
+        return Promise.reject(error);
+      });
+  }
+
+  public deleteMessages(messageId) {
+    let token: string;
+    token = this.cookieService.get('token');
+    return this.makeGetRequest(
+      this.path + 'api/deleteMessages/' + messageId,
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public editMessages(message) {
+    const fd = new FormData();
+    let token: string;
+    token = this.cookieService.get('token');
+    fd.append('message', message.message);
+    return this.makePostRequest(
+      this.path + 'api/editMessages/' + message._id,
+      fd,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public getChatNotifications() {
+    let token: string;
+    token = this.cookieService.get('token');
+    return this.makeGetRequest(
+      this.path + 'api/chatNotifications/',
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public resetChatNotifications(username) {
+    let token: string;
+    token = this.cookieService.get('token');
+    return this.makeGetRequest(
+      this.path + 'api/resetChatNotifications/' + username,
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
         return Promise.reject(err);
       });
   }

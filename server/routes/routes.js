@@ -134,6 +134,10 @@ router.post('/auth/login', async (req, res, next) => {
                     'An Error occured: ' + info['message']
                 ));
             }
+            if (user.isDeleted) {
+                console.log("User deleted")
+                return res.status(409).send('User marked as deleted');
+            }
             const today = new Date();
             if (today > user.licenceDate) {
                 console.log("User with licence expired")

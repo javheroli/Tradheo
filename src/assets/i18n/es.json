@@ -18,7 +18,12 @@
     "FORGOT_ALERT_MESSAGE": "Introduce el email asociado a su cuenta para restablecer su contraseña, aquí:",
     "INVALID_EMAIL": "Email introducido inválido",
     "EMAIL_NOTFOUND": "El email introducido no está asociado a ninguna cuenta",
-    "EMAIL_SENT": "Se le ha mandado un email con instrucciones a seguir para restablecer su contraseña"
+    "EMAIL_SENT": "Se le ha mandado un email con instrucciones a seguir para restablecer su contraseña",
+    "OK": "De acuerdo",
+    "USER_DELETED_HEADER": "Usuario borrado",
+    "USER_DELETED_BODY": "Esta cuenta fue marcada como borrada por su propietario",
+    "DELETE_SUCCESS_HEADER": "Cuenta borrada correctamente",
+    "DELETE_SUCCESS_BODY": "Su cuenta y datos personales ya no estarán activos en Tradheo"
 
   },
   "REGISTER": {
@@ -58,6 +63,11 @@
     "USERNAME_TAKEN": "Este usuario ya está en uso",
     "EMAIL_TAKEN": "Este email ya está en uso",
     "PHONENUMBER_TAKEN": "Este número de teléfono ya está en uso"
+  },
+  "EDIT_USER": {
+    "TITLE": "Editar perfil",
+    "HEADER_SUCCESS_EDIT": "Perfil de usuario editado",
+    "SUCCESS_EDIT": "Sus datos personales han sido modificados correctamente"
   },
   "RESET": {
     "RESET": "Restablecer contraseña",
@@ -110,14 +120,79 @@
     "MENU": "Menú",
     "PROFILE": "Perfil",
     "COOKIES": " Al continuar navegando, usted está aceptando el uso de cookies. Descubra más en nuestra ",
-    "PRIVACY_POLICY": "Política de privacidad"
+    "PRIVACY_POLICY": "Política de privacidad",
+    "COMMUNITY": "Comunidad & Soporte"
+  },
+  "COMMUNITY": {
+    "SEARCH_USERS": "Buscar usuarios",
+    "BLOCK_SURE_HEADER": "Bloquear usuario",
+    "BLOCK_SURE_BODY": "¿Está seguro de bloquear a este usuario? No podrá volver a contactar con usted de nuevo ni visualizar su perfil, sin embargo, esta operación no se puede deshacer",
+    "CANCEL": "Cancelar",
+    "CONTINUE": "Continuar",
+    "BLOCK_SUCCESS_HEADER": "Bloquear usuario",
+    "BLOCK_SUCCESS_BODY": "Ha bloqueado con éxito a este usuario de su perfil en Tradheo"
   },
   "SETTINGS": {
-    "APP_LANGUAGE": "Idioma",
-    "APP_SETTINGS": "Ajustes",
+    "APP_LANGUAGE": "Idioma de la aplicación",
+    "APP_SETTINGS": "Configuración de la aplicación",
     "GENERAL": "General",
     "LOGOUT": "Cerrar sesión",
-    "PROFILE": "Perfil"
+    "PROFILE": "Perfil",
+    "EXPORT": "Exportar información",
+    "EXPLICATION_EXPORT": "Si continúa, se enviará un mensaje con todos sus datos a su correo electrónico.",
+    "CONFIRM_QUESTION": "¿Desea contiuar?",
+    "EXPORT_ERROR_1": "Lo sentimos, ha ocurrido un error mientras exportábamos los datos.",
+    "EXPORT_ERROR_2": "Si el error persiste contacte con Soporte mediante las herramientas de Comunidad",
+    "EXPORT_OK_1": "Se han exportado todos sus datos correctamente",
+    "EXPORT_OK_2": "Muchas gracias por confiar en Tradheo.",
+    "EXPORT_DATA": "Exportar tus datos",
+    "SEND_EMAIL": "Notificación",
+    "SEND_OK_1": "Se ha dado la orden de envio",
+    "SEND_OK_2": "Los usuarios recibirán el correo en breves momentos",
+    "YES": "Sí"
+  },
+  "CHAT": {
+    "ME": "Yo",
+    "TYPE_A_MESSAGE": "Escribe un mensaje...",
+    "OK": "Vale",
+    "CANCEL": "Cancelar",
+    "DELETE_CONFIRMATION_HEADER": "Confirmar borrado",
+    "DELETE_CONFIRMATION_MESSAGE": "¿Está seguro de borrar este mensaje?",
+    "EDIT_CONFIRMATION_HEADER": "Confirmar editar",
+    "EDIT_CONFIRMATION_MESSAGE": "¿Está seguro de editar este mensaje?",
+    "ACTIONS": "Acciones",
+    "DELETE": "Borrar",
+    "EDIT": "Editar mensaje",
+    "EDITED": "Editado: ",
+    "EDIT_THIS_MESSAGE": "Editando el mensaje: "
+
+  },
+  "PROFILE": {
+    "ADMIN": "Administrador",
+    "AGE": "Edad",
+    "ALERT": "CUIDADO",
+    "CITY": "Ciudad",
+    "CONTACT": "Contactar",
+    "CREATOR_DELETED": "Usuario borrado",
+    "DELETED": "Usuario borrado",
+    "DELETE_BUTTON": "Eliminar cuenta",
+    "DELETE_ERROR_1": "Lo sentimos, la operación ha fallado.",
+    "DELETE_ERROR_2": "Si no puede borrar sus datos, póngase en contacto con un administrador en way.team.soft@gmail.com.",
+    "DELETE_USER_1": "Está a punto de borrar todos sus datos de la aplicación.",
+    "DELETE_USER_2": "Esta operación no se podrá deshacer, y no podrá volver a acceder a la aplicación con esta cuenta.",
+    "DELETE_USER_3": "¿Desea continuar?",
+    "EDIT_PROFILE": "Editar perfil",
+    "ELIMINATED": "Este usuario ha decidido eliminar su cuenta en Tradheo.",
+    "EMAIL": "Correo electrónico",
+    "FULL_NAME": "Nombre completo",
+    "SORRY": "Lo sentimos",
+    "YES": "Sí",
+    "COUNTRY": "País",
+    "PHONE": "Teléfono",
+    "MEMBER_SINCE": "Miembro desde",
+    "LICENCE_EXPIRES": "Licencia expira en"
+
+
   },
   "GDPR": {
     "GO_OUT": "Salir",

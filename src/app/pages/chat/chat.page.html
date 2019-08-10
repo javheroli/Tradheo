@@ -1,0 +1,104 @@
+<ion-header *ngIf="other != null">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="secondary"></ion-menu-button>
+      <ion-back-button color="secondary"></ion-back-button>
+    </ion-buttons>
+    <ion-avatar slot="start">
+      <ion-img src="{{other.image}}"></ion-img>
+    </ion-avatar>
+    <ion-title color="light">{{other.firstName}} {{other.lastName}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+<ion-content #content>
+  <ion-list class="chat-list" #chatlist>
+    <ion-item (ngModelChange)="getMessages()" *ngFor="let message of messages; let last = last" lines="none">
+
+
+      <div class="chat-message" text-right *ngIf="message['sender'] === logged.username">
+        <div class="right-bubble">
+          <div class="msg-details">
+            <span class="msg-name">{{ 'CHAT.ME' | translate}}</span>
+            <span class="msg-date">{{message['timestamp'] | date:'short'}}</span>
+            <ion-icon *ngIf="message['message'] !== '<message deleted>'" slot="start" name="menu" class="menuIcon"
+              (click)="presentActionSheet(message)">
+            </ion-icon>
+          </div>
+
+          <p class="meMessages">{{message['message']}}</p>
+
+          <div>
+            <span class="msg-date" *ngIf="message['edited'] !== null">{{ 'CHAT.EDITED' | translate}}</span>
+            <span *ngIf="message['edited'] !== null" class="msg-date">{{message['edited'] | date:'short'}}</span>
+          </div>
+
+        </div>
+      </div>
+      <div class="chat-message" text-left *ngIf="message['sender'] !== logged.username">
+        <div class="left-bubble">
+          <span class="msg-date">{{message['timestamp'] | date:'short'}}</span>
+          <span class="msg-name">{{message['sender']}}</span>
+
+          <p text-wrap class="heMessages">{{message['message']}}</p>
+
+          <div>
+            <span class="msg-date" *ngIf="message['edited'] !== null">{{ 'CHAT.EDITED' | translate}}</span>
+            <span *ngIf="message['edited'] !== null" class="msg-date">{{message['edited'] | date:'short'}}</span>
+          </div>
+        </div>
+      </div>
+
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar *ngIf="!edit" (keypress)="keypress($event)">
+    <div id="footer">
+      <div class="elem">
+        <ion-input placeholder="{{ 'CHAT.TYPE_A_MESSAGE' | translate}}" type="text" [(ngModel)]="message"></ion-input>
+      </div>
+      <div class="elem">
+        <ion-button icon-only (click)="sendMessage()">
+          <ion-icon name="send"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </ion-toolbar>
+
+
+  <div *ngIf="edit" class="edit-wrapper">
+    <ion-icon class="edit-close" name="close" (click)="stopEditing()"></ion-icon>
+    <div class="edit-reply">
+      <div class="edit-border"></div>
+      <div class="edit-title">
+        <span>
+          <ion-icon name="create"></ion-icon>{{ 'CHAT.EDIT' | translate}}
+        </span>
+      </div>
+      <div class="edit-body">
+        <span>{{editMessageForPlaceHolder}}</span>
+      </div>
+    </div>
+  </div>
+  <ion-toolbar *ngIf="edit" (keypress)="keypress2($event)">
+
+    <div id="footer">
+      <div class="elem">
+        <ion-input placeholder="{{ 'CHAT.TYPE_A_MESSAGE' | translate}}" type="text" [(ngModel)]="editMessage.message">
+        </ion-input>
+      </div>
+
+      <div class="elem">
+        <ion-button icon-only (click)="editMessages()">
+          <ion-icon name="send"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-footer>

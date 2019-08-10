@@ -1,0 +1,42 @@
+:host {
+    ion-content {
+        --background: linear-gradient(-135deg, var(--ion-color-medium), var(--ion-color-light));
+        --padding: 0px;
+    }
+}
+
+ion-avatar {
+    width: 60px;
+    height: 60px;
+}
+
+.larger {
+    font-size: 22px;
+}
+
+
+.arriba {
+    position: relative;
+    display: block;
+    height: 50px;
+}
+
+.username {
+    color: rgba(85, 83, 83, 0.842);
+}
+
+.filter {
+    color: white;
+}
+
+ion-row {
+    align-items: center;
+}
+
+.blockeds {
+    background-color: #ff9999;
+}
+
+.fab-container {
+    margin-right: 18px;
+}

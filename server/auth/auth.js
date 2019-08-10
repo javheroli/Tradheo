@@ -24,6 +24,9 @@ passport.use('signup', new localStrategy({
             var country = req.body.country
             var city = req.body.city
             var admin = false
+            var isDeleted = false
+            var blockedUsersByMe = []
+            var usersWhoHasBlockedMe = []
 
             if (req.file !== undefined) {
                 image = req.file.url
@@ -41,7 +44,10 @@ passport.use('signup', new localStrategy({
                     country,
                     city,
                     admin,
-                    image
+                    isDeleted,
+                    image,
+                    blockedUsersByMe,
+                    usersWhoHasBlockedMe
                 });
                 //Send the user information to the next middleware
                 return done(null, user);
@@ -58,7 +64,10 @@ passport.use('signup', new localStrategy({
                     description,
                     country,
                     city,
-                    admin
+                    admin,
+                    isDeleted,
+                    blockedUsersByMe,
+                    usersWhoHasBlockedMe
                 });
                 //Send the user information to the next middleware
                 return done(null, user);

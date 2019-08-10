@@ -68,10 +68,16 @@ const UserSchema = new Schema({
         type: Boolean,
         required: true,
     },
+    isDeleted: {
+        type: Boolean,
+        required: true,
+    },
     image: {
         type: String,
         default: 'https://res.cloudinary.com/tradheo/image/upload/v1561651255/userImages/default.png'
-    }
+    },
+    blockedUsersByMe: [String],
+    usersWhoHasBlockedMe: [String]
 });
 
 //Fuction to hash password in text plain
