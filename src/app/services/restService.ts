@@ -250,6 +250,21 @@ export class RestWS extends AbstractWS {
       });
   }
 
+  public getUserByUsernameWithoutLogging(username) {
+    return this.makeGetRequest(
+      this.path + 'api/getUserWithoutLogging/' + username,
+      null
+    )
+      .then(res => {
+        res.age = this.calculateAge(res.birthDate);
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log(err);
+        return Promise.reject(err);
+      });
+  }
+
   public deleteUser() {
     const token = this.cookieService.get('token');
     return this.makeGetRequest(this.path + 'api/deleteUser', null, token)
@@ -499,6 +514,20 @@ export class RestWS extends AbstractWS {
       this.path + 'api/resetChatNotifications/' + username,
       null,
       token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public paid(username, plan) {
+    return this.makeGetRequest(
+      this.path + 'api/updateLicence/' + username + '/' + plan,
+      null
     )
       .then(res => {
         return Promise.resolve(res);

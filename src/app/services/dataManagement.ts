@@ -98,6 +98,7 @@ export class DataManagement {
         return Promise.reject(error);
       });
   }
+
   public forgot(email): Promise<any> {
     return this.restService
       .forgot(email)
@@ -178,6 +179,17 @@ export class DataManagement {
   public getUserBy(username, token): Promise<any> {
     return this.restService
       .getUserBy(username, token)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public getUserByUsernameWithoutLogging(username): Promise<any> {
+    return this.restService
+      .getUserByUsernameWithoutLogging(username)
       .then(data => {
         return Promise.resolve(data);
       })
@@ -358,6 +370,17 @@ export class DataManagement {
   public resetChatNotifications(username): Promise<any> {
     return this.restService
       .resetChatNotifications(username)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public paid(username, plan): Promise<any> {
+    return this.restService
+      .paid(username, plan)
       .then(data => {
         return Promise.resolve(data);
       })

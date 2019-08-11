@@ -87,7 +87,7 @@ router.route('/auth/signup/validationEmail/:email')
 
     })
 
-//Route  /api/auth/signup/validationEmail/:email
+//Route  /api/auth/login/validationEmail/:email
 //Email validation for login
 router.route('/auth/login/existEmail/:email')
     .get((req, res) => {
@@ -104,6 +104,7 @@ router.route('/auth/login/existEmail/:email')
         })
 
     })
+
 
 //Route  /api/auth/signup/validationPhoneNumber/:phoneNumber
 //PhoneNumber validation for sign up
@@ -291,8 +292,64 @@ router.post('/auth/reset/:token', function (req, res) {
     ]);
 });
 
+//Route /api/updateLicence/:username/:plan
+//Token creation to reset password
+router.get('/updateLicence/:username/:plan', function (req, res) {
+    var username = req.params.username;
+    var plan = req.params.plan;
+
+    User.findOne({
+        username: username
+    }, (err, user) => {
+        var startDate;
+        var today = new Date();
+        if (today > user.licenceDate) {
+            startDate = today;
+        } else {
+            startDate = new Date(user.licenceDate);
+        }
+
+        if (plan === '19.99') {
+            startDate.setMonth(startDate.getMonth() + 1);
+        } else if (plan === '49.99') {
+            startDate.setMonth(startDate.getMonth() + 3);
+        } else if (plan === '149.99') {
+            startDate.setFullYear(startDate.getFullYear() + 1);
+        } else {
+            return res.status(400).send("Plan does not exist")
+        }
+
+        User.findOneAndUpdate({
+            username: username
+        }, {
+            licenceDate: startDate
+        }, (err, userUpdated) => {
+
+            userUpdated.licenceDate = startDate;
+            console.log("Updating licence of " + username);
+            res.json(userUpdated);
+        })
+    })
+
+});
 
 
+//API Route /api/getUserWithoutLogging/:username
+//GET: Getting user by username
+router.route('/getUserWithoutLogging/:username').get((req, res) => {
+    var username = req.params.username;
+    User.findOne({
+        username: username
+    }, (err, user) => {
+        if (err) {
+            res.status(404).send('User with username ' + username + ' not found');
+        } else {
+            res.json(user);
+            console.log('Getting user by username: ' + username);
+            res.end();
+        }
+    });
+});
 
 
 module.exports = router;

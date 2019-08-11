@@ -45,7 +45,6 @@ export class LoginPage implements OnInit {
 
   ionViewWillEnter() {
     const check = this.cookieService.check('token');
-    console.log(check);
     if (check) {
       this.navCtrl.navigateForward('/live-data');
     } else {
@@ -219,7 +218,11 @@ export class LoginPage implements OnInit {
                 buttons: [
                   {
                     text: updateLicence,
-                    role: 'ok'
+                    handler: () => {
+                      this.navCtrl.navigateForward(
+                        '/licence/' + this.registerCredentials.username
+                      );
+                    }
                   },
                   {
                     text: cancel,

@@ -9,9 +9,9 @@
     "USERNAME": "Username",
     "WAIT": "Please wait...",
     "TRADHEO": "Tradheo",
-    "LICENSE_EXPIRED_BODY": "Update your license with our affordable rates to continue enjoying Tradheo",
-    "LICENSE_EXPIRED_HEADER": "Your license has expired",
-    "UPDATE_LICENCE": "Update license",
+    "LICENSE_EXPIRED_BODY": "Update your licence with our affordable rates to continue enjoying Tradheo",
+    "LICENSE_EXPIRED_HEADER": "Your licence has expired",
+    "UPDATE_LICENCE": "Update licence",
     "CANCEL": "Cancel",
     "FORGOT_PASSWORD": "Forgot password?",
     "RESET": "Reset",
@@ -24,6 +24,7 @@
     "USER_DELETED_BODY": "This account was marked as deleted by his owner",
     "DELETE_SUCCESS_HEADER": "Account deleted successfuly",
     "DELETE_SUCCESS_BODY": "Your account and personal data won't be active on Tradheo anymore"
+
   },
   "REGISTER": {
     "CONFIRM_PASSWORD": "Confirm password",
@@ -41,7 +42,7 @@
     "REGISTER": "Sign up form",
     "REQUIRED_FIELD": "Required field",
     "SIGN_UP": "Sign up",
-    "SUCCESS": "Enjoy your 7 days Tradheo's trial licence! Once expired, feel free to update your license with our affordable rates",
+    "SUCCESS": "Enjoy your 7 days Tradheo's trial licence! Once expired, feel free to update your licence with our affordable rates",
     "THIS_FIELD_IS_REQUIRED": "This field is required",
     "USERNAME": "Username",
     "EMAIL": "Email",
@@ -115,13 +116,32 @@
     "LIVE_DATA": "Live Market",
     "CHARTS": "Charts",
     "SIMULATOR": "Investment simulator",
-    "LICENSE": "Update license",
+    "LICENCE": "Update licence",
     "LOGOUT": "Logout",
     "MENU": "Menu",
     "PROFILE": "Profile",
     "COOKIES": " By continuing to browse the site, you're agreeing to our use of cookies. Learn more in our ",
     "PRIVACY_POLICY": "Privacy policy",
     "COMMUNITY": "Community & Support"
+
+  },
+  "LICENCE": {
+    "UPDATE": "Update your licence to continue enjoying Tradheo!",
+    "TEXT_1": "We offer the best deals for the best price",
+    "TEXT_2": "Choose the plan that best suits with you:",
+    "APPRENTICE": "Apprentice Plan",
+    "EXPERT": "Expert Plan",
+    "PROFESSIONAL": "Professional Plan",
+    "MONTH": "month",
+    "MONTHS": "months",
+    "YEAR": "year",
+    "FOR_ONLY": "for only",
+    "RECOMENDATION_APPRENTICE": "For users whose Tradheo's free trial wasn't enough and want to arrive even further in stock market",
+    "RECOMENDATION_EXPERT": "Starting to be known in Tradheo's Community? Don't miss this opportunity and go ahead",
+    "RECOMENDATION_PROFESSIONAL": "A well-known Tradheo's mate, keep investing expertly and learning more and more with us",
+    "LANG": "en_US",
+    "UPDATED_LICENCE": "Congratulations! Your licence has been updated",
+    "LICENCE_EXPIRES": "Your licence expires: "
 
   },
   "COMMUNITY": {
@@ -204,7 +224,7 @@
     "TEXT_1": "About us",
     "TEXT_10": ". The photos you add will be stored in ",
     "TEXT_10B": ". All the data will be only shown to you because is private.",
-    "TEXT_11": "What happens when you buy a license?",
+    "TEXT_11": "What happens when you buy a licence?",
     "TEXT_12": "In this case we will only and exclusively store the payment date. The rest of the information such as card number and passwords to access payment accounts, will be stored by Paypal, a third party to whom you send your data from your browser. If you need more information, you can read Paypal's privacy policy ",
     "TEXT_13": ".",
     "TEXT_14": ".",

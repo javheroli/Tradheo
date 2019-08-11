@@ -25,6 +25,8 @@
     "DELETE_SUCCESS_HEADER": "Cuenta borrada correctamente",
     "DELETE_SUCCESS_BODY": "Su cuenta y datos personales ya no estarán activos en Tradheo"
 
+
+
   },
   "REGISTER": {
     "CONFIRM_PASSWORD": "Confirmar contraseña",
@@ -115,13 +117,32 @@
     "LIVE_DATA": "Bolsa en directo",
     "CHARTS": "Gráficos",
     "SIMULATOR": "Simulador de inversiones",
-    "LICENSE": "Actualizar licencia",
+    "LICENCE": "Actualizar licencia",
     "LOGOUT": "Cerrar sesión",
     "MENU": "Menú",
     "PROFILE": "Perfil",
     "COOKIES": " Al continuar navegando, usted está aceptando el uso de cookies. Descubra más en nuestra ",
     "PRIVACY_POLICY": "Política de privacidad",
     "COMMUNITY": "Comunidad & Soporte"
+  },
+  "LICENCE": {
+    "UPDATE": "¡Actualice su licencia para seguir disfrutando de Tradheo!",
+    "TEXT_1": "Ofrecemos las mejores ofertas por el mejor precio",
+    "TEXT_2": "Elige el plan que más se ajuste a sus necesidades:",
+    "PLANS": "Planes de licencia de Tradheo",
+    "APPRENTICE": "Plan Aprendiz",
+    "EXPERT": "Plan Experto",
+    "PROFESSIONAL": "Plan Profesional",
+    "MONTH": "mes",
+    "MONTHS": "meses",
+    "YEAR": "año",
+    "FOR_ONLY": "por sólo",
+    "RECOMENDATION_APPRENTICE": "Para usuarios a los que la prueba gratuita de Tradheo se les hizo corta y quieren llegar más lejos",
+    "RECOMENDATION_EXPERT": "¿Empezando a ser conocido en la comunidad? No pierdas la oportunidad y ve a por ello",
+    "RECOMENDATION_PROFESSIONAL": "Un buen compañero de Tradheo, sigue inviertiendo sabiamente y aprendiendo con nosotros",
+    "LANG": "es_ES",
+    "UPDATED_LICENCE": "¡Enhorabuena! Su licencia ha sido actualizada",
+    "LICENCE_EXPIRES": "Su licencia expira: "
   },
   "COMMUNITY": {
     "SEARCH_USERS": "Buscar usuarios",

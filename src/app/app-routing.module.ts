@@ -90,6 +90,21 @@ const routes: Routes = [
         ]
       }
     ]
+  },
+  {
+    path: 'licence',
+    children: [
+      {
+        path: ':username',
+        loadChildren: './pages/licence/licence.module#LicencePageModule',
+        canLoad: [NoAuthGuard]
+      },
+      {
+        path: '',
+        loadChildren: './pages/licence/licence.module#LicencePageModule',
+        canLoad: [AuthGuard]
+      }
+    ]
   }
 ];
 
