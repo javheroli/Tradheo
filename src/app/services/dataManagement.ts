@@ -388,4 +388,48 @@ export class DataManagement {
         return Promise.reject(error);
       });
   }
+
+  public purchaseByUser(company, number, stockValue): Promise<any> {
+    return this.restService
+      .purchaseByUser(company, number, stockValue)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public getAllSimulations(): Promise<any> {
+    return this.restService
+      .getAllSimulations()
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public deleteSimulation(_id): Promise<any> {
+    return this.restService
+      .deleteSimulation(_id)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public sellSimulation(_id, currentValue): Promise<any> {
+    return this.restService
+      .sellSimulation(_id, currentValue)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
 }

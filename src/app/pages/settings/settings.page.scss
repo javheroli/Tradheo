@@ -6,19 +6,26 @@
 
 }
 
+.profile {
+  background: var(--ion-color-primary);
+}
+
 ion-avatar {
   width: 68px;
   height: 68px;
 }
 
 .export_data_btn {
-  --background: var(--ion-color-primary, #3880ff);
+  --background: var(--ion-color-dark);
   --background-focused: rgb(241, 182, 105);
   --background-hover: rgb(243, 167, 67);
+  color: var(--ion-color-light);
 }
 
 .logout_btn {
-  --background: var(--ion-color-primary, #3880ff);
+  --background: var(--ion-color-dark);
   --background-focused: rgb(241, 182, 105);
   --background-hover: rgb(243, 167, 67);
+  color: var(--ion-color-light);
+
 }

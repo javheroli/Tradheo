@@ -23,10 +23,10 @@
     </ion-card-header>
 
     <ion-card-content no-margin no-padding>
-      <ion-card class="bg-primary" no-margin no-padding>
+      <ion-card class="bg-primary card-items" no-margin no-padding>
         <ion-card-content no-margin no-padding>
           <div class="listFriends" *ngFor="let user of users">
-            <ion-item *ngIf="!logged.blockedUsersByMe.includes(user.username)" class="bg-primary" no-margin>
+            <ion-item *ngIf="!logged.blockedUsersByMe.includes(user.username)" class="item-user" no-margin>
               <ion-buttons slot="end">
                 <ion-button *ngIf="user.username !== 'Support'" shape="round" color="dark" slot="end"
                   (click)="blockUser(user.username)">

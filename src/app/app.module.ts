@@ -34,6 +34,7 @@ import { ProfileComponent } from './components/display/profile/profile.component
 import { UsernameValidatorForEdit } from './validators/username.validator.edit';
 import { CustomEmailValidatorForEdit } from './validators/email.validator.edit';
 import { PhoneNumberValidatorForEdit } from './validators/phonenumber.validator.edit';
+import { ModalPageModule } from './pages/modal/modal.module';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, '../assets/i18n/', '.json');
@@ -52,6 +53,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     CookieLawModule,
     DeviceDetectorModule.forRoot(),
     NgxDatatableModule,
+    ModalPageModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

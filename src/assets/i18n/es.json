@@ -93,7 +93,17 @@
     "CANCEL": "Cancelar",
     "LAST_UPDATE": "Última actualización",
     "LAST_DATE": "Últ. Fecha",
-    "SHOWCHARTS": "Mostrar gráficos de "
+    "SHOWCHARTS": "Mostrar gráficos de ",
+    "BUY_STOCKS": "Simular la compra de acciones de ",
+    "PURCHASE_DONE": "Compra de acciones añadidas al simulador correctamente",
+    "SIMULATE_PURCHASE": "Simular compra",
+    "INTRODUCE_NUMBER": "Introduce el número de acciones que desea comprar",
+    "TOTAL_SPENDING": "Total a invertir:",
+    "STOCK": "acción"
+
+
+
+
   },
 
   "CHARTS": {
@@ -111,6 +121,13 @@
 
 
   },
+  "SIMULATOR": {
+    "FILTER": "Filtrar simulaciones",
+    "PERFORMANCE": "Rendimiento",
+    "PERFORMANCE&PROFIT": "Rendimiento & Beneficios",
+    "PROFIT": "Beneficios",
+    "NO_SIMULATORS": "No hay ninguna simulación todavía"
+  },
 
   "MENU": {
     "APP_SETTINGS": "Ajustes",
@@ -123,7 +140,26 @@
     "PROFILE": "Perfil",
     "COOKIES": " Al continuar navegando, usted está aceptando el uso de cookies. Descubra más en nuestra ",
     "PRIVACY_POLICY": "Política de privacidad",
-    "COMMUNITY": "Comunidad & Soporte"
+    "COMMUNITY": "Comunidad & Soporte",
+    "PURCHASE": "Compra",
+    "STOCKS": "Acciones",
+    "SALE": "Venta",
+    "VALUE": "Valor",
+    "INPROGRESS": "En progreso",
+    "RESOLVED": "Resueltas",
+    "CURRENT_VALUE": "Valor actual",
+    "DELETE": "Eliminar",
+    "DELETE_HEADER": "Eliminar simulación",
+    "DELETE_BODY": "¿Está seguro de eliminar esta simulación?",
+    "DELETE_SUCCESS": "La simulación ha sido eliminada con éxito",
+    "SELL_HEADER": "Simular venta de acciones",
+    "SELL": "Vender",
+    "SELL_BODY": "¿Está seguro de simular la venta de estas acciones?",
+    "SELL_SUCCESS": "Las acciones de la simulación han sido vendidas con éxito"
+
+
+
+
   },
   "LICENCE": {
     "UPDATE": "¡Actualice su licencia para seguir disfrutando de Tradheo!",

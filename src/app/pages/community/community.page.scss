@@ -34,17 +34,33 @@ ion-row {
 }
 
 .blockeds {
-    background-color: #ff9999;
+    background-color: #fcadad;
 }
 
 .blockeds:hover {
-    background-color: #c99797;
+    background-color: #d89b9b;
 }
 
-.bg-primary:hover {
-    background-color: rgb(135, 156, 196);
+.item-user:hover {
+    background-color: rgb(226, 226, 236);
+}
+
+.item-user {
+    background: ghostwhite;
 }
 
 .fab-container {
     margin-right: 18px;
+}
+
+.card-items {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+
+    ion-card-content {
+        padding: 0px 3px 3px;
+        background-color: var(--ion-color-dark);
+    }
+
+
 }

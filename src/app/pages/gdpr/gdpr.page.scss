@@ -10,12 +10,24 @@ p {
 
 h1 {
     font-size: 26px !important;
+    font-weight: bold;
+    text-align: center;
 }
 
 h2 {
+    font-weight: bold;
     font-size: 22px !important;
 }
 
 span {
     font-size: 16px !important;
+}
+
+ion-card-content {
+    margin: 40px 30px 40px;
+    padding: 25px 25px 25px;
+    color: var(--ion-color-dark);
+    background-color: ghostwhite;
+    border-radius: 4px;
+    border: 1px solid var(--ion-color-dark);
 }

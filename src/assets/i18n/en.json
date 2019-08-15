@@ -95,7 +95,13 @@
     "CANCEL": "Cancel",
     "LAST_UPDATE": "Last update",
     "LAST_DATE": "Last date",
-    "SHOWCHARTS": "Show charts of "
+    "SHOWCHARTS": "Show charts of ",
+    "BUY_STOCKS": "Simulate stock purchase of ",
+    "PURCHASE_DONE": "Stocks purchase added to simulator succesfuly",
+    "SIMULATE_PURCHASE": "Simulate purchase",
+    "INTRODUCE_NUMBER": "Introduce the stock number you want to purchase",
+    "TOTAL_SPENDING": "Total to invest:",
+    "STOCK": "stock"
   },
   "CHARTS": {
     "TITLE": "Charts",
@@ -109,6 +115,28 @@
     "LARGE": "Large",
     "SMALL": "Small",
     "MODE": "Mode"
+  },
+  "SIMULATOR": {
+    "FILTER": "Filter simulations",
+    "PERFORMANCE": "Performance",
+    "PERFORMANCE&PROFIT": "Performance & Profit",
+    "PROFIT": "Profit",
+    "NO_SIMULATORS": "There are no simulations yet",
+    "PURCHASE": "Purchase",
+    "STOCKS": "Stocks",
+    "SALE": "Sale",
+    "VALUE": "Value",
+    "INPROGRESS": "In progress",
+    "RESOLVED": "Resolved",
+    "CURRENT_VALUE": "Current value",
+    "DELETE": "Delete",
+    "DELETE_HEADER": "Delete simulation",
+    "DELETE_BODY": "Are you sure of deleting this simulation?",
+    "DELETE_SUCCESS": "The simulation has been deleted successfuly",
+    "SELL_HEADER": "Simulate stocks sale",
+    "SELL": "Sell",
+    "SELL_BODY": "Are you sure of selling this simulation?",
+    "SELL_SUCCESS": "The simulation has been sold successfuly"
   },
 
   "MENU": {

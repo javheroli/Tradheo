@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon color="secondary" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title color="light">{{company}}
+      ({{stockValue}} €/{{ 'LIVE_DATA.STOCK' | translate}})</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title color="light">
+        {{ 'LIVE_DATA.INTRODUCE_NUMBER' | translate}}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-input [(ngModel)]="number" type="number" min="1" value="1"></ion-input>
+      <h4>{{ 'LIVE_DATA.TOTAL_SPENDING' | translate}} {{Math.round(this.number * this.stockValue * 1000) / 1000}}€</h4>
+    </ion-card-content>
+  </ion-card>
+  <ion-button (click)="purchase()">{{ 'LIVE_DATA.SIMULATE_PURCHASE' | translate}}</ion-button>
+  <ion-button (click)="dismissModal()">{{'LOGIN.CANCEL' | translate}}</ion-button>
+</ion-content>

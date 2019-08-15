@@ -537,4 +537,68 @@ export class RestWS extends AbstractWS {
         return Promise.reject(err);
       });
   }
+
+  public purchaseByUser(company: string, number, stockValue) {
+    const token = this.cookieService.get('token');
+
+    const fd = new FormData();
+    fd.append('company', company);
+    fd.append('number', number);
+    fd.append('purchaseValue', stockValue);
+
+    return this.makePostRequest(
+      this.path + 'api/simulator/purchaseByUser',
+      fd,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(error => {
+        console.log(error);
+        return Promise.reject(error);
+      });
+  }
+
+  public getAllSimulations() {
+    const token = this.cookieService.get('token');
+    return this.makeGetRequest(this.path + 'api/simulator/getAll', null, token)
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public deleteSimulation(_id) {
+    const token = this.cookieService.get('token');
+    return this.makeDeleteRequest(
+      this.path + 'api/simulator/delete/' + _id,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public sellSimulation(_id, currentValue) {
+    const token = this.cookieService.get('token');
+    return this.makeGetRequest(
+      this.path + 'api/simulator/sell/' + _id + '/'+currentValue,null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
 }

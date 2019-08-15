@@ -3,10 +3,47 @@ const router = express.Router();
 const User = require('../models/userModel');
 const Market = require('../models/marketModel');
 const Message = require('../models/messageModel');
+const Simulator = require('../models/simulatorModel');
 const chatNotifications = require('../models/chatNotificationsModel');
 require('dotenv').config();
 const rp = require('request-promise');
 
+const SpanishCompanies = ['Acciona',
+    'Acerinox',
+    'ACS',
+    'Aena',
+    'Amadeus',
+    'ArcelorMittal',
+    'B. Sabadell',
+    'Bankia',
+    'Bankinter',
+    'BBVA',
+    'Caixabank',
+    'Cellnex Telecom',
+    'Cie Automotive',
+    'Enagas',
+    'ENCE',
+    'Endesa',
+    'Ferrovial',
+    'Gamesa',
+    'Grifols',
+    'IAG',
+    'Iberdrola',
+    'Inditex',
+    'Indra A',
+    'Inmobiliaria Colonial',
+    'Mapfre',
+    'Masmovil Ibercom',
+    'Mediaset',
+    'Melia Hotels',
+    'Merlin Properties SA',
+    'Naturgy Energy',
+    'Red Electrica',
+    'Repsol',
+    'Santander',
+    'Telefonica',
+    'Viscofan'
+]
 
 const companyToSymbol = {
     //IBEX 35
@@ -698,6 +735,151 @@ router.route('/resetChatNotifications/:username').get((req, res) => {
             return res.status(200).send();
         })
     });
+});
+
+//API Route /api/simulator/purchaseByUser
+//POST: Creating a new simulator purchase object for a user
+router.route('/simulator/purchaseByUser').post((req, res) => {
+    const simulator = new Simulator(req.body);
+    simulator.saleDate = null;
+    simulator.saleValue = null;
+    simulator.result = null;
+    var userId = req.user._id;
+    if (companyToSymbol[simulator.company] === undefined) {
+        return res.status(404).send('Company not found');
+    }
+
+    if (SpanishCompanies.includes(simulator.company)) {
+        simulator.country = 'Spain';
+    } else {
+        simulator.country = 'Germany';
+    }
+
+    User.findById(userId, (error, user) => {
+        simulator.username = user.username;
+        if (user.isDeleted) {
+            return res.status(400).send('User has been marked as deleted');
+        }
+        Simulator.create(simulator, (err, simulatorDB) => {
+            if (err) return res.status(500).send(err);
+
+            console.log('Simulating a purchase of ' + simulatorDB.number + ' stocks of ' + simulatorDB.company + ' for ' + simulatorDB.username);
+            res.json(simulatorDB);
+        })
+    })
+
+});
+
+//API Route /api/simulator/getAll
+//GET: Getting simulator objects for user logged
+router.route('/simulator/getAll').get((req, res) => {
+    var userId = req.user._id;
+
+    User.findById(userId, (error, user) => {
+
+        Simulator.find({
+            $and: [{
+                $or: [{
+                    username: user.username
+                }, {
+                    username: null
+                }]
+            }, {
+                purchaseDate: {
+                    $gt: user.registrationDate
+                }
+            }]
+
+        }).sort({
+            purchaseDate: -1
+        }).exec((err, simulators) => {
+            var data = {};
+            data.simulators = simulators;
+            var autoSimulations = simulators.filter(x => x.username === null);
+            var userSimulations = simulators.filter(x => x.username !== null);
+            var autoSimulationsDone = autoSimulations.filter(x => x.result !== null);
+            var userSimulationsDone = userSimulations.filter(x => x.result !== null);
+            if (autoSimulationsDone.length !== 0) {
+                var autoResult = 0.0;
+                var numberSuccessAuto = 0;
+                autoSimulationsDone.forEach(simulation => {
+                    if (simulation.result >= 0) {
+                        numberSuccessAuto++;
+                    }
+                    autoResult += simulation.result;
+                })
+                data.autoResult = Math.round(autoResult * 1000) / 1000;
+                data.autoPerformance = Math.round(numberSuccessAuto * 100 / autoSimulationsDone.length * 100) / 100;
+            } else {
+                data.autoResult = null;
+                data.autoPerformance = null;
+            }
+            if (userSimulationsDone.length !== 0) {
+                var userResult = 0.0;
+                var numberSuccessUser = 0;
+                userSimulationsDone.forEach(simulation => {
+                    if (simulation.result >= 0) {
+                        numberSuccessUser++;
+                    }
+                    userResult += simulation.result;
+                })
+                data.userResult = Math.round(userResult * 1000) / 1000;
+                data.userPerformance = Math.round(numberSuccessUser * 100 / userSimulationsDone.length * 100) / 100;
+            } else {
+                data.userResult = null;
+                data.userPerformance = null;
+            }
+            console.log('Getting simulations for user' + user.username);
+            res.json(data);
+
+        })
+
+    })
+
+});
+
+//API Route /api/simulator/delete/:id
+//DELETE: Delete simulator object by _id
+router.route('/simulator/delete/:_id').delete((req, res) => {
+    var _id = req.params._id;
+    var userId = req.user._id;
+
+    User.findById(userId, (error, user) => {
+        Simulator.findById(_id, (err, simulator) => {
+            if (err) return res.status(500).send();
+            if (user.username !== simulator.username) {
+                return res.status(409).send("You are not the propietary of this simulion");
+            }
+            simulator.remove((err, result) => {
+                console.log("Deleting simulation for " + user.username);
+                return res.status(201).send();
+            });
+        })
+    })
+});
+
+//API Route /api/simulator/sell/:id/:currentValue
+//GET: Sell simulator object by _id
+router.route('/simulator/sell/:_id/:currentValue').get((req, res) => {
+    var _id = req.params._id;
+    var currentValue = req.params.currentValue;
+    var userId = req.user._id;
+
+    User.findById(userId, (error, user) => {
+        Simulator.findById(_id, (err, simulator) => {
+            if (err) return res.status(500).send();
+            if (user.username !== simulator.username) {
+                return res.status(409).send("You are not the propietary of this simulion");
+            }
+            simulator.saleDate = new Date();
+            simulator.saleValue = currentValue;
+            simulator.result = Math.round((simulator.saleValue * simulator.number - simulator.purchaseValue * simulator.number) * 1000) / 1000;
+            simulator.save();
+            console.log("Sending simulation for " + simulator.username);
+            res.json(simulator);
+
+        })
+    })
 });
 
 module.exports = router;

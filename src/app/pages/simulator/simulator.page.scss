@@ -1,0 +1,297 @@
+ion-content {
+    --background: linear-gradient(-135deg, var(--ion-color-medium), var(--ion-color-light))
+}
+
+.filter-item {
+    display: inline-block;
+    background-color: aliceblue;
+    --border-width: 1px;
+    --border-radius: 4px;
+    --border-color: var(--ion-color-dark);
+    margin: 12px 12px 6px;
+}
+
+ion-checkbox {
+    width: 24px;
+    height: 24px;
+}
+
+ion-card {
+    text-align: center;
+}
+
+ion-card-content {
+    background-color: white;
+}
+
+.filter-card {
+    width: fit-content;
+    display: inline-block;
+
+    /* Smartphones (portrait) ----------- */
+    @media only screen and (max-width : 450px) {
+        width: auto;
+        display: block;
+    }
+
+}
+
+.filter-card ion-card-content {
+    padding: 0;
+}
+
+ion-card-header {
+    --background: var(--ion-color-dark);
+}
+
+.performance-item {
+    //display: inline-block;
+    background-color: aliceblue;
+    --border-width: 1px;
+    --border-radius: 4px;
+    --border-color: var(--ion-color-dark);
+    margin: 12px 12px 12px;
+
+    /* Smartphones (portrait) ----------- */
+    @media only screen and (max-width : 450px) {
+        width: fit-content;
+    }
+}
+
+.green {
+    color: rgb(74, 209, 74);
+}
+
+.red {
+    color: rgb(250, 94, 89);
+}
+
+ion-text {
+    font-size: 20px;
+}
+
+.metrics-container {
+    font-weight: bold;
+    color: var(--ion-color-dark);
+}
+
+.bg-white {
+    width: fit-content;
+    display: inline-block;
+
+    /* Smartphones (portrait) ----------- */
+    @media only screen and (max-width : 450px) {
+        width: auto;
+        display: block;
+    }
+}
+
+.bg-white ion-card-content {
+    padding: 0;
+
+    /* Smartphones (portrait) ----------- */
+    @media only screen and (max-width : 450px) {
+        text-align: -webkit-center;
+    }
+}
+
+.cards-container {
+    text-align: center
+}
+
+h1 {
+    color: var(--ion-color-secondary)
+}
+
+.simulations-card-container {
+    text-align: -webkit-center;
+}
+
+.simulations-card {
+    @media only screen and (min-width : 1300px) {
+        width: 65%;
+        min-width: 900px;
+    }
+
+    @media only screen and (max-width : 450px) {
+        width: auto;
+        min-width: auto;
+    }
+
+    ion-card-content {
+        padding: 0;
+        //background-color: var(--ion-color-dark);
+    }
+}
+
+.simulation-item {
+    background-color: white;
+}
+
+.simulation-item:hover {
+    background-color: rgb(226, 226, 236);
+}
+
+.resultDoneSuccess {
+    background-color: rgb(214, 252, 201);
+}
+
+.resultDoneSuccess:hover {
+    background-color: rgb(185, 223, 172);
+}
+
+.resultDoneFail {
+    background-color: rgb(252, 211, 201);
+}
+
+.resultDoneFail:hover {
+    background-color: rgb(224, 181, 170);
+}
+
+.resultDoneNeutral {
+    background-color: rgb(252, 244, 201);
+}
+
+.resultDoneNeutral:hover {
+    background-color: rgb(231, 223, 175);
+}
+
+.second-filter-line {
+    text-align: left;
+
+    /* Smartphones (portrait) ----------- */
+    @media only screen and (max-width : 450px) {
+        text-align: center;
+    }
+
+    ion-item {
+        margin-top: 0px;
+    }
+}
+
+.icon-filter {
+    margin-right: 5px;
+}
+
+.filter-text {
+    margin-right: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.filter-status {
+    width: 177.47px;
+}
+
+
+
+.simulations-text {
+    display: inline-block;
+    text-align: center;
+
+
+}
+
+.companyAndNumber {}
+
+.companyAndNumber-container {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 3.67%;
+    margin-right: 4%;
+    margin-left: 4%;
+}
+
+.purchase,
+.sale {
+    background-color: aliceblue;
+    border-radius: 4px;
+    padding: 0px 0px 1px;
+    border: 1px solid var(--ion-color-dark);
+}
+
+.date-value-container {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+.purchase-container,
+.sale-container {
+    display: inline-block;
+    text-align: center;
+    margin-right: 4%;
+    margin-left: 4%;
+}
+
+.purchase-title,
+.sale-title {
+    color: var(--ion-color-light);
+    font-weight: bold;
+    background-color: var(--ion-color-dark);
+    margin-top: 0;
+    padding-bottom: 1px;
+}
+
+h2,
+h4 {
+    font-weight: bold;
+}
+
+
+
+.sale-result-container {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 3.67%;
+    margin-right: 4%;
+    margin-left: 4%;
+}
+
+.current-result-container {
+    display: inline-block;
+    vertical-align: top;
+    //margin-top: 3.67%;
+    margin-right: 4%;
+    margin-left: 4%;
+
+    ion-text {
+        font-size: 26px;
+    }
+}
+
+.current-value-text {
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--ion-color-dark);
+}
+
+.sale-result-text {
+    font-weight: bold;
+    font-size: 30px;
+
+}
+
+
+
+ion-col {
+    padding: 0;
+    text-align: center;
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+.fillSpace1 {
+    width: 9px;
+}
+
+.fillSpace2 {
+    width: 35.59px;
+}
+
+.grid {
+    margin-top: 11px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}

@@ -105,6 +105,11 @@ const routes: Routes = [
         canLoad: [AuthGuard]
       }
     ]
+  },
+  {
+    path: 'simulator',
+    loadChildren: './pages/simulator/simulator.module#SimulatorPageModule',
+    canLoad: [AuthGuard]
   }
 ];
 

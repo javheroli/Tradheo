@@ -1,0 +1,216 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="secondary"></ion-menu-button>
+      <ion-back-button color="secondary"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="light">{{ 'MENU.SIMULATOR' | translate}}</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="isReady">
+  <div class="cards-container">
+    <ion-card class="filter-card">
+      <ion-card-header color="dark">
+        <ion-card-title>{{ 'SIMULATOR.FILTER' | translate}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item class="filter-item" lines="none">
+          <ion-checkbox (ionChange)="changeFilter('user')" [(ngModel)]="userCheckbox"></ion-checkbox>
+          <ion-avatar (click)="changeUserCheckbox()" slot="start">
+            <img style="cursor: pointer" src="{{ logged.image }}" class="user-avatar" />
+          </ion-avatar>
+        </ion-item>
+
+        <ion-item class="filter-item filter-status" lines="none">
+          <ion-icon color="dark" class="icon-filter" name="hourglass" slot="start"></ion-icon>
+          <ion-text class="filter-text">{{ 'SIMULATOR.INPROGRESS' | translate}}</ion-text>
+          <ion-checkbox (ionChange)="changeFilter('inProgress')" [(ngModel)]="inProgressCheckbox"></ion-checkbox>
+        </ion-item>
+        <div class="second-filter-line">
+          <ion-item class="filter-item" lines="none">
+            <ion-avatar (click)="changeTradheoCheckbox()" slot="start">
+              <img style="cursor: pointer" src="../../../assets/img/logoTradheo.png" class="user-avatar" />
+            </ion-avatar>
+            <ion-checkbox (ionChange)="changeFilter('tradheo')" [(ngModel)]="tradheoCheckbox"></ion-checkbox>
+          </ion-item>
+          <ion-item class="filter-item filter-status" lines="none">
+            <ion-icon color="dark" class="icon-filter" name="done-all" slot="start"></ion-icon>
+            <ion-text class="filter-text ">{{ 'SIMULATOR.RESOLVED' | translate}}</ion-text>
+            <ion-checkbox (ionChange)="changeFilter('resolved')" [(ngModel)]="resolvedCheckbox"></ion-checkbox>
+          </ion-item>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="bg-white">
+      <ion-card-header color="dark">
+        <ion-card-title>{{ 'SIMULATOR.PERFORMANCE&PROFIT' | translate}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item class="performance-item" lines="none">
+          <ion-avatar slot="start">
+            <img src="{{ logged.image }}" class="user-avatar" />
+          </ion-avatar>
+          <div class="metrics-container">
+            <div>
+              {{ 'SIMULATOR.PERFORMANCE' | translate}}: <ion-text *ngIf="simulationsResponse.userPerformance === null">
+                ---
+              </ion-text>
+              <ion-text *ngIf="simulationsResponse.userPerformance !== null">
+                {{Math.round(simulationsResponse.userPerformance * 1000) / 1000}}%</ion-text>
+            </div>
+            <div>
+              {{ 'SIMULATOR.PROFIT' | translate}}: <ion-text *ngIf="simulationsResponse.userResult === null">---
+              </ion-text>
+              <ion-text class="green" *ngIf="simulationsResponse.userResult > 0">
+                +{{Math.round(simulationsResponse.userResult * 1000) / 1000}}€</ion-text>
+              <ion-text class="red" *ngIf="simulationsResponse.userResult < 0">
+                {{Math.round(simulationsResponse.userResult * 1000) / 1000}}€</ion-text>
+              <ion-text *ngIf="simulationsResponse.userResult === 0">
+                {{simulationsResponse.userResult}}€</ion-text>
+            </div>
+          </div>
+
+        </ion-item>
+        <ion-item class="performance-item" lines="none">
+          <ion-avatar slot="start">
+            <img src="../../../assets/img/logoTradheo.png" class="user-avatar" />
+          </ion-avatar>
+          <div class="metrics-container">
+            <div>
+              {{ 'SIMULATOR.PERFORMANCE' | translate}}: <ion-text *ngIf="simulationsResponse.autoPerformance === null">
+                ---
+              </ion-text>
+              <ion-text *ngIf="simulationsResponse.autoPerformance !== null">
+                {{Math.round(simulationsResponse.autoPerformance * 1000) / 1000}}%</ion-text>
+            </div>
+            <div>
+              {{ 'SIMULATOR.PROFIT' | translate}}: <ion-text *ngIf="simulationsResponse.autoResult === null">---
+              </ion-text>
+              <ion-text class="green" *ngIf="simulationsResponse.autoResult > 0">
+                +{{Math.round(simulationsResponse.autoResult * 1000) / 1000}}€</ion-text>
+              <ion-text class="red" *ngIf="simulationsResponse.autoResult < 0">
+                {{Math.round(simulationsResponse.autoResult * 1000) / 1000}}€</ion-text>
+              <ion-text *ngIf="simulationsResponse.autoResult === 0">
+                {{simulationsResponse.autoResult}}€</ion-text>
+            </div>
+          </div>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="simulations-card-container">
+    <ion-card class="simulations-card">
+      <ion-card-content>
+        <div *ngIf="data.length !== 0">
+          <div class="listSimulations" *ngFor="let simulation of data; trackBy: trackSimulation">
+            <ion-item lines="full"
+              [ngClass]="{'simulation-item':simulation.result === null, 'resultDoneSuccess':simulation.result > 0, 'resultDoneNeutral' : simulation.result === 0, 'resultDoneFail':simulation.result < 0}">
+              <ion-avatar *ngIf="simulation.username === null" slot="start">
+                <img src="../../../assets/img/logoTradheo.png" class="user-avatar" />
+              </ion-avatar>
+              <ion-avatar *ngIf="simulation.username !== null" slot="start">
+                <img src="{{ logged.image }}" class="user-avatar" />
+              </ion-avatar>
+              <ion-grid class="grid">
+                <ion-row>
+                  <ion-col size="3" sizeXl="3" sizeXs="6">
+                    <div class="companyAndNumber-container">
+                      <ion-text class="simulations-text companyAndNumber" color="dark">
+                        <h2>
+                          {{simulation.company}}
+                        </h2>
+                        <h2>
+                          {{simulation.number}} {{ 'SIMULATOR.STOCKS' | translate}}
+                        </h2>
+                      </ion-text>
+                    </div>
+                  </ion-col>
+
+                  <ion-col size="3" sizeXl="3" sizeXs="6">
+                    <div *ngIf="simulation.result !== null" class="sale-result-container">
+                      <ion-text class="green sale-result-text" *ngIf="simulation.result > 0">
+                        +{{Math.round(simulation.result * 1000) / 1000}}€</ion-text>
+                      <ion-text class="red sale-result-text" *ngIf="simulation.result < 0">
+                        {{Math.round(simulation.result * 1000) / 1000}}€</ion-text>
+                      <ion-text class="sale-result-text" *ngIf="simulation.result === 0">
+                        {{simulation.result * 1000}}€</ion-text>
+                    </div>
+                    <div *ngIf="simulation.last" class="current-result-container">
+                      <ion-text class="green sale-result-text" *ngIf="simulation.last - simulation.purchaseValue  > 0">
+                        +{{Math.round((simulation.last * simulation.number - simulation.purchaseValue * simulation.number) * 1000) / 1000}}€
+                      </ion-text>
+                      <ion-text class="red sale-result-text" *ngIf="simulation.last - simulation.purchaseValue < 0">
+                        {{Math.round((simulation.last * simulation.number - simulation.purchaseValue * simulation.number) * 1000) / 1000}}€
+                      </ion-text>
+                      <ion-text class="sale-result-text" *ngIf="simulation.last - simulation.purchaseValue === 0">
+                        {{Math.round((simulation.last * simulation.number - simulation.purchaseValue * simulation.number) * 1000) / 1000}}€
+                      </ion-text>
+                    </div>
+                    <div *ngIf="simulation.last" class="current-value-container">
+                      <ion-text class="current-value-text">
+                        {{ 'SIMULATOR.CURRENT_VALUE' | translate}}: {{simulation.last}}€
+                      </ion-text>
+                    </div>
+                  </ion-col>
+
+                  <ion-col size="3" sizeXl="3" sizeXs="6">
+                    <div class="purchase-container">
+                      <ion-text class="simulations-text purchase" color="dark">
+                        <h2 class="purchase-title">
+                          {{ 'SIMULATOR.PURCHASE' | translate}}:
+                        </h2>
+                        <div class="date-value-container">
+                          <h4>
+                            {{simulation.purchaseDate | date:'short'}}
+                          </h4>
+                          <h4>{{ 'SIMULATOR.VALUE' | translate}}: {{simulation.purchaseValue}}€</h4>
+                        </div>
+
+                      </ion-text>
+                    </div>
+                  </ion-col>
+                  <ion-col size="3" sizeXl="3" sizeXs="6">
+                    <div *ngIf="simulation.result !== null" class="sale-container">
+                      <ion-text class="simulations-text sale" color="dark">
+                        <h2 class="sale-title">
+                          {{ 'SIMULATOR.SALE' | translate}}:
+                        </h2>
+                        <div class="date-value-container">
+                          <h4>
+                            {{simulation.saleDate | date:'short'}}
+                          </h4>
+                          <h4>{{ 'SIMULATOR.VALUE' | translate}}: {{simulation.saleValue}}€</h4>
+                        </div>
+
+                      </ion-text>
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+              <div class="fillSpace1" *ngIf="simulation.username === null" slot="end">
+              </div>
+              <ion-buttons no-margin *ngIf="simulation.username !== null" slot="end">
+                <ion-button style="margin:0" (click)="presentActionSheet(simulation)" no-margin shape="round"
+                  color="dark" slot="end">
+                  <ion-icon name="more" class="larger" item-right></ion-icon>
+                </ion-button>
+              </ion-buttons>
+
+            </ion-item>
+          </div>
+        </div>
+
+        <div *ngIf="data.length === 0">
+          <h1 style="padding: 12px 5px 12px;
+          font-size: 29px;">{{ 'SIMULATOR.NO_SIMULATORS' | translate}}</h1>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+
+</ion-content>
