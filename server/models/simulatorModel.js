@@ -34,6 +34,9 @@ const simulatorModel = new Schema({
   },
   result: {
     type: Number
+  },
+  lossClosure: {
+    type: Number,
   }
 
 
