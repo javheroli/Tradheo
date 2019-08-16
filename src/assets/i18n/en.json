@@ -101,7 +101,8 @@
     "SIMULATE_PURCHASE": "Simulate purchase",
     "INTRODUCE_NUMBER": "Introduce the stock number you want to purchase",
     "TOTAL_SPENDING": "Total to invest:",
-    "STOCK": "stock"
+    "STOCK": "stock",
+    "NEW_AUTO": "A new automatic simulation has been added by Tradheo"
   },
   "CHARTS": {
     "TITLE": "Charts",
@@ -202,7 +203,11 @@
     "SEND_EMAIL": "Notification",
     "SEND_OK_1": "The notifacation order has been sent",
     "SEND_OK_2": "Users will receive the email in a few moments",
-    "YES": "Yes"
+    "YES": "Yes",
+    "COMPANY": "Automatic system company",
+    "AGREED": "Agreed",
+    "CARE": "Be carefull!",
+    "CHANGE_COMPANY": "If you change the automatic system's company while the system has a simulation in operation, the operation will be deleted"
   },
   "CHAT": {
     "ME": "Me",

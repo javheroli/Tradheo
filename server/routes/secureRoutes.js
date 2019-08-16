@@ -4,6 +4,7 @@ const User = require('../models/userModel');
 const Market = require('../models/marketModel');
 const Message = require('../models/messageModel');
 const Simulator = require('../models/simulatorModel');
+const AdminSettings = require('../models/adminSettingsModel');
 const chatNotifications = require('../models/chatNotificationsModel');
 require('dotenv').config();
 const rp = require('request-promise');
@@ -879,6 +880,72 @@ router.route('/simulator/sell/:_id/:currentValue').get((req, res) => {
             res.json(simulator);
 
         })
+    })
+});
+
+//API Route /api/setAdminSettings/
+//GET: Set admin settings for automatic system
+router.route('/setAdminSettings/:company').get((req, res) => {
+    var company = req.params.company;
+    var userId = req.user._id;
+
+    User.findById(userId, (err, user) => {
+        if (!user.admin) return res.status(409).send('You are not a Tradheo admin');
+        AdminSettings.findOne((eror, settings) => {
+            var country;
+            var oldCompany = settings.company;
+            if (SpanishCompanies.find(x => x === company)) {
+                country = 'Spain';
+            } else {
+                country = 'Germany';
+            }
+            settings.country = country;
+            settings.company = company;
+            settings.save();
+
+            Simulator.findOne({
+                username: null,
+                company: oldCompany,
+                result: null
+            }, (error, simulator) => {
+                if (simulator !== null) {
+                    simulator.remove();
+                }
+
+            })
+            console.log(user.username + " is setting admin settings");
+            return res.json(settings);
+        })
+    })
+});
+
+//API Route /api/getAdminSettings/
+//GET: Get admin settings for automatic system
+router.route('/getAdminSettings/').get((req, res) => {
+    var userId = req.user._id;
+
+    User.findById(userId, (err, user) => {
+        if (!user.admin) return res.status(409).send('You are not a Tradheo admin');
+        AdminSettings.findOne((eror, settings) => {
+            console.log("Getting admin settings for" + user.username);
+            return res.json(settings);
+        })
+    })
+});
+
+//API Route /api/simulator/getAutomaticOperation
+//GET: Get admin settings for automatic system
+router.route('/simulator/getAutomaticOperation').get((req, res) => {
+
+    Simulator.findOne({
+        username: null,
+        result: null
+    }, (err, simulator) => {
+        if (simulator !== null) {
+            res.json(true);
+        } else {
+            res.json(false);
+        }
     })
 });
 

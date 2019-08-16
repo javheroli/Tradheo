@@ -6,7 +6,8 @@ import {
   ActionSheetController,
   AlertController,
   LoadingController,
-  ModalController
+  ModalController,
+  Events
 } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DataManagement } from 'src/app/services/dataManagement';
@@ -76,6 +77,7 @@ export class LiveDataPage implements OnInit {
   isReady = false;
   reorderable = true;
   swapColumns = false;
+  automaticOperation;
 
   constructor(
     public menuCtrl: MenuController,
@@ -87,7 +89,8 @@ export class LiveDataPage implements OnInit {
     public actionSheetController: ActionSheetController,
     private deviceService: DeviceDetectorService,
     public loadingCtrl: LoadingController,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public events: Events
   ) {
     this.onResize();
 
@@ -124,10 +127,38 @@ export class LiveDataPage implements OnInit {
       .catch(err => {
         console.log(err);
       });
+
+    this.dm.getAutomaticOperation().then(res => {
+      this.automaticOperation = res;
+    });
+
+    events.subscribe(
+      'automaticOperation:changedFromSimulator',
+      automaticOperation => {
+        this.automaticOperation = automaticOperation;
+      }
+    );
   }
 
   ionViewWillEnter() {
     this.subscription = this.intervallTimer.subscribe(x => {
+      this.dm.getAutomaticOperation().then(res => {
+        if (!this.automaticOperation && res) {
+          this.automaticOperation = true;
+          this.events.publish(
+            'automaticOperation:changedFromLive',
+            this.automaticOperation
+          );
+          const newAuto: string = this.translate.instant('LIVE_DATA.NEW_AUTO');
+          this.showSuccessToast(newAuto);
+        } else if (this.automaticOperation && !res) {
+          this.automaticOperation = false;
+          this.events.publish(
+            'automaticOperation:changedFromLive',
+            this.automaticOperation
+          );
+        }
+      });
       if (this.first) {
         this.first = false;
       } else {
@@ -158,6 +189,18 @@ export class LiveDataPage implements OnInit {
 
   ionViewWillLeave() {
     this.subscription.unsubscribe();
+  }
+
+  async showSuccessToast(data: any) {
+    let toast = await this.toastCtrl.create({
+      message: data,
+      duration: 3000,
+      position: 'top',
+      cssClass: 'toast',
+      color: 'success'
+    });
+
+    toast.present();
   }
 
   @HostListener('window:resize', ['$event'])

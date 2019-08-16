@@ -99,11 +99,8 @@
     "SIMULATE_PURCHASE": "Simular compra",
     "INTRODUCE_NUMBER": "Introduce el número de acciones que desea comprar",
     "TOTAL_SPENDING": "Total a invertir:",
-    "STOCK": "acción"
-
-
-
-
+    "STOCK": "acción",
+    "NEW_AUTO": "Se ha añadido una nueva simulación automática por Tradheo"
   },
 
   "CHARTS": {
@@ -206,7 +203,12 @@
     "SEND_EMAIL": "Notificación",
     "SEND_OK_1": "Se ha dado la orden de envio",
     "SEND_OK_2": "Los usuarios recibirán el correo en breves momentos",
-    "YES": "Sí"
+    "YES": "Sí",
+    "COMPANY": "Empresa para el sistema automático",
+    "AGREED": "De acuerdo",
+    "CARE": "¡Cuidado!",
+    "CHANGE_COMPANY": "Si cambia la empresa del sistema automático mientras este está en una operación, dicha operación será eliminada"
+
   },
   "CHAT": {
     "ME": "Yo",

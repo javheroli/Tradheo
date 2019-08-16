@@ -15,15 +15,76 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class SettingsPage implements OnInit {
   lang: any;
-  enableNotifications: any;
-  paymentMethod: any;
-  currency: any;
-  enablePromo: any;
-  enableHistory: any;
-
   languages: any = ['English', 'Spanish'];
-  paymentMethods: any = ['Paypal', 'Credit Card'];
-  currencies: any = ['USD', 'BRL', 'EUR'];
+  company;
+  companies = [
+    'Acciona',
+    'Acerinox',
+    'ACS',
+    'Aena',
+    'Amadeus',
+    'ArcelorMittal',
+    'B. Sabadell',
+    'Bankia',
+    'Bankinter',
+    'BBVA',
+    'Caixabank',
+    'Cellnex Telecom',
+    'Cie Automotive',
+    'Enagas',
+    'ENCE',
+    'Endesa',
+    'Ferrovial',
+    'Gamesa',
+    'Grifols',
+    'IAG',
+    'Iberdrola',
+    'Inditex',
+    'Indra A',
+    'Inmobiliaria Colonial',
+    'Mapfre',
+    'Masmovil Ibercom',
+    'Mediaset',
+    'Melia Hotels',
+    'Merlin Properties SA',
+    'Naturgy Energy',
+    'Red Electrica',
+    'Repsol',
+    'Santander',
+    'Telefonica',
+    'Viscofan',
+    'Adidas',
+    'Allianz',
+    'BASF',
+    'Bayer',
+    'Beiersdorf AG',
+    'BMW ST',
+    'Continental AG',
+    'Covestro',
+    'Daimler',
+    'Deutsche Bank AG',
+    'Deutsche Boerse',
+    'Deutsche Post',
+    'Deutsche Telekom AG',
+    'E.ON SE',
+    'Fresenius SE',
+    'Fresenius ST',
+    'Heidelbergcement',
+    'Henkel VZO',
+    'Infineon',
+    'Linde PLC',
+    'Lufthansa',
+    'Merck',
+    'Muench. Rueckvers.',
+    'RWE AG ST',
+    'SAP',
+    'Siemens AG',
+    'Thyssenkrupp AG',
+    'Volkswagen VZO',
+    'Vonovia',
+    'Wirecard AG'
+  ];
+
   public userLogged;
 
   constructor(
@@ -38,9 +99,46 @@ export class SettingsPage implements OnInit {
     const token = this.cookieService.get('token');
     this.dm.getUserLogged(token).then(res => {
       this.userLogged = res;
+      if (res.admin) {
+        this.dm.getAdminSettings().then(res => {
+          this.company = res.company;
+        });
+      }
     });
   }
 
+  focusCompany() {
+    let agreed: string = this.translate.instant('SETTINGS.AGREED');
+    let care: string = this.translate.instant('SETTINGS.CARE');
+    let changeCompany: string = this.translate.instant(
+      'SETTINGS.CHANGE_COMPANY'
+    );
+
+    this.alertCtrl
+      .create({
+        header: care,
+        message: changeCompany,
+
+        buttons: [
+          {
+            text: agreed,
+            role: 'cancel'
+          }
+        ]
+      })
+      .then(alertEl => {
+        alertEl.present();
+      });
+  }
+
+  changeCompany() {
+    this.dm
+      .setAdminSettings(this.company)
+      .then(res => {})
+      .catch(err => {
+        console.log(err);
+      });
+  }
   ngOnInit() {}
 
   logout() {
