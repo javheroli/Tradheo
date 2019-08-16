@@ -30,6 +30,11 @@ import { PhoneNumberValidator } from './validators/phonenumber.validator';
 import { CookieLawModule } from 'angular2-cookie-law';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+import { ProfileComponent } from './components/display/profile/profile.component';
+import { UsernameValidatorForEdit } from './validators/username.validator.edit';
+import { CustomEmailValidatorForEdit } from './validators/email.validator.edit';
+import { PhoneNumberValidatorForEdit } from './validators/phonenumber.validator.edit';
+import { ModalPageModule } from './pages/modal/modal.module';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, '../assets/i18n/', '.json');
@@ -48,6 +53,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     CookieLawModule,
     DeviceDetectorModule.forRoot(),
     NgxDatatableModule,
+    ModalPageModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -68,6 +74,10 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     UsernameValidator,
     CustomEmailValidator,
     PhoneNumberValidator,
+    UsernameValidatorForEdit,
+    CustomEmailValidatorForEdit,
+    PhoneNumberValidatorForEdit,
+    ProfileComponent,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

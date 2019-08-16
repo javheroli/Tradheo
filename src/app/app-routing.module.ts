@@ -48,6 +48,68 @@ const routes: Routes = [
         ]
       }
     ]
+  },
+  {
+    path: 'settings',
+    loadChildren: './pages/settings/settings.module#SettingsPageModule',
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'user-profile/:username',
+    loadChildren:
+      './pages/user-profile/user-profile.module#UserProfilePageModule',
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'user-profile',
+    loadChildren:
+      './pages/user-profile/user-profile.module#UserProfilePageModule',
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'edit-user',
+    loadChildren: './pages/edit-user/edit-user.module#EditUserPageModule',
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'community',
+    loadChildren: './pages/community/community.module#CommunityPageModule',
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'chat',
+    children: [
+      {
+        path: ':loggedUsername',
+        children: [
+          {
+            path: ':otherUsername',
+            loadChildren: './pages/chat/chat.module#ChatPageModule',
+            canLoad: [AuthGuard]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: 'licence',
+    children: [
+      {
+        path: ':username',
+        loadChildren: './pages/licence/licence.module#LicencePageModule',
+        canLoad: [NoAuthGuard]
+      },
+      {
+        path: '',
+        loadChildren: './pages/licence/licence.module#LicencePageModule',
+        canLoad: [AuthGuard]
+      }
+    ]
+  },
+  {
+    path: 'simulator',
+    loadChildren: './pages/simulator/simulator.module#SimulatorPageModule',
+    canLoad: [AuthGuard]
   }
 ];
 

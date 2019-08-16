@@ -2,9 +2,48 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/userModel');
 const Market = require('../models/marketModel');
+const Message = require('../models/messageModel');
+const Simulator = require('../models/simulatorModel');
+const chatNotifications = require('../models/chatNotificationsModel');
 require('dotenv').config();
 const rp = require('request-promise');
 
+const SpanishCompanies = ['Acciona',
+    'Acerinox',
+    'ACS',
+    'Aena',
+    'Amadeus',
+    'ArcelorMittal',
+    'B. Sabadell',
+    'Bankia',
+    'Bankinter',
+    'BBVA',
+    'Caixabank',
+    'Cellnex Telecom',
+    'Cie Automotive',
+    'Enagas',
+    'ENCE',
+    'Endesa',
+    'Ferrovial',
+    'Gamesa',
+    'Grifols',
+    'IAG',
+    'Iberdrola',
+    'Inditex',
+    'Indra A',
+    'Inmobiliaria Colonial',
+    'Mapfre',
+    'Masmovil Ibercom',
+    'Mediaset',
+    'Melia Hotels',
+    'Merlin Properties SA',
+    'Naturgy Energy',
+    'Red Electrica',
+    'Repsol',
+    'Santander',
+    'Telefonica',
+    'Viscofan'
+]
 
 const companyToSymbol = {
     //IBEX 35
@@ -225,6 +264,621 @@ router.route('/chart/getData/:company/:interval').get((req, res) => {
             return null;
         }
 
+    })
+});
+
+//API Route /api/getUser/:username
+//GET: Getting all users from DB
+router.route('/getUser/:username').get((req, res) => {
+    var username = req.params.username;
+    User.findOne({
+        username: username
+    }, (err, user) => {
+        if (err) {
+            res.status(404).send('User with username ' + username + ' not found');
+        } else {
+            res.json(user);
+            console.log('Getting user by username: ' + username);
+            res.end();
+        }
+    });
+});
+
+
+//API Route /api/deleteUser
+//GET: Mark user account as deleted
+router.route('/deleteUser').get((req, res) => {
+    var id = req.user._id;
+    User.findByIdAndUpdate(id, {
+        isDeleted: true
+    }, (err, user) => {
+        res.status(204).send();
+    });
+});
+
+//Route  /api/editUser
+//Edit user personal data
+router.route('/editUser').post((req, res) => {
+    var id = req.user._id;
+    var username = req.body.username;
+    var email = req.body.email;
+    var phoneNumber = req.body.phoneNumber;
+    var birthdate = req.body.birthdate;
+    var firstName = req.body.firstName;
+    var lastName = req.body.lastName;
+    var description = req.body.description;
+    var country = req.body.country;
+    var city = req.body.city;
+
+    if (req.file !== undefined) {
+        var image = req.file.url;
+        User.findByIdAndUpdate(id, {
+            username: username,
+            email: email,
+            phoneNumber: phoneNumber,
+            birthdate: birthdate,
+            firstName: firstName,
+            lastName: lastName,
+            description: description,
+            country: country,
+            city: city,
+            image: image
+        }, (err, user) => {
+            if (err) {
+                return res.status(500).send()
+            }
+            res.json(user);
+        });
+    } else {
+        User.findByIdAndUpdate(id, {
+            username: username,
+            email: email,
+            phoneNumber: phoneNumber,
+            birthdate: birthdate,
+            firstName: firstName,
+            lastName: lastName,
+            description: description,
+            country: country,
+            city: city,
+        }, (err, user) => {
+            if (err) {
+                return res.status(500).send()
+            }
+            res.json(user);
+        });
+    }
+
+});
+
+//Route  /api/editUser/validationUsername/:username
+//Username validation for edit user
+router.route('/editUser/validationUsername/:username')
+    .get((req, res) => {
+        var username = req.params.username;
+        var id = req.user._id;
+        User.findById(id, (err, userLogged) => {
+            User.findOne({
+                username: username
+            }, (err, user) => {
+                console.log("Validate username: " + username);
+                if (userLogged.username === username) {
+                    return res.status(200).send("Ok")
+                }
+
+                if (user !== null) {
+                    res.status(409).send('Username already taken');
+                } else {
+                    res.status(200).send("Ok")
+                }
+            })
+        })
+    })
+
+//Route  /api/editUser/validationEmail/:email
+//Email validation for editUser
+router.route('/editUser/validationEmail/:email')
+    .get((req, res) => {
+        var email = req.params.email;
+        var id = req.user._id;
+        User.findById(id, (err, userLogged) => {
+            User.findOne({
+                email: email
+            }, (err, user) => {
+                console.log("Validate email: " + email);
+                if (userLogged.email === email) {
+                    return res.status(200).send("Ok")
+                }
+                if (user !== null) {
+                    res.status(409).send('Email already taken');
+                } else {
+                    res.status(200).send("Ok")
+                }
+
+            })
+        })
+
+    })
+
+//Route  /api/editUser/validationPhoneNumber/:phoneNumber
+//PhoneNumber validation for edit user
+router.route('/editUser/validationPhoneNumber/:phoneNumber')
+    .get((req, res) => {
+        var phoneNumber = req.params.phoneNumber;
+        var id = req.user._id;
+        User.findById(id, (err, userLogged) => {
+            User.findOne({
+                phoneNumber: phoneNumber
+            }, (err, user) => {
+                console.log("Validate phoneNumber: " + phoneNumber);
+
+                if (userLogged.phoneNumber === phoneNumber) {
+                    return res.status(200).send("Ok")
+                }
+
+                if (user !== null) {
+                    res.status(409).send('phoneNumber already taken');
+                } else {
+                    res.status(200).send("Ok")
+                }
+            })
+        })
+
+    })
+
+//API Route /api/users
+//GET: Getting all users from DB
+router.route('/users').get((req, res) => {
+    var _id = req.user._id;
+    User.findById(_id, (err, userLogged) => {
+        User.find({
+                _id: {
+                    $ne: _id
+                },
+                username: {
+                    $nin: userLogged.usersWhoHasBlockedMe
+                }
+            },
+            (err, users) => {
+                res.json(users);
+                console.log('Getting all but the current user and blockeds');
+                res.end();
+            }
+        );
+    })
+
+});
+
+//API Route /api/users/search?keyword=*
+//GET: Getting all users from DB that contain the keyword in their username, first name or last name
+router.route('/users/search/:keyword?').get((req, res) => {
+    var _id = req.user._id;
+    var keyword = req.query.keyword;
+    var query;
+    User.findById(_id, (err, userLogged) => {
+        if (keyword === undefined || keyword == '') {
+            query = {
+                _id: {
+                    $ne: _id
+                },
+                username: {
+                    $nin: userLogged.usersWhoHasBlockedMe
+                }
+
+            };
+        } else {
+            query = {
+                $and: [{
+                        $or: [{
+                                username: {
+                                    $regex: keyword,
+                                    $options: 'i'
+                                }
+                            },
+                            {
+                                firstName: {
+                                    $regex: keyword,
+                                    $options: 'i'
+                                }
+                            },
+                            {
+                                lastName: {
+                                    $regex: keyword,
+                                    $options: 'i'
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        _id: {
+                            $ne: _id
+                        },
+                        username: {
+                            $nin: userLogged.usersWhoHasBlockedMe
+                        }
+                    }
+                ]
+            };
+        }
+
+
+        User.find(query,
+            (err, users) => {
+                res.json(users);
+                console.log('Getting all but the current user that contain the keyword in their username, first name or last name');
+                res.end();
+            }
+        );
+    });
+});
+
+//Route  /api/blockUser/:username
+//Block user for chat
+router.route('/blockUser/:username')
+    .get((req, res) => {
+        var username = req.params.username;
+        var id = req.user._id;
+        User.findByIdAndUpdate(id, {
+            $push: {
+                blockedUsersByMe: username
+            }
+        }, (err, userLogged) => {
+            User.findOneAndUpdate({
+                username: username
+            }, {
+                $push: {
+                    usersWhoHasBlockedMe: userLogged.username
+                }
+            }, (error, user) => {
+                console.log("User " + userLogged.username + " blocking " + username)
+                res.status(200).send("User blocked");
+            })
+        })
+
+    })
+
+//Route  /api/unblockUser/:username
+//Unblock user for chat
+router.route('/unblockUser/:username')
+    .get((req, res) => {
+        var username = req.params.username;
+        var id = req.user._id;
+        User.findByIdAndUpdate(id, {
+            $pull: {
+                blockedUsersByMe: username
+            }
+        }, (err, userLogged) => {
+            User.findOneAndUpdate({
+                username: username
+            }, {
+                $pull: {
+                    usersWhoHasBlockedMe: userLogged.username
+                }
+            }, (error, user) => {
+                console.log("User " + userLogged.username + " unblocking " + username)
+                res.status(200).send("User unblocked");
+            })
+        })
+
+    })
+
+//API Route /api/messages/
+//POST: Creating a new message and storing it at DB
+router.route('/messages').post((req, res) => {
+    let message = new Message(req.body);
+    var userId = req.user._id;
+    User.findById(userId, (error, user) => {
+        if (user.username !== message.sender) {
+            return res
+                .status(500)
+                .send('The user logged is not the sender of this message');
+        } else {
+            if (message.sender === message.receiver) {
+                return res.status(500).send('Sender and Receiver can not be the same user');
+            }
+            message.save(function (err) {
+                if (err) return res.status(500).send(err);
+                chatNotifications.findOne({
+                    username: message.receiver
+                }, (error, cN) => {
+                    if (error) return res.status(500).send(err);
+                    if (cN === null) {
+                        cN = new chatNotifications();
+                        cN.username = message.receiver;
+                        cN.notifications = {};
+                        cN.notifications.set(message.sender, 1);
+                    } else {
+                        if (cN.notifications.has(message.sender)) {
+                            cN.notifications.set(message.sender, cN.notifications.get(message.sender) + 1)
+                        } else {
+                            cN.notifications.set(message.sender, 1);
+                        }
+                    }
+                    cN.save();
+                })
+                res.status(201).send(message);
+                console.log('Message stored successfully');
+            });
+        }
+    });
+});
+
+
+//API Route /api/editMessages/
+//POST: Delete a message
+router.route('/deleteMessages/:messageId')
+    .get((req, res) => {
+        var messageId = req.params.messageId;
+        var userId = req.user._id;
+        User.findById(userId, (error, user) => {
+            Message.findById(messageId, (err, messageDB) => {
+                if (user.username !== messageDB.sender) {
+                    return res
+                        .status(500)
+                        .send('The user is not the sender of this message');
+                }
+                if (err) return res.status(500).send(err);
+                messageDB.message = '<message deleted>';
+                messageDB.save(function (err) {
+                    if (err) return res.status(500).send(err);
+                    res.status(200).send(messageDB);
+                    console.log("Message marked as deleted successfully");
+                });
+
+            });
+        });
+
+    });
+
+
+
+//API Route /api/editMessages/
+//POST: Edit a message
+router.route('/editMessages/:messageId')
+    .post((req, res) => {
+        var messageId = req.params.messageId;
+        var messageBody = new Message(req.body);
+        var userId = req.user._id;
+        User.findById(userId, (error, user) => {
+            Message.findById(messageId, (err, messageDB) => {
+                if (user.username !== messageDB.sender) {
+                    return res
+                        .status(500)
+                        .send('The user is not the sender of this message');
+                }
+                if (err) return res.status(500).send(err);
+                messageDB.message = messageBody.message;
+                messageDB.edited = Date.now();
+                messageDB.save(function (err) {
+                    if (err) return res.status(500).send(err);
+                    res.status(200).send(messageDB);
+                    console.log("Message edit successfully");
+                });
+
+            });
+        });
+
+    });
+
+//API Route /api/messages/:sender/:receiver
+//GET: Getting all messages between sender and receiver ordered by timestamp from DB
+router.route('/messages/:sender/:receiver').get((req, res) => {
+    var sender = req.params.sender;
+    var receiver = req.params.receiver;
+
+    Message.find({
+            $or: [{
+                    $and: [{
+                            sender: sender
+                        },
+                        {
+                            receiver: receiver
+                        }
+                    ]
+                },
+                {
+                    $and: [{
+                            sender: receiver
+                        },
+                        {
+                            receiver: sender
+                        }
+                    ]
+                }
+            ]
+        })
+        .sort({
+            timestamp: 1
+        })
+        .exec((err, messages) => {
+            res.json(messages);
+            console.log(
+                'Getting all messages between ' + sender + ' and ' + receiver
+            );
+            res.end();
+        });
+});
+
+//API Route /api/chatNotifications/
+//Get: Get chatNotifications for logged user
+router.route('/chatNotifications').get((req, res) => {
+    var userId = req.user._id;
+    User.findById(userId, (error, user) => {
+        chatNotifications.findOne({
+            username: user.username
+        }, (err, cN) => {
+            if (cN === null) {
+                cN = new chatNotifications();
+                cN.username = user.username;
+                cN.notifications = {};
+                cN.save();
+            }
+            console.log('Getting chat notifications for ' + user.username);
+            return res.json(cN);
+        })
+    });
+});
+
+//API Route /api/resetChatNotifications/:username
+//Get: Reset to 0 chatNotifications of user with username equals to :username for logged user 
+router.route('/resetChatNotifications/:username').get((req, res) => {
+    var userId = req.user._id;
+    var username = req.params.username;
+    User.findById(userId, (error, user) => {
+        chatNotifications.findOne({
+            username: user.username
+        }, (err, cN) => {
+            if (cN.notifications.has(username)) {
+                cN.notifications.delete(username, 0);
+                cN.save();
+                console.log('Reseting chat notifications of ' + username + ' for ' + user.username)
+            }
+            return res.status(200).send();
+        })
+    });
+});
+
+//API Route /api/simulator/purchaseByUser
+//POST: Creating a new simulator purchase object for a user
+router.route('/simulator/purchaseByUser').post((req, res) => {
+    const simulator = new Simulator(req.body);
+    simulator.saleDate = null;
+    simulator.saleValue = null;
+    simulator.result = null;
+    var userId = req.user._id;
+    if (companyToSymbol[simulator.company] === undefined) {
+        return res.status(404).send('Company not found');
+    }
+
+    if (SpanishCompanies.includes(simulator.company)) {
+        simulator.country = 'Spain';
+    } else {
+        simulator.country = 'Germany';
+    }
+
+    User.findById(userId, (error, user) => {
+        simulator.username = user.username;
+        if (user.isDeleted) {
+            return res.status(400).send('User has been marked as deleted');
+        }
+        Simulator.create(simulator, (err, simulatorDB) => {
+            if (err) return res.status(500).send(err);
+
+            console.log('Simulating a purchase of ' + simulatorDB.number + ' stocks of ' + simulatorDB.company + ' for ' + simulatorDB.username);
+            res.json(simulatorDB);
+        })
+    })
+
+});
+
+//API Route /api/simulator/getAll
+//GET: Getting simulator objects for user logged
+router.route('/simulator/getAll').get((req, res) => {
+    var userId = req.user._id;
+
+    User.findById(userId, (error, user) => {
+
+        Simulator.find({
+            $and: [{
+                $or: [{
+                    username: user.username
+                }, {
+                    username: null
+                }]
+            }, {
+                purchaseDate: {
+                    $gt: user.registrationDate
+                }
+            }]
+
+        }).sort({
+            purchaseDate: -1
+        }).exec((err, simulators) => {
+            var data = {};
+            data.simulators = simulators;
+            var autoSimulations = simulators.filter(x => x.username === null);
+            var userSimulations = simulators.filter(x => x.username !== null);
+            var autoSimulationsDone = autoSimulations.filter(x => x.result !== null);
+            var userSimulationsDone = userSimulations.filter(x => x.result !== null);
+            if (autoSimulationsDone.length !== 0) {
+                var autoResult = 0.0;
+                var numberSuccessAuto = 0;
+                autoSimulationsDone.forEach(simulation => {
+                    if (simulation.result >= 0) {
+                        numberSuccessAuto++;
+                    }
+                    autoResult += simulation.result;
+                })
+                data.autoResult = Math.round(autoResult * 1000) / 1000;
+                data.autoPerformance = Math.round(numberSuccessAuto * 100 / autoSimulationsDone.length * 100) / 100;
+            } else {
+                data.autoResult = null;
+                data.autoPerformance = null;
+            }
+            if (userSimulationsDone.length !== 0) {
+                var userResult = 0.0;
+                var numberSuccessUser = 0;
+                userSimulationsDone.forEach(simulation => {
+                    if (simulation.result >= 0) {
+                        numberSuccessUser++;
+                    }
+                    userResult += simulation.result;
+                })
+                data.userResult = Math.round(userResult * 1000) / 1000;
+                data.userPerformance = Math.round(numberSuccessUser * 100 / userSimulationsDone.length * 100) / 100;
+            } else {
+                data.userResult = null;
+                data.userPerformance = null;
+            }
+            console.log('Getting simulations for user' + user.username);
+            res.json(data);
+
+        })
+
+    })
+
+});
+
+//API Route /api/simulator/delete/:id
+//DELETE: Delete simulator object by _id
+router.route('/simulator/delete/:_id').delete((req, res) => {
+    var _id = req.params._id;
+    var userId = req.user._id;
+
+    User.findById(userId, (error, user) => {
+        Simulator.findById(_id, (err, simulator) => {
+            if (err) return res.status(500).send();
+            if (user.username !== simulator.username) {
+                return res.status(409).send("You are not the propietary of this simulion");
+            }
+            simulator.remove((err, result) => {
+                console.log("Deleting simulation for " + user.username);
+                return res.status(201).send();
+            });
+        })
+    })
+});
+
+//API Route /api/simulator/sell/:id/:currentValue
+//GET: Sell simulator object by _id
+router.route('/simulator/sell/:_id/:currentValue').get((req, res) => {
+    var _id = req.params._id;
+    var currentValue = req.params.currentValue;
+    var userId = req.user._id;
+
+    User.findById(userId, (error, user) => {
+        Simulator.findById(_id, (err, simulator) => {
+            if (err) return res.status(500).send();
+            if (user.username !== simulator.username) {
+                return res.status(409).send("You are not the propietary of this simulion");
+            }
+            simulator.saleDate = new Date();
+            simulator.saleValue = currentValue;
+            simulator.result = Math.round((simulator.saleValue * simulator.number - simulator.purchaseValue * simulator.number) * 1000) / 1000;
+            simulator.save();
+            console.log("Sending simulation for " + simulator.username);
+            res.json(simulator);
+
+        })
     })
 });
 

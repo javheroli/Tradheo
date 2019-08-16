@@ -124,7 +124,7 @@ ion-toolbar.user-profile {
 // Custom toolbar (overriding Shadow DOM)
 ion-toolbar {
     &.ion-color-primary {
-        --ion-color-base: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary)) !important;
+        --ion-color-base: var(--ion-color-dark) !important;
     }
 }
 
@@ -223,6 +223,8 @@ ion-card {
 
 }
 
+
+
 // Custom Menu styles (overriding Shadow DOM)
 ion-menu {
     ion-header {
@@ -278,12 +280,17 @@ ion-select {
     font-weight: bold;
 }
 
+.searchbar-input {
+
+    background: #cddce6 !important;
+}
+
 .card-header-charts {
-    background: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
+    background: var(--ion-color-dark);
 }
 
 .datatable-header {
-    background: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
+    background: var(--ion-color-dark);
     text-align: center;
 
     @media screen and (min-width: 800px) {
@@ -434,4 +441,14 @@ ion-select {
     border-right: 1px solid #DADADA;
     border-left: 1px solid #DADADA;
     border-bottom: 1px solid #DADADA;
+}
+
+@media screen and (min-width: 1200px) {
+    .loadingChart {
+        margin-left: 28%;
+    }
+}
+
+ion-radio .radio-inner {
+    border-width: 6px;
 }

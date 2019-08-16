@@ -1,0 +1,66 @@
+:host {
+    ion-content {
+        --background: linear-gradient(-135deg, var(--ion-color-medium), var(--ion-color-light));
+        --padding: 0px;
+    }
+}
+
+ion-avatar {
+    width: 60px;
+    height: 60px;
+}
+
+.larger {
+    font-size: 22px;
+}
+
+
+.arriba {
+    position: relative;
+    display: block;
+    height: 50px;
+}
+
+.username {
+    color: rgba(85, 83, 83, 0.842);
+}
+
+.filter {
+    color: white;
+}
+
+ion-row {
+    align-items: center;
+}
+
+.blockeds {
+    background-color: #fcadad;
+}
+
+.blockeds:hover {
+    background-color: #d89b9b;
+}
+
+.item-user:hover {
+    background-color: rgb(226, 226, 236);
+}
+
+.item-user {
+    background: ghostwhite;
+}
+
+.fab-container {
+    margin-right: 18px;
+}
+
+.card-items {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+
+    ion-card-content {
+        padding: 0px 3px 3px;
+        background-color: var(--ion-color-dark);
+    }
+
+
+}

@@ -3,12 +3,16 @@ import {
   MenuController,
   ToastController,
   NavController,
-  ActionSheetController
+  ActionSheetController,
+  AlertController,
+  LoadingController,
+  ModalController
 } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DataManagement } from 'src/app/services/dataManagement';
 import { interval } from 'rxjs';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { ModalPage } from '../modal/modal.page';
 
 @Component({
   selector: 'app-live-data',
@@ -78,9 +82,12 @@ export class LiveDataPage implements OnInit {
     private translate: TranslateService,
     public dm: DataManagement,
     public toastCtrl: ToastController,
+    public alertCtrl: AlertController,
     public navCtrl: NavController,
     public actionSheetController: ActionSheetController,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    public loadingCtrl: LoadingController,
+    public modalController: ModalController
   ) {
     this.onResize();
 
@@ -126,15 +133,26 @@ export class LiveDataPage implements OnInit {
       } else {
         this.previousData = this.data;
       }
-      this.dm
-        .marketLiveData(this.country)
-        .then(res => {
-          res.date = String(new Date(res.date)).split(' GMT')[0];
-          this.data = res;
-        })
-        .catch(err => {
-          console.log(err);
-        });
+
+      const now = new Date();
+      if (
+        now.getDay() > 0 &&
+        now.getDay() < 6 &&
+        now.getHours() >= 8 &&
+        !(now.getHours() == 8 && now.getMinutes() < 25) &&
+        now.getHours() <= 17 &&
+        !(now.getHours() == 17 && now.getMinutes() > 45)
+      ) {
+        this.dm
+          .marketLiveData(this.country)
+          .then(res => {
+            res.date = String(new Date(res.date)).split(' GMT')[0];
+            this.data = res;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     });
   }
 
@@ -237,13 +255,33 @@ export class LiveDataPage implements OnInit {
     const translationActions: string = this.translate.instant(
       'LIVE_DATA.ACTIONS'
     );
+
     const showChart: string = this.translate.instant('LIVE_DATA.SHOWCHARTS');
+    const buyStocks: string = this.translate.instant('LIVE_DATA.BUY_STOCKS');
+
     const actionSheet = await this.actionSheetController.create({
       header: translationActions,
       buttons: [
         {
+          text: buyStocks + message,
+          icon: 'logo-usd',
+          handler: async () => {
+            const stockValue = this.data.companies.filter(
+              x => x.name === message
+            )[0].last;
+            const modal = await this.modalController.create({
+              component: ModalPage,
+              componentProps: {
+                company: message,
+                stockValue
+              }
+            });
+            await modal.present();
+          }
+        },
+        {
           text: showChart + message,
-          icon: 'stats',
+          icon: 'analytics',
           handler: () => {
             this.navCtrl.navigateForward(
               '/charts/' + this.country + '/' + message
@@ -258,5 +296,18 @@ export class LiveDataPage implements OnInit {
       ]
     });
     await actionSheet.present();
+  }
+
+  showLoading() {
+    let translation2: string = this.translate.instant('LOGIN.WAIT');
+    this.loadingCtrl
+      .create({
+        message: translation2,
+        showBackdrop: true,
+        duration: 500
+      })
+      .then(loadingEl => {
+        loadingEl.present();
+      });
   }
 }

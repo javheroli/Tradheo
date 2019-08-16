@@ -1,0 +1,42 @@
+ion-content {
+    --background: linear-gradient(-135deg, var(--ion-color-medium), var(--ion-color-light));
+    text-align: center;
+}
+
+ion-card {
+    margin-top: 15%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+ion-card-header {
+    --background: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
+}
+
+ion-card-content {
+    background-color: white;
+    padding-top: 5%;
+    padding-bottom: 3%;
+}
+
+ion-input {
+    background-color: var(--ion-color-light);
+    border-radius: 4px;
+    font-size: 170%;
+    margin-bottom: 5%;
+    border: 1px solid var(--ion-color-dark);
+}
+
+h4 {
+    font-size: 130%;
+    color: var(--ion-color-secondary);
+}
+
+ion-button {
+    margin-top: 10px;
+    margin-right: 4%;
+    --background: var(--ion-color-primary, #3880ff);
+    --background-focused: rgb(241, 182, 105);
+    --background-hover: rgb(243, 167, 67);
+
+}

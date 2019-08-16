@@ -1,0 +1,118 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="secondary"></ion-menu-button>
+      <ion-back-button color="secondary"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="light">{{ 'MENU.LICENCE' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card style="text-align: center" class="bg-light" no-margin>
+
+    <ion-card-content>
+      <h1 margin-bottom>
+        <ion-text color="dark"><strong>{{ 'LICENCE.UPDATE' | translate}}</strong></ion-text>
+      </h1>
+
+      <p margin-bottom>
+        {{ 'LICENCE.TEXT_1' | translate}}
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="card-offers">
+    <ion-card-header>
+      <ion-card-title>
+        <h1>{{ 'LICENCE.TEXT_2' | translate}}</h1>
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-radio-group id="radio-group" [(ngModel)]="plan">
+        <div class="offers-container">
+          <ion-item>
+            <div class="offer-container">
+              <div class="info-product">
+                <section>
+                  <ion-text class="plan-title">{{ 'LICENCE.APPRENTICE' | translate}}</ion-text>
+                </section>
+                <div class="time">
+                  1 {{ 'LICENCE.MONTH' | translate}}
+                </div>
+                <div class="for-only">
+                  {{ 'LICENCE.FOR_ONLY' | translate}}
+                </div>
+                <div class="price">
+                  19.99€
+                </div>
+              </div>
+              <div class="recomendation-product">
+                <p>{{ 'LICENCE.RECOMENDATION_APPRENTICE' | translate}}</p>
+                <ion-radio color="success" mode="ios" slot="start" value="19.99" checked="true">
+                </ion-radio>
+              </div>
+            </div>
+          </ion-item>
+          <ion-item>
+            <div class="offer-container">
+              <div class="info-product">
+                <section>
+                  <ion-text class="plan-title">{{ 'LICENCE.EXPERT' | translate}}</ion-text>
+                </section>
+                <div class="time">
+                  3 {{ 'LICENCE.MONTHS' | translate}}
+                </div>
+                <div class="for-only">
+                  {{ 'LICENCE.FOR_ONLY' | translate}}
+                </div>
+                <div class="price">
+                  49.99€
+                </div>
+              </div>
+              <div class="recomendation-product">
+                <p>{{ 'LICENCE.RECOMENDATION_EXPERT' | translate}}</p>
+                <ion-radio color="success" mode="ios" slot="start" value="49.99">
+                </ion-radio>
+              </div>
+
+            </div>
+          </ion-item>
+          <ion-item>
+            <div class="offer-container-last">
+              <div class="info-product">
+                <section>
+                  <ion-text class="plan-title">{{ 'LICENCE.PROFESSIONAL' | translate}}</ion-text>
+                </section>
+                <div class="time">
+                  1 {{ 'LICENCE.YEAR' | translate}}
+                </div>
+                <div class="for-only">
+                  {{ 'LICENCE.FOR_ONLY' | translate}}
+                </div>
+                <div class="price">
+                  149.99€
+                </div>
+
+              </div>
+              <div class="recomendation-product">
+                <p>{{ 'LICENCE.RECOMENDATION_PROFESSIONAL' | translate}}</p>
+                <ion-radio color="success" mode="ios" slot="start" value="149.99">
+                </ion-radio>
+
+              </div>
+            </div>
+          </ion-item>
+        </div>
+      </ion-radio-group>
+
+    </ion-card-content>
+  </ion-card>
+  <div #buynow class="div-paypal" id="buynow" no-margin size="large"></div>
+  <div style="text-align: center" *ngIf="isReady" class="licence-expiration-div">
+    <h4 style="font-size: 15px;" class="licence-expiration">
+      {{ 'LICENCE.LICENCE_EXPIRES' | translate}}{{logged.licenceDate}}</h4>
+  </div>
+
+
+</ion-content>

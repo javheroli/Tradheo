@@ -1,0 +1,165 @@
+:host {
+    ion-content {
+        --background: linear-gradient(-135deg, var(--ion-color-medium), var(--ion-color-light));
+        --padding: 0px;
+    }
+}
+
+.card-offers {
+    margin-top: 4%;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+
+.card-offers ion-card-header {
+    --background: var(--ion-color-dark);
+    text-align: center;
+}
+
+.card-offers ion-card-header ion-card-title {
+    color: var(--ion-color-light);
+    font-weight: bold;
+}
+
+.offer-container {
+    border: 2px solid var(--ion-color-dark);
+    margin: 0px auto;
+    padding: 10px;
+    position: relative;
+    display: inline-block;
+    //margin-right: 30px;
+    border-radius: 4px;
+    background-color: #f8f3ed;
+}
+
+.offer-container-last {
+    border: 2px solid var(--ion-color-dark);
+    margin: 0px auto;
+    padding: 10px;
+    position: relative;
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #f8f3ed;
+}
+
+.offers-container {
+    padding: 30px 0px 0px;
+    text-align: center;
+}
+
+section {
+    background-color: var(--ion-color-secondary);
+    color: var(--ion-color-light);
+    border-radius: 4px;
+    height: 45px;
+    border: 1px solid darkgray;
+}
+
+.info-product {
+    background-color: #cddce6;
+}
+
+.plan-title {
+    font-size: 26px;
+    font-weight: bold;
+    font-variant-caps: small-caps;
+    text-shadow: -1px 0 darkgrey, 0 1px darkgrey, 1px 0 darkgrey, 0 -1px darkgrey;
+}
+
+.time {
+    font-size: 40px;
+    font-weight: bold;
+    color: var(--ion-color-dark);
+    margin-top: 6%;
+}
+
+.price {
+    font-size: 55px;
+    font-weight: bold;
+    color: var(--ion-color-dark);
+    padding-bottom: 6%;
+}
+
+.for-only {
+    font-size: 20px;
+}
+
+.recomendation-product {
+    margin-top: 4px;
+    background-color: #E7EDF1;
+    padding: 10px 50px;
+
+}
+
+ion-radio {
+    margin-top: 9px;
+    width: 75px;
+    height: 120px;
+    display: inline-block;
+}
+
+ion-item {
+    display: inline-block;
+    width: 33%;
+    text-align: center;
+}
+
+ion-item:hover {
+    section {
+        background-color: #4dc049;
+    }
+
+    .info-product {
+        background-color: #baccd8;
+    }
+
+    .recomendation-product {
+        background-color: rgb(211, 217, 221);
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    .time {
+        font-size: 20px;
+    }
+
+    .for-only {
+        font-size: 15px;
+    }
+
+    .price {
+        font-size: 30px;
+    }
+
+    .recomendation-product {
+        padding: 10px 17%;
+    }
+
+    ion-radio {
+        width: 33%;
+        height: 100px;
+    }
+}
+
+@media only screen and (max-width : 450px) {
+    ion-item {
+        display: block;
+        width: 100%;
+        margin-bottom: 6px;
+    }
+
+    .plan-title {
+        font-size: 21px;
+    }
+}
+
+@media only screen and (min-width : 321px) and (max-width: 900px) {
+    .plan-title {
+        font-size: 16px;
+    }
+}
+
+.div-paypal {
+    text-align: center;
+    margin-top: 3%;
+}

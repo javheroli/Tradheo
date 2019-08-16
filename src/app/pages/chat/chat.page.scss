@@ -1,0 +1,230 @@
+ion-content {
+    --background: white;
+}
+
+ion-button {
+    --background: var(--ion-color-primary, #3880ff);
+    --background-focused: rgb(241, 182, 105);
+    --background-hover: rgb(243, 167, 67);
+}
+
+.elem ion-button {
+    border-radius: 0;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 96%;
+    height: 100%;
+}
+
+.elem {
+    position: relative;
+    min-width: 50px;
+    width: 27%;
+}
+
+.elem-edit {
+    position: relative;
+    min-width: 50px;
+    width: 10%;
+}
+
+.elem-send-edit ion-button {
+    border-radius: 0;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 96%;
+    height: 100%;
+}
+
+.elem-send-edit {
+    position: relative;
+    min-width: 50px;
+    width: 17%;
+}
+
+div#footer div.elem:first-child {
+    flex-grow: 1;
+}
+
+
+
+div#footer {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+ion-input {
+    padding-left: 15px;
+    font-size: 125%;
+    margin-left: 5%;
+    width: 90%;
+}
+
+ion-toolbar {
+    margin: 0;
+    padding: 0 !important;
+}
+
+ion-item {
+    margin-top: 1%;
+}
+
+.meMessages {
+    text-align: left;
+    width: max-content;
+    max-width: 100%;
+}
+
+.heMessages {
+    text-align: left;
+    width: max-content;
+    max-width: 100%;
+
+}
+
+.menuIcon {
+    cursor: pointer;
+    font-size: 23px;
+    margin-left: 15px;
+}
+
+
+.chat-list {
+    margin-bottom: 25px;
+}
+
+
+.chat-message {
+    width: 100%;
+    display: inline-block;
+    padding-left: 9%;
+    padding-right: 9%;
+
+
+    .right-bubble {
+        border: 1px solid #ddd;
+        max-width: 100%;
+        float: right;
+        position: relative;
+        background: #dcf8c6;
+        border-top-left-radius: .4em;
+        border-bottom-left-radius: .4em;
+        border-bottom-right-radius: .4em;
+        padding: 5px 25px 10px;
+
+        span.msg-name {
+            font-size: 12px;
+            font-weight: bold;
+            color: green;
+            margin-right: 7px;
+            margin-left: 7px;
+
+        }
+
+        span.msg-date {
+            font-size: 10px;
+        }
+    }
+
+    .right-bubble:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+        border: 27px solid transparent;
+        border-left-color: #dcf8c6;
+        border-right: 0;
+        border-top: 0;
+        margin-top: -13.5px;
+        margin-right: -27px;
+    }
+
+    .left-bubble {
+        border: 1px solid #ddd;
+        max-width: 100%;
+        float: left;
+        position: relative;
+        background: #cbd7ff;
+        border-top-left-radius: .4em;
+        border-bottom-left-radius: .4em;
+        border-bottom-right-radius: .4em;
+        padding: 5px 25px 10px;
+
+        span.msg-name {
+            font-size: 12px;
+            font-weight: bold;
+            color: blue;
+            margin-right: 7px;
+            margin-left: 7px;
+        }
+
+        span.msg-date {
+            font-size: 10px;
+        }
+    }
+
+    .left-bubble:after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+        border: 27px solid transparent;
+        border-right-color: #cbd7ff;
+        border-left: 0;
+        border-top: 0;
+        margin-top: -13.5px;
+        margin-left: -27px;
+    }
+}
+
+.edit-wrapper {
+    margin-bottom: 5px;
+}
+
+.edit-reply {
+    padding-left: 25px;
+}
+
+.edit-border {
+    background: #7eaad1;
+    height: 33px;
+    width: 2px;
+    position: absolute;
+    margin-left: -14px;
+}
+
+.edit-title {
+    font-weight: 700;
+    color: #3a6d99;
+    line-height: 16px;
+    margin-bottom: 3px;
+    font-size: 15px;
+}
+
+.edit-body {
+    line-height: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-bottom: 1px;
+}
+
+.edit-close {
+    float: right;
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin-right: 13px;
+    margin-top: 5px;
+    padding-top: 7px;
+    cursor: pointer;
+}

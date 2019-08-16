@@ -195,7 +195,7 @@
               <ion-icon name="map" item-start></ion-icon>
               {{ 'REGISTER.COUNTRY' | translate }}
             </ion-label>
-            <ionic-selectable color="secondary" (onChange)="autocompletePrefixPhoneNumber()" [isMultiple]="false"
+            <ionic-selectable class="selectable" (onChange)="autocompletePrefixPhoneNumber()" [isMultiple]="false"
               formControlName="country" [(ngModel)]="country" [items]="countries" itemValueField="name"
               itemTextField="name" [canSearch]="true">
             </ionic-selectable>
@@ -282,8 +282,8 @@
               <ion-icon name="calendar" item-start></ion-icon>
               {{ 'REGISTER.BIRTHDATE' | translate }}
             </ion-label>
-            <ion-datetime (change)="validateBirthdate()" displayFormat="DD/MM/YYYY" [(ngModel)]="birthDate"
-              formControlName="birthDate">
+            <ion-datetime class="datetime" (change)="validateBirthdate()" displayFormat="DD/MM/YYYY"
+              [(ngModel)]="birthDate" formControlName="birthDate">
             </ion-datetime>
           </ion-item>
           <div class="error-message" *ngIf="
