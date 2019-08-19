@@ -8,7 +8,8 @@ import {
   LoadingController,
   ToastController,
   AlertController,
-  ActionSheetController
+  ActionSheetController,
+  Events
 } from '@ionic/angular';
 
 @Component({
@@ -30,6 +31,8 @@ export class SimulatorPage implements OnInit {
   marketSpain;
   marketGermany;
   Math = Math;
+  automaticOperation;
+
   trackSimulation = simulation => simulation._id;
   constructor(
     private translate: TranslateService,
@@ -38,11 +41,23 @@ export class SimulatorPage implements OnInit {
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public alertCtrl: AlertController,
-    public actionSheetController: ActionSheetController
+    public actionSheetController: ActionSheetController,
+    public events: Events
   ) {
     const token = this.cookieService.get('token');
     this.dm.getUserLogged(token).then(res => {
       this.logged = res;
+
+      this.dm.getAutomaticOperation().then(res => {
+        this.automaticOperation = res;
+      });
+
+      events.subscribe(
+        'automaticOperation:changedFromLive',
+        automaticOperation => {
+          this.automaticOperation = automaticOperation;
+        }
+      );
 
       this.dm.getAllSimulations().then(res => {
         this.simulationsResponse = res;
@@ -123,6 +138,25 @@ export class SimulatorPage implements OnInit {
               });
 
             this.changeFilter(null);
+            this.dm.getAutomaticOperation().then(res => {
+              if (!this.automaticOperation && res) {
+                this.automaticOperation = true;
+                this.events.publish(
+                  'automaticOperation:changedFromSimulator',
+                  this.automaticOperation
+                );
+                const newAuto: string = this.translate.instant(
+                  'LIVE_DATA.NEW_AUTO'
+                );
+                this.showSuccessToast(newAuto);
+              } else if (this.automaticOperation && !res) {
+                this.automaticOperation = false;
+                this.events.publish(
+                  'automaticOperation:changedFromSimulator',
+                  this.automaticOperation
+                );
+              }
+            });
           });
         });
       });

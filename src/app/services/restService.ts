@@ -590,7 +590,52 @@ export class RestWS extends AbstractWS {
   public sellSimulation(_id, currentValue) {
     const token = this.cookieService.get('token');
     return this.makeGetRequest(
-      this.path + 'api/simulator/sell/' + _id + '/'+currentValue,null,
+      this.path + 'api/simulator/sell/' + _id + '/' + currentValue,
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public getAdminSettings() {
+    const token = this.cookieService.get('token');
+    return this.makeGetRequest(this.path + 'api/getAdminSettings', null, token)
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public setAdminSettings(company) {
+    const token = this.cookieService.get('token');
+    return this.makeGetRequest(
+      this.path + 'api/setAdminSettings/' + company,
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
+  public getAutomaticOperation() {
+    const token = this.cookieService.get('token');
+    return this.makeGetRequest(
+      this.path + 'api/simulator/getAutomaticOperation/',
+      null,
       token
     )
       .then(res => {

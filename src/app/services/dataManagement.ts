@@ -432,4 +432,37 @@ export class DataManagement {
         return Promise.reject(error);
       });
   }
+
+  public getAdminSettings(): Promise<any> {
+    return this.restService
+      .getAdminSettings()
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public setAdminSettings(company): Promise<any> {
+    return this.restService
+      .setAdminSettings(company)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
+  public getAutomaticOperation(): Promise<any> {
+    return this.restService
+      .getAutomaticOperation()
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
 }

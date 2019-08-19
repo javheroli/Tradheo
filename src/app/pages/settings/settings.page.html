@@ -48,10 +48,12 @@
       </ion-select>
     </ion-item>
 
-    <ion-item>
-      <div style="text-align:center;" (click)="exportData()">
-        <ion-button class="export_data_btn">{{ 'SETTINGS.EXPORT_DATA' | translate }}</ion-button>
-      </div>
+    <ion-item *ngIf="userLogged.admin" (click)="focusCompany()">
+      <ion-icon name="logo-ionitron" slot="start" color="primary"></ion-icon>
+      <ion-label color="primary">{{ 'SETTINGS.COMPANY' | translate}}</ion-label>
+      <ion-select [(ngModel)]="company" (ionChange)="changeCompany()">
+        <ion-select-option *ngFor="let company of companies" value="{{company}}">{{company}}</ion-select-option>
+      </ion-select>
 
     </ion-item>
   </ion-list>
