@@ -596,7 +596,7 @@ router.route('/messages').post((req, res) => {
                     }
                     cN.save();
                 })
-                res.status(201).send(message);
+                res.status(200).send(message);
                 console.log('Message stored successfully');
             });
         }
@@ -605,7 +605,7 @@ router.route('/messages').post((req, res) => {
 
 
 //API Route /api/editMessages/
-//POST: Delete a message
+//GET: Delete a message
 router.route('/deleteMessages/:messageId')
     .get((req, res) => {
         var messageId = req.params.messageId;

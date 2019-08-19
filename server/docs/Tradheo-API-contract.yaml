@@ -21,6 +21,21 @@ tags:
   - name: Captcha
     description: Google ReCaptcha V2 verification to avoid bots on sign up through Turing test
 
+  - name: Market
+    description: All about market data objects, API end-points to get live data
+
+  - name: Message
+    description: All about message objects, API end-points to implement chat functionality
+
+  - name: ChatNotification
+    description: All about chat notificaitions objects, API end-points to get the number of chat new messages
+
+  - name: Simulator
+    description: All about simulator objects, API end-points to simulate the creation and sale of stocks
+
+  - name: AdminSettings
+    description: All about admin settings objects, API end-points to manage automatic purchase-sale system
+
 paths:
   /auth/signup:
     post:
@@ -203,6 +218,594 @@ paths:
       security:
         - bearerAuth: []
 
+  /getUserLoggedWithoutLoggin/{username}:
+    get:
+      tags:
+        - User
+      parameters:
+        - name: username
+          in: path
+          description: Username to search in DB for an account in order to update its licence
+          required: true
+          schema:
+            type: string
+      summary: Route to get another user's information
+      operationId: 'getUserLoggedWithoutLoggin'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: 'User not found'
+
+  /getUser/{username}:
+    get:
+      tags:
+        - User
+      parameters:
+        - name: username
+          in: path
+          description: Username find a Tradheo account and display its profile
+          required: true
+          schema:
+            type: string
+      summary: Route to get an user by its username
+      operationId: 'getUser'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Market'
+        '404':
+          description: 'User not found'
+      security:
+        - bearerAuth: []
+
+  /updateLicence/{username}/{plan}:
+    get:
+      tags:
+        - User
+      parameters:
+        - name: username
+          in: path
+          description: Tradheo account's username to update licence for
+          required: true
+          schema:
+            type: string
+        - name: plan
+          in: path
+          description: Tradheo plans for licence update (19.49, 49.99, 149.99)
+          required: true
+          schema:
+            type: string
+      summary: Route to update user's licence by username
+      operationId: 'updateLicence'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: 'Plan does not exist'
+
+  /market/live/{country}:
+    get:
+      tags:
+        - Market
+      parameters:
+        - name: country
+          in: path
+          description: Country (Spain or Germany) to get market live data
+          required: true
+          schema:
+            type: string
+      summary: Route to get market live data by country
+      operationId: 'marketLive'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Market'
+        '500':
+          description: 'Error getting market live data'
+      security:
+        - bearerAuth: []
+
+  /chart/getData/{company}/{interval}:
+    get:
+      tags:
+        - Market
+      parameters:
+        - name: company
+          in: path
+          description: Company to get data needed to plot a graph
+          required: true
+          schema:
+            type: string
+        - name: interval
+          in: path
+          description: Interval for the data in graph (1m, 5m, 15m, 30m, 1h, 1D, 1W, 1M)
+          required: true
+          schema:
+            type: string
+      summary: Route to get a company data to plot its graph
+      operationId: 'chartGetData'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Market'
+        '400':
+          description: 'Bad interval introduced'
+        '503':
+          description: "Reached API's limitations of 5 request per minute and 500 per day"
+
+      security:
+        - bearerAuth: []
+
+  /deleteUser:
+    get:
+      tags:
+        - User
+      summary: Route to mark user as deleted
+      operationId: 'deleteUser'
+      responses:
+        '204':
+          description: 'No content'
+      security:
+        - bearerAuth: []
+
+  /editUser:
+    post:
+      tags:
+        - User
+      summary: Route to edit user logged profile
+      operationId: editUser
+      requestBody:
+        $ref: '#/components/requestBodies/UserResponse'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+        '500':
+          description: 'Server error'
+
+  /editUser/validationUsername/{username}:
+    get:
+      tags:
+        - User
+      parameters:
+        - name: username
+          in: path
+          description: Username to validate if is already used while editting a profile
+          required: true
+          schema:
+            type: string
+      summary: Route to validate an username while editting a profile
+      operationId: 'edituservalidationusername'
+      responses:
+        '200':
+          description: Ok
+        '409':
+          description: 'Username already taken'
+      security:
+        - bearerAuth: []
+
+  /editUser/validationEmail/{email}:
+    get:
+      tags:
+        - User
+      parameters:
+        - name: email
+          in: path
+          description: Email to validate if is already used while editting a profile
+          required: true
+          schema:
+            type: string
+      summary: Route to validate an email while editting a profile
+      operationId: 'edituservalidationemail'
+      responses:
+        '200':
+          description: Ok
+        '409':
+          description: 'Email already taken'
+      security:
+        - bearerAuth: []
+
+  /editUser/validationPhoneNumber/{phoneNumber}:
+    get:
+      tags:
+        - User
+      parameters:
+        - name: phoneNumber
+          in: path
+          description: Phone Number to validate if is already used while editting a profile
+          required: true
+          schema:
+            type: string
+      summary: Route to validate an phone number while editting a profile
+      operationId: 'edituservalidationphone'
+      responses:
+        '200':
+          description: Ok
+        '409':
+          description: 'Phone number already taken'
+      security:
+        - bearerAuth: []
+
+  /users:
+    get:
+      tags:
+        - Message
+      summary: Route to get all users but logged user and blockeds
+      operationId: 'users'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      security:
+        - bearerAuth: []
+
+  /users/search/{keyboard}:
+    get:
+      tags:
+        - Message
+      parameters:
+        - name: keyboard
+          in: path
+          description: Keyboard to search for users in DB
+          required: true
+          schema:
+            type: string
+      summary: Route to get all users containing keyboard in their username, first name or last name
+      operationId: 'searchUsers'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      security:
+        - bearerAuth: []
+
+  /blockUser/{username}:
+    get:
+      tags:
+        - Message
+      parameters:
+        - name: keyboard
+          in: path
+          description: Username to identify the user who is going to be blocked
+          required: true
+          schema:
+            type: string
+      summary: Route to block user by username
+      operationId: 'block'
+      responses:
+        '200':
+          description: 'User blocked'
+      security:
+        - bearerAuth: []
+
+  /unblockUser/{username}:
+    get:
+      tags:
+        - Message
+      parameters:
+        - name: keyboard
+          in: path
+          description: Username to identify the user who is going to be unblocked
+          required: true
+          schema:
+            type: string
+      summary: Route to unblock user by username
+      operationId: 'unblock'
+      responses:
+        '200':
+          description: 'User unblocked'
+      security:
+        - bearerAuth: []
+
+  /messages:
+    post:
+      tags:
+        - Message
+      summary: Route to create a new message object
+      operationId: creteMessage
+      requestBody:
+        $ref: '#/components/requestBodies/messageResponse'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+
+        '500':
+          description: 'The user logged is not the sender of this message / Sender and Receiver can not be the same user'
+
+  /deleteMessages/{messageId}:
+    get:
+      tags:
+        - Message
+      parameters:
+        - name: messageId
+          in: path
+          description: ObjectId to identify the message which is going to be marked as deleted
+          required: true
+          schema:
+            type: string
+      summary: Route to mark message as deleted
+      operationId: 'deleteMessage'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '500':
+          description: 'The user logged is not the sender of this message'
+      security:
+        - bearerAuth: []
+
+  /editMessages/{messageId}:
+    post:
+      tags:
+        - Message
+      parameters:
+        - name: messageId
+          in: path
+          description: ObjectId to identify the message which is going to be updated
+          required: true
+          schema:
+            type: string
+      summary: Route to edit a message object
+      operationId: editMessage
+      requestBody:
+        $ref: '#/components/requestBodies/messageResponse'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+
+        '500':
+          description: 'The user logged is not the sender of this message'
+
+  /messages/{sender}/{receiver}:
+    get:
+      tags:
+        - Message
+      parameters:
+        - name: sender
+          in: path
+          description: Username to identify the sender of the conversation
+          required: true
+          schema:
+            type: string
+        - name: receiver
+          in: path
+          description: Username to identify the receiver of the conversation
+          required: true
+          schema:
+            type: string
+      summary: Route to get all the messages of a conversation
+      operationId: 'getMessages'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+      security:
+        - bearerAuth: []
+
+  /chatNotifications:
+    get:
+      tags:
+        - ChatNotification
+      summary: Route to get the ChatNotification object for the user logged
+      operationId: 'getMessages'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatNotification'
+      security:
+        - bearerAuth: []
+
+  /resetChatNotifications/{username}:
+    get:
+      tags:
+        - ChatNotification
+      parameters:
+        - name: username
+          in: path
+          description: Username to identify the username to reset Chat notifications map
+          required: true
+          schema:
+            type: string
+      summary: Route to reset to 0 chatNotifications of user with username equals to {username} for logged user
+      operationId: 'getMessages'
+      responses:
+        '200':
+          description: successful operation
+      security:
+        - bearerAuth: []
+
+  /simulator/purchaseByUser:
+    post:
+      tags:
+        - Simulator
+      summary: Route to purchase stocks by user an create a simulator object
+      operationId: createSimulator
+      requestBody:
+        $ref: '#/components/requestBodies/simulatorResponse'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '400':
+          description: 'User has been marked as deleted'
+
+        '500':
+          description: 'Error'
+
+  /simulator/getAll:
+    get:
+      tags:
+        - Simulator
+      summary: Route to get all simulator object by user
+      operationId: 'getSimulator'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Simulator'
+      security:
+        - bearerAuth: []
+
+  /simulator/delete/{_id}:
+    delete:
+      tags:
+        - Simulator
+      parameters:
+        - name: _id
+          in: path
+          description: ObjectId to identify the simulator object to delete
+          required: true
+          schema:
+            type: string
+      summary: Route to delete a simulator object
+      operationId: 'deleteSimulator'
+      responses:
+        '201':
+          description: No content
+
+        '409':
+          description: 'You are not the propietary of this simulation'
+
+      security:
+        - bearerAuth: []
+
+  /simulator/sell/{_id}/{currentValue}:
+    delete:
+      tags:
+        - Simulator
+      parameters:
+        - name: _id
+          in: path
+          description: ObjectId to identify the simulator object to sell
+          required: true
+          schema:
+            type: string
+        - name: currentValue
+          in: path
+          description: Current value of the stocks to sell
+          required: true
+          schema:
+            type: string
+      summary: Route to sell a simulator object
+      operationId: 'sellSimulator'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Simulator'
+
+        '500':
+          description: 'Error'
+
+      security:
+        - bearerAuth: []
+
+  /setAdminSettings/{company}:
+    get:
+      tags:
+        - AdminSettings
+      parameters:
+        - name: company
+          in: path
+          description: Company to set admin settings for automatic purchase-sale system
+          required: true
+          schema:
+            type: string
+      summary: Route to set admin settings
+      operationId: 'setAdminSettings'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSettings'
+        '409':
+          description: 'You are not a Tradheo admin'
+      security:
+        - bearerAuth: []
+
+  /getAdminSettings:
+    get:
+      tags:
+        - AdminSettings
+      summary: Route to get admin settings
+      operationId: 'getAdminSettings'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminSettings'
+        '409':
+          description: 'You are not a Tradheo admin'
+      security:
+        - bearerAuth: []
+
+  /getAdminsimulator/getAutomaticOperationSettings:
+    get:
+      tags:
+        - Simulator
+      summary: Route to create a notification when the automatic system make a new simulation
+      operationId: 'getAdminSimulator'
+      responses:
+        '200':
+          description: 'True / False'
+
+      security:
+        - bearerAuth: []
+
   /captchaVerify:
     post:
       tags:
@@ -264,6 +867,14 @@ components:
         image:
           type: string
           format: uri
+        blockedUsersByMe:
+          type: array
+          items:
+            type: string
+        usersWhoHasBlockedMe:
+          type: array
+          items:
+            type: string
 
       required:
         - username
@@ -281,6 +892,129 @@ components:
         - city
         - admin
         - image
+        - blockedUsersByMe
+        - usersWhoHasBlockedMe
+    Market:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        country:
+          type: string
+        name:
+          type: string
+        companies:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              last:
+                type: number
+              high:
+                type: number
+              low:
+                type: number
+              change:
+                type: string
+              changePerCent:
+                type: string
+              volume:
+                type: string
+              time:
+                type: string
+              purchase:
+                type: boolean
+              sale:
+                type: boolean
+
+      required:
+        - name
+        - country
+        - date
+        - companies
+
+    Message:
+      type: object
+      properties:
+        sender:
+          type: string
+        receiver:
+          type: string
+        timestamp:
+          type: string
+          format: date
+        message:
+          type: string
+        edited:
+          type: string
+          format: date
+
+      required:
+        - sender
+        - receiver
+        - timestamp
+        - message
+
+    AdminSettings:
+      type: object
+      properties:
+        company:
+          type: string
+        country:
+          type: string
+
+      required:
+        - company
+        - country
+
+    Simulator:
+      type: object
+      properties:
+        username:
+          type: string
+        country:
+          type: string
+        company:
+          type: string
+        number:
+          type: number
+        purchaseDate:
+          type: string
+          format: date
+        purchaseValue:
+          type: number
+        saleDate:
+          type: string
+          format: date
+        saleValue:
+          type: number
+        result:
+          type: number
+        lossClosure:
+          type: number
+
+      required:
+        - username
+        - country
+        - company
+        - number
+        - purchaseDate
+        - purchaseValue
+
+    ChatNotification:
+      type: object
+      properties:
+        username:
+          type: string
+        notifications:
+          type: map
+
+      required:
+        - username
+        - notifications
 
     Credentials:
       type: object
@@ -330,6 +1064,50 @@ components:
             $ref: '#/components/schemas/User'
 
       description: User object stored in DB
+      required: true
+    Market:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Market'
+
+      description: Market object stored in DB
+      required: true
+
+    Message:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Message'
+
+      description: Message object stored in DB
+      required: true
+
+    Simulator:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Simulator'
+
+      description: Simulator object stored in DB
+      required: true
+
+    AdminSettings:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AdminSettings'
+
+      description: Admin settings object stored in DB
+      required: true
+
+    ChatNotification:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ChatNotification'
+
+      description: ChatNotification object stored in DB
       required: true
 
     Credentials:
