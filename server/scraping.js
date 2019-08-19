@@ -359,7 +359,7 @@ removeOldData = async () => {
   var olderThan = new Date();
   olderThan.setDate(olderThan.getDate() - 7);
 
-  const remove = await Market.find({
+  const remove = await MarketModel.find({
     date: {
       $lte: olderThan
     }
@@ -466,6 +466,10 @@ getMarketData = async workerId => {
             workerId.toString() +
             ')'
           );
+          if (workerId === 1) {
+            const remove = await removeOldData();
+            console.log('Removed all data from DB')
+          }
         }
       })
       .catch(err => {
@@ -563,10 +567,6 @@ getMarketData = async workerId => {
             workerId.toString() +
             ')'
           );
-          if (workerId === 1) {
-            const remove = await removeOldData();
-            console.log('Removed all data from DB')
-          }
         }
       })
       .catch(err => {
