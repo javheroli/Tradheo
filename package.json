@@ -29,6 +29,7 @@
     "@ngx-translate/http-loader": "^4.0.0",
     "@swimlane/ngx-datatable": "^15.0.2",
     "angular2-cookie-law": "^7.0.1",
+    "connect-history-api-fallback": "^1.6.0",
     "core-js": "^2.5.4",
     "google-libphonenumber": "^3.2.3",
     "highcharts": "^7.1.2",
