@@ -354,6 +354,20 @@ getMidBand = async (country, company) => {
   return midBand;
 }
 
+
+removeOldData = async () => {
+  var olderThan = new Date();
+  olderThan.setDate(olderThan.getDate() - 7);
+
+  const remove = await Market.find({
+    date: {
+      $lte: olderThan
+    }
+  }).remove().exec();
+
+  return remove;
+}
+
 getMarketData = async workerId => {
   console.log('Starting web scraping job');
   const adminSettings = await returnAdminSettings();
@@ -443,7 +457,7 @@ getMarketData = async workerId => {
         //Checks that time is before 17:35 (close of the stock exchange)
         if (
           now.getHours() <= 17 &&
-          !(now.getHours() == 17 && now.getMinutes() > 40)
+          !(now.getHours() == 17 && now.getMinutes() > 36)
         ) {
           return getMarketData(workerId);
         } else {
@@ -540,7 +554,7 @@ getMarketData = async workerId => {
         //Checks that time is before 17:35 (close of the stock exchange)
         if (
           now.getHours() <= 17 &&
-          !(now.getHours() == 17 && now.getMinutes() > 40)
+          !(now.getHours() == 17 && now.getMinutes() > 36)
         ) {
           return getMarketData(workerId);
         } else {
@@ -549,6 +563,10 @@ getMarketData = async workerId => {
             workerId.toString() +
             ')'
           );
+          if (workerId === 1) {
+            const remove = await removeOldData();
+            console.log('Removed all data from DB')
+          }
         }
       })
       .catch(err => {
@@ -571,7 +589,7 @@ if (cluster.isMaster) {
     }, 2500);
   }
 
-  var j = schedule.scheduleJob('30 8 * * 1-5', function () {
+  var j = schedule.scheduleJob('55 8 * * 1-5', function () {
     if (cluster.worker.id < 3) {
       getMarketData(cluster.worker.id);
     } else {
