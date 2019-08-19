@@ -7,7 +7,7 @@ var crypto = require('crypto');
 var nodemailer = require('nodemailer');
 var async = require('async');
 require('dotenv').config();
-var enviroment = require('../../src/environments/environmentForNode.ts');
+var enviroment = require('../environments/environmentForNode.ts');
 
 if (!enviroment.production) {
     var serverURL = 'localhost:8100'
