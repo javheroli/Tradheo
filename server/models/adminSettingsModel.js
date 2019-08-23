@@ -11,5 +11,9 @@ const adminSettingsModel = new Schema({
     type: String,
     required: true
   },
+  minutes: {
+    type: Number,
+    required: true
+  }
 });
 module.exports = mongoose.model('adminSettings', adminSettingsModel);

@@ -17,6 +17,7 @@ export class SettingsPage implements OnInit {
   lang: any;
   languages: any = ['English', 'Spanish'];
   company;
+  minutes;
   companies = [
     'Acciona',
     'Acerinox',
@@ -102,6 +103,7 @@ export class SettingsPage implements OnInit {
       if (res.admin) {
         this.dm.getAdminSettings().then(res => {
           this.company = res.company;
+          this.minutes = res.minutes + 'm';
         });
       }
     });
@@ -128,6 +130,39 @@ export class SettingsPage implements OnInit {
       })
       .then(alertEl => {
         alertEl.present();
+      });
+  }
+
+  focusMinutes() {
+    let agreed: string = this.translate.instant('SETTINGS.AGREED');
+    let care: string = this.translate.instant('SETTINGS.CARE');
+    let changeMinutes: string = this.translate.instant(
+      'SETTINGS.CHANGE_MINUTES'
+    );
+
+    this.alertCtrl
+      .create({
+        header: care,
+        message: changeMinutes,
+
+        buttons: [
+          {
+            text: agreed,
+            role: 'cancel'
+          }
+        ]
+      })
+      .then(alertEl => {
+        alertEl.present();
+      });
+  }
+
+  changeMinutes() {
+    this.dm
+      .setAdminSettingsMinutes(this.company, this.minutes.split('m')[0])
+      .then(res => {})
+      .catch(err => {
+        console.log(err);
       });
   }
 

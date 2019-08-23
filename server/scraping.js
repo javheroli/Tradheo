@@ -61,7 +61,7 @@ scraper = (companies, html) => {
   return companies;
 };
 
-systemFirstConditionPurchase = async (country, company) => {
+systemFirstConditionPurchase = async (country, company, minutes) => {
   const aggregateData = await MarketModel.aggregate([{
         $unwind: '$companies'
       },
@@ -88,7 +88,7 @@ systemFirstConditionPurchase = async (country, company) => {
                         $toDate: '$date'
                       }
                     },
-                    1000 * 60 * 30
+                    1000 * 60 * minutes
                   ]
                 }
               ]
@@ -128,7 +128,7 @@ systemFirstConditionPurchase = async (country, company) => {
   }
 }
 
-systemSecondConditionPurchase = async (country, company) => {
+systemSecondConditionPurchase = async (country, company, minutes) => {
   const aggregateData = await MarketModel.aggregate([{
         $unwind: '$companies'
       },
@@ -155,7 +155,7 @@ systemSecondConditionPurchase = async (country, company) => {
                         $toDate: '$date'
                       }
                     },
-                    1000 * 60 * 30
+                    1000 * 60 * minutes
                   ]
                 }
               ]
@@ -193,7 +193,7 @@ systemSecondConditionPurchase = async (country, company) => {
   }
 }
 
-systemThirdConditionPurchase = async (country, company, currentPrice) => {
+systemThirdConditionPurchase = async (country, company, currentPrice, minutes) => {
   const aggregateData = await MarketModel.aggregate([{
         $unwind: '$companies'
       },
@@ -220,7 +220,7 @@ systemThirdConditionPurchase = async (country, company, currentPrice) => {
                         $toDate: '$date'
                       }
                     },
-                    1000 * 60 * 30
+                    1000 * 60 * minutes
                   ]
                 }
               ]
@@ -295,7 +295,7 @@ returnAdminSettings = async () => {
   return adminSettings;
 }
 
-getMidBand = async (country, company) => {
+getMidBand = async (country, company, minutes) => {
   const aggregateData = await MarketModel.aggregate([{
         $unwind: '$companies'
       },
@@ -322,7 +322,7 @@ getMidBand = async (country, company) => {
                         $toDate: '$date'
                       }
                     },
-                    1000 * 60 * 30
+                    1000 * 60 * minutes
                   ]
                 }
               ]
@@ -400,13 +400,13 @@ getMarketData = async workerId => {
           try {
             const existsOperation = await hasAlreadySimulator(company.name);
             if (!existsOperation && workerId === 1) {
-              const purchase1Cond = await systemFirstConditionPurchase('Spain', company.name);
+              const purchase1Cond = await systemFirstConditionPurchase('Spain', company.name, adminSettings.minutes);
               if (purchase1Cond) {
                 console.log('First condition passed for ' + company.name);
-                const purchase2Cond = await systemSecondConditionPurchase('Spain', company.name);
+                const purchase2Cond = await systemSecondConditionPurchase('Spain', company.name, adminSettings.minutes);
                 if (purchase2Cond) {
                   console.log('Second condition passed for ' + company.name);
-                  const purchase3Cond = await systemThirdConditionPurchase('Spain', company.name, company.last);
+                  const purchase3Cond = await systemThirdConditionPurchase('Spain', company.name, company.last, adminSettings.minutes);
                   if (purchase3Cond.condition) {
                     console.log('Third condition passed for ' + company.name);
                     Simulator.create({
@@ -438,7 +438,7 @@ getMarketData = async workerId => {
                 simulator.result = Math.round((company.last * simulator.number - simulator.purchaseValue * simulator.number) * 1000) / 1000;
                 simulator.save();
               } else {
-                const mid = await getMidBand('Spain', company.name);
+                const mid = await getMidBand('Spain', company.name, adminSettings.minutes);
                 if (company.last >= mid) {
                   console.log('Closing simulation with benefit');
                   simulator.saleDate = new Date();
@@ -503,13 +503,13 @@ getMarketData = async workerId => {
           try {
             const existsOperation = await hasAlreadySimulator(company.name);
             if (!existsOperation && workerId === 2) {
-              const purchase1Cond = await systemFirstConditionPurchase('Germany', company.name);
+              const purchase1Cond = await systemFirstConditionPurchase('Germany', company.name, adminSettings.minutes);
               if (purchase1Cond) {
                 console.log('First condition passed for ' + company.name);
-                const purchase2Cond = await systemSecondConditionPurchase('Germany', company.name);
+                const purchase2Cond = await systemSecondConditionPurchase('Germany', company.name, adminSettings.minutes);
                 if (purchase2Cond) {
                   console.log('Second condition passed for ' + company.name);
-                  const purchase3Cond = await systemThirdConditionPurchase('Germany', company.name, company.last);
+                  const purchase3Cond = await systemThirdConditionPurchase('Germany', company.name, company.last, adminSettings.minutes);
                   if (purchase3Cond.condition) {
                     console.log('Third condition passed for ' + company.name);
                     Simulator.create({
@@ -540,7 +540,7 @@ getMarketData = async workerId => {
                 simulator.result = Math.round((company.last * simulator.number - simulator.purchaseValue * simulator.number) * 1000) / 1000;
                 simulator.save();
               } else {
-                const mid = await getMidBand('Germany', company.name);
+                const mid = await getMidBand('Germany', company.name, adminSettings.minutes);
                 if (company.last >= mid) {
                   simulator.saleDate = new Date();
                   simulator.saleValue = company.last;

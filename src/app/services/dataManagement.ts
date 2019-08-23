@@ -455,6 +455,17 @@ export class DataManagement {
       });
   }
 
+  public setAdminSettingsMinutes(oldCompany, minutes): Promise<any> {
+    return this.restService
+      .setAdminSettingsMinutes(oldCompany, minutes)
+      .then(data => {
+        return Promise.resolve(data);
+      })
+      .catch(error => {
+        return Promise.reject(error);
+      });
+  }
+
   public getAutomaticOperation(): Promise<any> {
     return this.restService
       .getAutomaticOperation()

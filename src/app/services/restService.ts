@@ -631,6 +631,22 @@ export class RestWS extends AbstractWS {
       });
   }
 
+  public setAdminSettingsMinutes(oldCompany, minutes) {
+    const token = this.cookieService.get('token');
+    return this.makeGetRequest(
+      this.path + 'api/setAdminSettingsMinutes/' + oldCompany + '/' + minutes,
+      null,
+      token
+    )
+      .then(res => {
+        return Promise.resolve(res);
+      })
+      .catch(err => {
+        console.log('Error: ' + err);
+        return Promise.reject(err);
+      });
+  }
+
   public getAutomaticOperation() {
     const token = this.cookieService.get('token');
     return this.makeGetRequest(

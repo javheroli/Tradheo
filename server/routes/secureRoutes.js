@@ -922,6 +922,35 @@ router.route('/setAdminSettings/:company').get((req, res) => {
     })
 });
 
+//API Route /api/setAdminSettings/
+//GET: Set minutes admin settings for automatic system
+router.route('/setAdminSettingsMinutes/:oldCompany/:minutes').get((req, res) => {
+    var minutes = req.params.minutes;
+    var oldCompany = req.params.oldCompany;
+    var userId = req.user._id;
+
+    User.findById(userId, (err, user) => {
+        if (!user.admin) return res.status(409).send('You are not a Tradheo admin');
+        AdminSettings.findOne((eror, settings) => {
+            settings.minutes = minutes;
+            settings.save();
+
+            Simulator.findOne({
+                username: null,
+                company: oldCompany,
+                result: null
+            }, (error, simulator) => {
+                if (simulator !== null) {
+                    simulator.remove();
+                }
+
+            })
+            console.log(user.username + " is setting admin settings");
+            return res.json(settings);
+        })
+    })
+});
+
 //API Route /api/getAdminSettings/
 //GET: Get admin settings for automatic system
 router.route('/getAdminSettings/').get((req, res) => {

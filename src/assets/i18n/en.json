@@ -207,7 +207,10 @@
     "COMPANY": "Automatic system company",
     "AGREED": "Agreed",
     "CARE": "Be carefull!",
-    "CHANGE_COMPANY": "If you change the automatic system's company while the system has a simulation in operation, the operation will be deleted"
+    "CHANGE_COMPANY": "If you change the automatic system's company while the system has a simulation in operation, the operation will be deleted",
+    "CHANGE_MINUTES": "If you change the automatic system's interval while the system has a simulation in operation, the operation will be deleted",
+    "MINUTES": "Automatic system interval"
+
   },
   "CHAT": {
     "ME": "Me",
@@ -248,7 +251,9 @@
     "COUNTRY": "Country",
     "PHONE": "Phone number",
     "MEMBER_SINCE": "Member since",
-    "LICENCE_EXPIRES": "Licence expires"
+    "LICENCE_EXPIRES": "Licence expires",
+    "DELETE_SUCCESS_HEADER": "Profile deleted successfuly",
+    "DELETE_SUCCESS_BODY": "Your profile has been disabled"
   },
   "GDPR": {
     "GO_OUT": "Go out",

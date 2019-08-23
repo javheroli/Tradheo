@@ -207,7 +207,10 @@
     "COMPANY": "Empresa para el sistema automático",
     "AGREED": "De acuerdo",
     "CARE": "¡Cuidado!",
-    "CHANGE_COMPANY": "Si cambia la empresa del sistema automático mientras este está en una operación, dicha operación será eliminada"
+    "CHANGE_COMPANY": "Si cambia la empresa del sistema automático mientras este está en una operación, dicha operación será eliminada",
+    "CHANGE_MINUTES": "Si cambia el intrevalo del sistema automático mientras este está en una operación, dicha operación será eliminada",
+    "MINUTES": "Intervalo para el sistema automático"
+
 
   },
   "CHAT": {
@@ -249,7 +252,9 @@
     "COUNTRY": "País",
     "PHONE": "Teléfono",
     "MEMBER_SINCE": "Miembro desde",
-    "LICENCE_EXPIRES": "Licencia expira en"
+    "LICENCE_EXPIRES": "Licencia expira en",
+    "DELETE_SUCCESS_HEADER": "Perfil eliminado correctamente",
+    "DELETE_SUCCESS_BODY": "Su perfil ha sido desactivado"
 
 
   },
