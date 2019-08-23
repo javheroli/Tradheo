@@ -143,8 +143,22 @@ export class LicencePage implements OnInit {
           },
           commit: true,
           payment: function(data, actions) {
-            var x = document.getElementById('radio-group');
-            var plan = x.getAttribute('ng-reflect-model');
+            var x = document.getElementById('radio1');
+            var checked = x.getAttribute('aria-checked') === 'true';
+            var plan = null;
+
+            if (checked) {
+              plan = '19.99';
+            } else {
+              x = document.getElementById('radio2');
+              checked = x.getAttribute('aria-checked') === 'true';
+              if (checked) {
+                plan = '49.99';
+              } else {
+                plan = '149.99';
+              }
+            }
+
             return actions.payment.create({
               payment: {
                 transactions: [
