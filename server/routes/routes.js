@@ -182,17 +182,13 @@ router.post('/auth/forgot', function (req, res, next) {
             });
         },
         function (token, done) {
-            User.findOne({
+            User.findOneAndUpdate({
                 email: req.body.email
+            }, {
+                resetPasswordToken: token,
+                resetPasswordExpires: Date.now() + 3600000
             }, function (err, user) {
-
-
-                user.resetPasswordToken = token;
-                user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-
-                user.save(function (err) {
-                    done(err, token, user);
-                });
+                done(err, token, user);
             });
         },
         function (token, user, done) {

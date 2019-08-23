@@ -432,6 +432,7 @@ router.route('/users').get((req, res) => {
     var _id = req.user._id;
     User.findById(_id, (err, userLogged) => {
         User.find({
+                isDeleted: false,
                 _id: {
                     $ne: _id
                 },
@@ -463,7 +464,8 @@ router.route('/users/search/:keyword?').get((req, res) => {
                 },
                 username: {
                     $nin: userLogged.usersWhoHasBlockedMe
-                }
+                },
+                isDeleted: false
 
             };
         } else {
@@ -495,7 +497,8 @@ router.route('/users/search/:keyword?').get((req, res) => {
                         },
                         username: {
                             $nin: userLogged.usersWhoHasBlockedMe
-                        }
+                        },
+                        isDeleted: false
                     }
                 ]
             };

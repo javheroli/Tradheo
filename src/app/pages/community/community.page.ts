@@ -52,6 +52,8 @@ export class CommunityPage implements OnInit {
 
   ionViewWillEnter() {
     this.menuCtrl.enable(true);
+    this.keyword = '';
+    this.listUsers(null);
     this.subscription = this.intervallTimer.subscribe(x => {
       this.dM.getChatNotifications().then(res => {
         this.notifications = res.notifications;

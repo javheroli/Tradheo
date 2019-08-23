@@ -25,6 +25,7 @@ mongoose.connect(process.env.MONGO_URI, {
 mongoose.connection.on('error', error => console.log(error));
 mongoose.Promise = global.Promise;
 
+mongoose.set('useFindAndModify', false);
 const app = express();
 
 //For parsing body with Content-Type application/json
