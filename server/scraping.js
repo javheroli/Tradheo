@@ -457,7 +457,7 @@ getMarketData = async workerId => {
         //Checks that time is before 17:35 (close of the stock exchange)
         if (
           now.getHours() <= 17 &&
-          !(now.getHours() == 17 && now.getMinutes() > 36)
+          !(now.getHours() == 17 && now.getMinutes() > 50)
         ) {
           return getMarketData(workerId);
         } else {
@@ -558,7 +558,7 @@ getMarketData = async workerId => {
         //Checks that time is before 17:35 (close of the stock exchange)
         if (
           now.getHours() <= 17 &&
-          !(now.getHours() == 17 && now.getMinutes() > 36)
+          !(now.getHours() == 17 && now.getMinutes() > 50)
         ) {
           return getMarketData(workerId);
         } else {
