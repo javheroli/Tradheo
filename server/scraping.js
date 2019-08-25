@@ -62,46 +62,46 @@ scraper = (companies, html) => {
 };
 
 systemFirstConditionPurchase = async (country, company, minutes) => {
-  const aggregateData = await MarketModel.aggregate([{
-        $unwind: '$companies'
-      },
-      {
-        $match: {
-          country: country,
-          'companies.name': company
-        }
-      },
+  const aggregateData = await MarketModel.aggregate([
+    {
+      $unwind: '$companies'
+    },
+    {
+      $match: {
+        country: country,
+        'companies.name': company
+      }
+    },
 
-
-      {
-        $group: {
-          _id: {
-            $toDate: {
-              $subtract: [{
-                  $toLong: {
-                    $toDate: '$date'
-                  }
-                },
-                {
-                  $mod: [{
-                      $toLong: {
-                        $toDate: '$date'
-                      }
-                    },
-                    1000 * 60 * minutes
-                  ]
+    {
+      $group: {
+        _id: {
+          $toDate: {
+            $subtract: [
+              {
+                $toLong: {
+                  $toDate: '$date'
                 }
-              ]
-            }
-          },
-          last: {
-            $last: '$companies.last'
-
-          },
+              },
+              {
+                $mod: [
+                  {
+                    $toLong: {
+                      $toDate: '$date'
+                    }
+                  },
+                  1000 * 60 * minutes
+                ]
+              }
+            ]
+          }
         },
-      },
-
-    ])
+        last: {
+          $last: '$companies.last'
+        }
+      }
+    }
+  ])
     .limit(70)
     .sort({
       _id: 1
@@ -115,9 +115,9 @@ systemFirstConditionPurchase = async (country, company, minutes) => {
   var dataForBollinger = [];
   aggregateData.forEach(x => {
     dataForBollinger.push(x.last);
-  })
+  });
 
-  var bollingerResult = boll(dataForBollinger, 69, 2)
+  var bollingerResult = boll(dataForBollinger, 69, 2);
   var i = bollingerResult.lower.length - 1;
   var lowerBand = Math.round(bollingerResult.lower[i] * 1000) / 1000;
 
@@ -126,49 +126,49 @@ systemFirstConditionPurchase = async (country, company, minutes) => {
   } else {
     return false;
   }
-}
+};
 
 systemSecondConditionPurchase = async (country, company, minutes) => {
-  const aggregateData = await MarketModel.aggregate([{
-        $unwind: '$companies'
-      },
-      {
-        $match: {
-          country: country,
-          'companies.name': company
-        }
-      },
+  const aggregateData = await MarketModel.aggregate([
+    {
+      $unwind: '$companies'
+    },
+    {
+      $match: {
+        country: country,
+        'companies.name': company
+      }
+    },
 
-
-      {
-        $group: {
-          _id: {
-            $toDate: {
-              $subtract: [{
-                  $toLong: {
-                    $toDate: '$date'
-                  }
-                },
-                {
-                  $mod: [{
-                      $toLong: {
-                        $toDate: '$date'
-                      }
-                    },
-                    1000 * 60 * minutes
-                  ]
+    {
+      $group: {
+        _id: {
+          $toDate: {
+            $subtract: [
+              {
+                $toLong: {
+                  $toDate: '$date'
                 }
-              ]
-            }
-          },
-          last: {
-            $first: '$companies.last'
-
-          },
+              },
+              {
+                $mod: [
+                  {
+                    $toLong: {
+                      $toDate: '$date'
+                    }
+                  },
+                  1000 * 60 * minutes
+                ]
+              }
+            ]
+          }
         },
-      },
-
-    ])
+        last: {
+          $first: '$companies.last'
+        }
+      }
+    }
+  ])
     .limit(69)
     .sort({
       _id: 1
@@ -180,9 +180,9 @@ systemSecondConditionPurchase = async (country, company, minutes) => {
   var dataForBollinger = [];
   aggregateData.forEach(x => {
     dataForBollinger.push(x.last);
-  })
+  });
 
-  var bollingerResult = boll(dataForBollinger, 69, 2)
+  var bollingerResult = boll(dataForBollinger, 69, 2);
   var i = bollingerResult.lower.length - 1;
   var lowerBand = Math.round(bollingerResult.lower[i] * 1000) / 1000;
 
@@ -191,49 +191,54 @@ systemSecondConditionPurchase = async (country, company, minutes) => {
   } else {
     return false;
   }
-}
+};
 
-systemThirdConditionPurchase = async (country, company, currentPrice, minutes) => {
-  const aggregateData = await MarketModel.aggregate([{
-        $unwind: '$companies'
-      },
-      {
-        $match: {
-          country: country,
-          'companies.name': company
-        }
-      },
+systemThirdConditionPurchase = async (
+  country,
+  company,
+  currentPrice,
+  minutes
+) => {
+  const aggregateData = await MarketModel.aggregate([
+    {
+      $unwind: '$companies'
+    },
+    {
+      $match: {
+        country: country,
+        'companies.name': company
+      }
+    },
 
-
-      {
-        $group: {
-          _id: {
-            $toDate: {
-              $subtract: [{
-                  $toLong: {
-                    $toDate: '$date'
-                  }
-                },
-                {
-                  $mod: [{
-                      $toLong: {
-                        $toDate: '$date'
-                      }
-                    },
-                    1000 * 60 * minutes
-                  ]
+    {
+      $group: {
+        _id: {
+          $toDate: {
+            $subtract: [
+              {
+                $toLong: {
+                  $toDate: '$date'
                 }
-              ]
-            }
-          },
-          last: {
-            $last: '$companies.last'
-
-          },
+              },
+              {
+                $mod: [
+                  {
+                    $toLong: {
+                      $toDate: '$date'
+                    }
+                  },
+                  1000 * 60 * minutes
+                ]
+              }
+            ]
+          }
         },
-      },
-
-    ])
+        last: {
+          $last: '$companies.last'
+        }
+      }
+    }
+  ])
     .limit(69)
     .sort({
       _id: 1
@@ -243,9 +248,9 @@ systemThirdConditionPurchase = async (country, company, currentPrice, minutes) =
   var dataForBollinger = [];
   aggregateData.forEach(x => {
     dataForBollinger.push(x.last);
-  })
+  });
 
-  var bollingerResult = boll(dataForBollinger, 69, 2)
+  var bollingerResult = boll(dataForBollinger, 69, 2);
   var i = bollingerResult.lower.length - 1;
   var lowerBand = Math.round(bollingerResult.lower[i] * 1000) / 1000;
   var midBand = Math.round(bollingerResult.mid[i] * 1000) / 1000;
@@ -260,82 +265,79 @@ systemThirdConditionPurchase = async (country, company, currentPrice, minutes) =
     result.condition = false;
     return result;
   }
-}
+};
 
-hasAlreadySimulator = async (company) => {
+hasAlreadySimulator = async company => {
   const simulator = await Simulator.findOne({
-      username: null,
-      company: company,
-      result: null
-    })
-    .exec();
+    username: null,
+    company: company,
+    result: null
+  }).exec();
 
   if (simulator === null) {
     return false;
   } else {
     return true;
   }
-}
+};
 
-returnSimulator = async (company) => {
+returnSimulator = async company => {
   const simulator = await Simulator.findOne({
-      username: null,
-      company: company,
-      result: null
-    })
-    .exec();
+    username: null,
+    company: company,
+    result: null
+  }).exec();
 
   return simulator;
-}
+};
 
 returnAdminSettings = async () => {
-  const adminSettings = await AdinSettings.findOne({})
-    .exec();
+  const adminSettings = await AdinSettings.findOne({}).exec();
 
   return adminSettings;
-}
+};
 
 getMidBand = async (country, company, minutes) => {
-  const aggregateData = await MarketModel.aggregate([{
-        $unwind: '$companies'
-      },
-      {
-        $match: {
-          country: country,
-          'companies.name': company
-        }
-      },
+  const aggregateData = await MarketModel.aggregate([
+    {
+      $unwind: '$companies'
+    },
+    {
+      $match: {
+        country: country,
+        'companies.name': company
+      }
+    },
 
-
-      {
-        $group: {
-          _id: {
-            $toDate: {
-              $subtract: [{
-                  $toLong: {
-                    $toDate: '$date'
-                  }
-                },
-                {
-                  $mod: [{
-                      $toLong: {
-                        $toDate: '$date'
-                      }
-                    },
-                    1000 * 60 * minutes
-                  ]
+    {
+      $group: {
+        _id: {
+          $toDate: {
+            $subtract: [
+              {
+                $toLong: {
+                  $toDate: '$date'
                 }
-              ]
-            }
-          },
-          last: {
-            $last: '$companies.last'
-
-          },
+              },
+              {
+                $mod: [
+                  {
+                    $toLong: {
+                      $toDate: '$date'
+                    }
+                  },
+                  1000 * 60 * minutes
+                ]
+              }
+            ]
+          }
         },
-      },
-
-    ])
+        last: {
+          $last: '$companies.last'
+        }
+      }
+    }
+  ])
     .limit(69)
     .sort({
       _id: 1
@@ -345,15 +347,14 @@ getMidBand = async (country, company, minutes) => {
   var dataForBollinger = [];
   aggregateData.forEach(x => {
     dataForBollinger.push(x.last);
-  })
+  });
 
-  var bollingerResult = boll(dataForBollinger, 69, 2)
+  var bollingerResult = boll(dataForBollinger, 69, 2);
   var i = bollingerResult.lower.length - 1;
   var midBand = Math.round(bollingerResult.mid[i] * 1000) / 1000;
 
   return midBand;
-}
-
+};
 
 removeOldData = async () => {
   var olderThan = new Date();
@@ -363,10 +364,12 @@ removeOldData = async () => {
     date: {
       $lte: olderThan
     }
-  }).remove().exec();
+  })
+    .remove()
+    .exec();
 
   return remove;
-}
+};
 
 getMarketData = async workerId => {
   console.log('Starting web scraping job');
@@ -374,15 +377,16 @@ getMarketData = async workerId => {
 
   if (workerId % 2 === 1) {
     rp({
-        uri: 'https://uk.investing.com/equities/spain',
-        headers: {
-          'User-Agent': 'Request-Promise'
-        }
-      })
+      uri: 'https://uk.investing.com/equities/spain',
+      headers: {
+        'User-Agent': 'Request-Promise'
+      }
+    })
       .then(async html => {
         let companies = [];
         companies = scraper(companies, html);
-        MarketModel.create({
+        MarketModel.create(
+          {
             country: 'Spain',
             name: 'IBEX 35',
             companies
@@ -396,17 +400,32 @@ getMarketData = async workerId => {
         );
         //Check purchase System
         if (adminSettings.country === 'Spain') {
-          const company = await companies.find(x => x.name === adminSettings.company);
+          const company = await companies.find(
+            x => x.name === adminSettings.company
+          );
           try {
             const existsOperation = await hasAlreadySimulator(company.name);
             if (!existsOperation && workerId === 1) {
-              const purchase1Cond = await systemFirstConditionPurchase('Spain', company.name, adminSettings.minutes);
+              const purchase1Cond = await systemFirstConditionPurchase(
+                'Spain',
+                company.name,
+                adminSettings.minutes
+              );
               if (purchase1Cond) {
                 console.log('First condition passed for ' + company.name);
-                const purchase2Cond = await systemSecondConditionPurchase('Spain', company.name, adminSettings.minutes);
+                const purchase2Cond = await systemSecondConditionPurchase(
+                  'Spain',
+                  company.name,
+                  adminSettings.minutes
+                );
                 if (purchase2Cond) {
                   console.log('Second condition passed for ' + company.name);
-                  const purchase3Cond = await systemThirdConditionPurchase('Spain', company.name, company.last, adminSettings.minutes);
+                  const purchase3Cond = await systemThirdConditionPurchase(
+                    'Spain',
+                    company.name,
+                    company.last,
+                    adminSettings.minutes
+                  );
                   if (purchase3Cond.condition) {
                     console.log('Third condition passed for ' + company.name);
                     Simulator.create({
@@ -418,10 +437,15 @@ getMarketData = async workerId => {
                       saleDate: null,
                       saleValue: null,
                       result: null,
-                      lossClosure: Math.round((company.last - purchase3Cond.lossDistance) * 1000) / 1000
-                    })
+                      lossClosure:
+                        Math.round(
+                          (company.last - purchase3Cond.lossDistance) * 1000
+                        ) / 1000
+                    });
                   } else {
-                    console.log('Not matching 3rd condition for ' + company.name);
+                    console.log(
+                      'Not matching 3rd condition for ' + company.name
+                    );
                   }
                 } else {
                   console.log('Not matching 2nd condition for ' + company.name);
@@ -435,20 +459,33 @@ getMarketData = async workerId => {
                 console.log('Closing simulation with loss');
                 simulator.saleDate = new Date();
                 simulator.saleValue = company.last;
-                simulator.result = Math.round((company.last * simulator.number - simulator.purchaseValue * simulator.number) * 1000) / 1000;
+                simulator.result =
+                  Math.round(
+                    (company.last * simulator.number -
+                      simulator.purchaseValue * simulator.number) *
+                      1000
+                  ) / 1000;
                 simulator.save();
               } else {
-                const mid = await getMidBand('Spain', company.name, adminSettings.minutes);
+                const mid = await getMidBand(
+                  'Spain',
+                  company.name,
+                  adminSettings.minutes
+                );
                 if (company.last >= mid) {
                   console.log('Closing simulation with benefit');
                   simulator.saleDate = new Date();
                   simulator.saleValue = company.last;
-                  simulator.result = Math.round((company.last * simulator.number - simulator.purchaseValue * simulator.number) * 1000) / 1000;
+                  simulator.result =
+                    Math.round(
+                      (company.last * simulator.number -
+                        simulator.purchaseValue * simulator.number) *
+                        1000
+                    ) / 1000;
                   simulator.save();
                 }
               }
             }
-
           } catch (err) {
             console.log(err);
           }
@@ -463,12 +500,12 @@ getMarketData = async workerId => {
         } else {
           console.log(
             "Today's scraping job finished (Worker: " +
-            workerId.toString() +
-            ')'
+              workerId.toString() +
+              ')'
           );
           if (workerId === 1) {
             const remove = await removeOldData();
-            console.log('Removed all data from DB')
+            console.log('Removed all data from DB');
           }
         }
       })
@@ -477,15 +514,16 @@ getMarketData = async workerId => {
       });
   } else {
     rp({
-        uri: 'https://uk.investing.com/equities/germany',
-        headers: {
-          'User-Agent': 'Request-Promise'
-        }
-      })
+      uri: 'https://uk.investing.com/equities/germany',
+      headers: {
+        'User-Agent': 'Request-Promise'
+      }
+    })
       .then(async html => {
         let companies = [];
         companies = scraper(companies, html);
-        MarketModel.create({
+        MarketModel.create(
+          {
             country: 'Germany',
             name: 'DAX',
             companies
@@ -499,17 +537,32 @@ getMarketData = async workerId => {
         );
         //Check purchase System
         if (adminSettings.country === 'Germany') {
-          const company = await companies.find(x => x.name === adminSettings.company);
+          const company = await companies.find(
+            x => x.name === adminSettings.company
+          );
           try {
             const existsOperation = await hasAlreadySimulator(company.name);
             if (!existsOperation && workerId === 2) {
-              const purchase1Cond = await systemFirstConditionPurchase('Germany', company.name, adminSettings.minutes);
+              const purchase1Cond = await systemFirstConditionPurchase(
+                'Germany',
+                company.name,
+                adminSettings.minutes
+              );
               if (purchase1Cond) {
                 console.log('First condition passed for ' + company.name);
-                const purchase2Cond = await systemSecondConditionPurchase('Germany', company.name, adminSettings.minutes);
+                const purchase2Cond = await systemSecondConditionPurchase(
+                  'Germany',
+                  company.name,
+                  adminSettings.minutes
+                );
                 if (purchase2Cond) {
                   console.log('Second condition passed for ' + company.name);
-                  const purchase3Cond = await systemThirdConditionPurchase('Germany', company.name, company.last, adminSettings.minutes);
+                  const purchase3Cond = await systemThirdConditionPurchase(
+                    'Germany',
+                    company.name,
+                    company.last,
+                    adminSettings.minutes
+                  );
                   if (purchase3Cond.condition) {
                     console.log('Third condition passed for ' + company.name);
                     Simulator.create({
@@ -522,9 +575,11 @@ getMarketData = async workerId => {
                       saleValue: null,
                       result: null,
                       lossClosure: company.last - purchase3Cond.lossDistance
-                    })
+                    });
                   } else {
-                    console.log('Not matching 3rd condition for ' + company.name);
+                    console.log(
+                      'Not matching 3rd condition for ' + company.name
+                    );
                   }
                 } else {
                   console.log('Not matching 2nd condition for ' + company.name);
@@ -537,19 +592,32 @@ getMarketData = async workerId => {
               if (company.last <= simulator.lossClosure) {
                 simulator.saleDate = new Date();
                 simulator.saleValue = company.last;
-                simulator.result = Math.round((company.last * simulator.number - simulator.purchaseValue * simulator.number) * 1000) / 1000;
+                simulator.result =
+                  Math.round(
+                    (company.last * simulator.number -
+                      simulator.purchaseValue * simulator.number) *
+                      1000
+                  ) / 1000;
                 simulator.save();
               } else {
-                const mid = await getMidBand('Germany', company.name, adminSettings.minutes);
+                const mid = await getMidBand(
+                  'Germany',
+                  company.name,
+                  adminSettings.minutes
+                );
                 if (company.last >= mid) {
                   simulator.saleDate = new Date();
                   simulator.saleValue = company.last;
-                  simulator.result = Math.round((company.last * simulator.number - simulator.purchaseValue * simulator.number) * 1000) / 1000;
+                  simulator.result =
+                    Math.round(
+                      (company.last * simulator.number -
+                        simulator.purchaseValue * simulator.number) *
+                        1000
+                    ) / 1000;
                   simulator.save();
                 }
               }
             }
-
           } catch (err) {
             console.log(err);
           }
@@ -564,8 +632,8 @@ getMarketData = async workerId => {
         } else {
           console.log(
             "Today's scraping job finished (Worker: " +
-            workerId.toString() +
-            ')'
+              workerId.toString() +
+              ')'
           );
         }
       })
@@ -581,15 +649,18 @@ if (cluster.isMaster) {
   cluster.fork();
   cluster.fork();
 } else {
-  if (cluster.worker.id < 3) {
-    getMarketData(cluster.worker.id);
-  } else {
-    setTimeout(() => {
+  const nowForHeroku = new Date();
+  if (nowForHeroku.getDay() > 0 && nowForHeroku.getDay() < 6) {
+    if (cluster.worker.id < 3) {
       getMarketData(cluster.worker.id);
-    }, 2500);
+    } else {
+      setTimeout(() => {
+        getMarketData(cluster.worker.id);
+      }, 2500);
+    }
   }
 
-  var j = schedule.scheduleJob('55 8 * * 1-5', function () {
+  var j = schedule.scheduleJob('55 8 * * 1-5', function() {
     if (cluster.worker.id < 3) {
       getMarketData(cluster.worker.id);
     } else {
