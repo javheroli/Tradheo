@@ -62,46 +62,43 @@ scraper = (companies, html) => {
 };
 
 systemFirstConditionPurchase = async (country, company, minutes) => {
-  const aggregateData = await MarketModel.aggregate([
-    {
-      $unwind: '$companies'
-    },
-    {
-      $match: {
-        country: country,
-        'companies.name': company
-      }
-    },
+  const aggregateData = await MarketModel.aggregate([{
+        $unwind: '$companies'
+      },
+      {
+        $match: {
+          country: country,
+          'companies.name': company
+        }
+      },
 
-    {
-      $group: {
-        _id: {
-          $toDate: {
-            $subtract: [
-              {
-                $toLong: {
-                  $toDate: '$date'
+      {
+        $group: {
+          _id: {
+            $toDate: {
+              $subtract: [{
+                  $toLong: {
+                    $toDate: '$date'
+                  }
+                },
+                {
+                  $mod: [{
+                      $toLong: {
+                        $toDate: '$date'
+                      }
+                    },
+                    1000 * 60 * minutes
+                  ]
                 }
-              },
-              {
-                $mod: [
-                  {
-                    $toLong: {
-                      $toDate: '$date'
-                    }
-                  },
-                  1000 * 60 * minutes
-                ]
-              }
-            ]
+              ]
+            }
+          },
+          last: {
+            $last: '$companies.last'
           }
-        },
-        last: {
-          $last: '$companies.last'
         }
       }
-    }
-  ])
+    ])
     .limit(70)
     .sort({
       _id: 1
@@ -129,46 +126,43 @@ systemFirstConditionPurchase = async (country, company, minutes) => {
 };
 
 systemSecondConditionPurchase = async (country, company, minutes) => {
-  const aggregateData = await MarketModel.aggregate([
-    {
-      $unwind: '$companies'
-    },
-    {
-      $match: {
-        country: country,
-        'companies.name': company
-      }
-    },
+  const aggregateData = await MarketModel.aggregate([{
+        $unwind: '$companies'
+      },
+      {
+        $match: {
+          country: country,
+          'companies.name': company
+        }
+      },
 
-    {
-      $group: {
-        _id: {
-          $toDate: {
-            $subtract: [
-              {
-                $toLong: {
-                  $toDate: '$date'
+      {
+        $group: {
+          _id: {
+            $toDate: {
+              $subtract: [{
+                  $toLong: {
+                    $toDate: '$date'
+                  }
+                },
+                {
+                  $mod: [{
+                      $toLong: {
+                        $toDate: '$date'
+                      }
+                    },
+                    1000 * 60 * minutes
+                  ]
                 }
-              },
-              {
-                $mod: [
-                  {
-                    $toLong: {
-                      $toDate: '$date'
-                    }
-                  },
-                  1000 * 60 * minutes
-                ]
-              }
-            ]
+              ]
+            }
+          },
+          last: {
+            $first: '$companies.last'
           }
-        },
-        last: {
-          $first: '$companies.last'
         }
       }
-    }
-  ])
+    ])
     .limit(69)
     .sort({
       _id: 1
@@ -199,46 +193,43 @@ systemThirdConditionPurchase = async (
   currentPrice,
   minutes
 ) => {
-  const aggregateData = await MarketModel.aggregate([
-    {
-      $unwind: '$companies'
-    },
-    {
-      $match: {
-        country: country,
-        'companies.name': company
-      }
-    },
+  const aggregateData = await MarketModel.aggregate([{
+        $unwind: '$companies'
+      },
+      {
+        $match: {
+          country: country,
+          'companies.name': company
+        }
+      },
 
-    {
-      $group: {
-        _id: {
-          $toDate: {
-            $subtract: [
-              {
-                $toLong: {
-                  $toDate: '$date'
+      {
+        $group: {
+          _id: {
+            $toDate: {
+              $subtract: [{
+                  $toLong: {
+                    $toDate: '$date'
+                  }
+                },
+                {
+                  $mod: [{
+                      $toLong: {
+                        $toDate: '$date'
+                      }
+                    },
+                    1000 * 60 * minutes
+                  ]
                 }
-              },
-              {
-                $mod: [
-                  {
-                    $toLong: {
-                      $toDate: '$date'
-                    }
-                  },
-                  1000 * 60 * minutes
-                ]
-              }
-            ]
+              ]
+            }
+          },
+          last: {
+            $last: '$companies.last'
           }
-        },
-        last: {
-          $last: '$companies.last'
         }
       }
-    }
-  ])
+    ])
     .limit(69)
     .sort({
       _id: 1
@@ -298,46 +289,43 @@ returnAdminSettings = async () => {
 };
 
 getMidBand = async (country, company, minutes) => {
-  const aggregateData = await MarketModel.aggregate([
-    {
-      $unwind: '$companies'
-    },
-    {
-      $match: {
-        country: country,
-        'companies.name': company
-      }
-    },
+  const aggregateData = await MarketModel.aggregate([{
+        $unwind: '$companies'
+      },
+      {
+        $match: {
+          country: country,
+          'companies.name': company
+        }
+      },
 
-    {
-      $group: {
-        _id: {
-          $toDate: {
-            $subtract: [
-              {
-                $toLong: {
-                  $toDate: '$date'
+      {
+        $group: {
+          _id: {
+            $toDate: {
+              $subtract: [{
+                  $toLong: {
+                    $toDate: '$date'
+                  }
+                },
+                {
+                  $mod: [{
+                      $toLong: {
+                        $toDate: '$date'
+                      }
+                    },
+                    1000 * 60 * minutes
+                  ]
                 }
-              },
-              {
-                $mod: [
-                  {
-                    $toLong: {
-                      $toDate: '$date'
-                    }
-                  },
-                  1000 * 60 * minutes
-                ]
-              }
-            ]
+              ]
+            }
+          },
+          last: {
+            $last: '$companies.last'
           }
-        },
-        last: {
-          $last: '$companies.last'
         }
       }
-    }
-  ])
+    ])
     .limit(69)
     .sort({
       _id: 1
@@ -361,10 +349,10 @@ removeOldData = async () => {
   olderThan.setDate(olderThan.getDate() - 7);
 
   const remove = await MarketModel.find({
-    date: {
-      $lte: olderThan
-    }
-  })
+      date: {
+        $lte: olderThan
+      }
+    })
     .remove()
     .exec();
 
@@ -377,16 +365,15 @@ getMarketData = async workerId => {
 
   if (workerId % 2 === 1) {
     rp({
-      uri: 'https://uk.investing.com/equities/spain',
-      headers: {
-        'User-Agent': 'Request-Promise'
-      }
-    })
+        uri: 'https://uk.investing.com/equities/spain',
+        headers: {
+          'User-Agent': 'Request-Promise'
+        }
+      })
       .then(async html => {
         let companies = [];
         companies = scraper(companies, html);
-        MarketModel.create(
-          {
+        MarketModel.create({
             country: 'Spain',
             name: 'IBEX 35',
             companies
@@ -437,10 +424,9 @@ getMarketData = async workerId => {
                       saleDate: null,
                       saleValue: null,
                       result: null,
-                      lossClosure:
-                        Math.round(
-                          (company.last - purchase3Cond.lossDistance) * 1000
-                        ) / 1000
+                      lossClosure: Math.round(
+                        (company.last - purchase3Cond.lossDistance) * 1000
+                      ) / 1000
                     });
                   } else {
                     console.log(
@@ -463,7 +449,7 @@ getMarketData = async workerId => {
                   Math.round(
                     (company.last * simulator.number -
                       simulator.purchaseValue * simulator.number) *
-                      1000
+                    1000
                   ) / 1000;
                 simulator.save();
               } else {
@@ -480,7 +466,7 @@ getMarketData = async workerId => {
                     Math.round(
                       (company.last * simulator.number -
                         simulator.purchaseValue * simulator.number) *
-                        1000
+                      1000
                     ) / 1000;
                   simulator.save();
                 }
@@ -494,14 +480,14 @@ getMarketData = async workerId => {
         //Checks that time is before 17:35 (close of the stock exchange)
         if (
           now.getHours() <= 17 &&
-          !(now.getHours() == 17 && now.getMinutes() > 50)
+          !(now.getHours() == 17 && now.getMinutes() > 59)
         ) {
           return getMarketData(workerId);
         } else {
           console.log(
             "Today's scraping job finished (Worker: " +
-              workerId.toString() +
-              ')'
+            workerId.toString() +
+            ')'
           );
           if (workerId === 1) {
             const remove = await removeOldData();
@@ -514,16 +500,15 @@ getMarketData = async workerId => {
       });
   } else {
     rp({
-      uri: 'https://uk.investing.com/equities/germany',
-      headers: {
-        'User-Agent': 'Request-Promise'
-      }
-    })
+        uri: 'https://uk.investing.com/equities/germany',
+        headers: {
+          'User-Agent': 'Request-Promise'
+        }
+      })
       .then(async html => {
         let companies = [];
         companies = scraper(companies, html);
-        MarketModel.create(
-          {
+        MarketModel.create({
             country: 'Germany',
             name: 'DAX',
             companies
@@ -596,7 +581,7 @@ getMarketData = async workerId => {
                   Math.round(
                     (company.last * simulator.number -
                       simulator.purchaseValue * simulator.number) *
-                      1000
+                    1000
                   ) / 1000;
                 simulator.save();
               } else {
@@ -612,7 +597,7 @@ getMarketData = async workerId => {
                     Math.round(
                       (company.last * simulator.number -
                         simulator.purchaseValue * simulator.number) *
-                        1000
+                      1000
                     ) / 1000;
                   simulator.save();
                 }
@@ -626,14 +611,14 @@ getMarketData = async workerId => {
         //Checks that time is before 17:35 (close of the stock exchange)
         if (
           now.getHours() <= 17 &&
-          !(now.getHours() == 17 && now.getMinutes() > 50)
+          !(now.getHours() == 17 && now.getMinutes() > 59)
         ) {
           return getMarketData(workerId);
         } else {
           console.log(
             "Today's scraping job finished (Worker: " +
-              workerId.toString() +
-              ')'
+            workerId.toString() +
+            ')'
           );
         }
       })
@@ -660,7 +645,7 @@ if (cluster.isMaster) {
     }
   }
 
-  var j = schedule.scheduleJob('55 8 * * 1-5', function() {
+  var j = schedule.scheduleJob('55 8 * * 1-5', function () {
     if (cluster.worker.id < 3) {
       getMarketData(cluster.worker.id);
     } else {
