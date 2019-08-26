@@ -1142,11 +1142,8 @@ describe('GET /api/simulator/delete/:_id', () => {
 
 
   it('respond with 401 Unauthorized because there is no token for authentication introduced', async () => {
-    const simulator = await Simulator.findOne({
-      username: 'pruebas'
-    }).exec();
     await request(app)
-      .delete('/api/simulator/delete/' + simulator._id)
+      .delete('/api/simulator/delete/')
       .set('Accept', 'application/json')
       .expect(401)
       .end((err, res) => {
