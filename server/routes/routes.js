@@ -36,9 +36,16 @@ router.post('/auth/signup', async (req, res, next) => {
     passport.authenticate('signup', async (err, user, info) => {
         try {
             if (err || !user) {
-                return next(res.status(409).send(
-                    'An Error occured: ' + info['message']
-                ));
+                if (info) {
+                    return next(res.status(409).send(
+                        'An Error occured: ' + info['message']
+                    ));
+                } else {
+                    return next(res.status(409).send(
+                        'An Error occured: '
+                    ));
+                }
+
             } else {
                 res.json({
                     message: 'Signup successful',
@@ -297,6 +304,7 @@ router.get('/updateLicence/:username/:plan', function (req, res) {
     User.findOne({
         username: username
     }, (err, user) => {
+        if (!user) return res.status(404).send("User not found");
         var startDate;
         var today = new Date();
         if (today > user.licenceDate) {
@@ -337,7 +345,7 @@ router.route('/getUserWithoutLogging/:username').get((req, res) => {
     User.findOne({
         username: username
     }, (err, user) => {
-        if (err) {
+        if (!user) {
             res.status(404).send('User with username ' + username + ' not found');
         } else {
             res.json(user);

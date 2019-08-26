@@ -275,7 +275,7 @@ router.route('/getUser/:username').get((req, res) => {
     User.findOne({
         username: username
     }, (err, user) => {
-        if (err) {
+        if (!user) {
             res.status(404).send('User with username ' + username + ' not found');
         } else {
             res.json(user);
@@ -856,7 +856,7 @@ router.route('/simulator/delete/:_id').delete((req, res) => {
             }
             simulator.remove((err, result) => {
                 console.log("Deleting simulation for " + user.username);
-                return res.status(201).send();
+                return res.status(204).send();
             });
         })
     })
