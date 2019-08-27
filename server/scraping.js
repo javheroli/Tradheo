@@ -635,7 +635,8 @@ if (cluster.isMaster) {
   cluster.fork();
 } else {
   const nowForHeroku = new Date();
-  if (nowForHeroku.getDay() > 0 && nowForHeroku.getDay() < 6) {
+  if (nowForHeroku.getDay() > 0 && nowForHeroku.getDay() < 6 && nowForHeroku.getHours() >= 9 && nowForHeroku.getHours() <= 17 &&
+    !(nowForHeroku.getHours() == 17 && nowForHeroku.getMinutes() > 59)) {
     if (cluster.worker.id < 3) {
       getMarketData(cluster.worker.id);
     } else {
@@ -645,7 +646,7 @@ if (cluster.isMaster) {
     }
   }
 
-  var j = schedule.scheduleJob('55 8 * * 1-5', function () {
+  var j = schedule.scheduleJob('0 9 * * 1-5', function () {
     if (cluster.worker.id < 3) {
       getMarketData(cluster.worker.id);
     } else {
