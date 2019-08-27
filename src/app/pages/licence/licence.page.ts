@@ -44,7 +44,7 @@ export class LicencePage implements OnInit {
       this.menuCtrl.enable(true);
       const token = this.cookieService.get('token');
       this.dM.getUserLogged(token).then(res => {
-        res.licenceDate = new Date(res.licenceDate);
+        res.licenceDate = String(new Date(res.licenceDate)).split(' GMT')[0];
         this.logged = res;
         this.isReady = true;
       });
@@ -53,7 +53,7 @@ export class LicencePage implements OnInit {
       this.activatedRoute.paramMap.subscribe(paramMap => {
         this.username = paramMap.get('username');
         this.dM.getUserByUsernameWithoutLogging(this.username).then(res => {
-          res.licenceDate = new Date(res.licenceDate);
+          res.licenceDate = String(new Date(res.licenceDate)).split(' GMT')[0];
           this.logged = res;
           this.isReady = true;
         });
