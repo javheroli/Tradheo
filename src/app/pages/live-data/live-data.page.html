@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button color="secondary"></ion-menu-button>
     </ion-buttons>
-    <ion-title>
+    <ion-title style="padding: 0">
       <div *ngIf="isReady">
         <img style="margin-right: 17px; float: left;" *ngIf="country === 'Spain'" src="../../../assets/img/spain.png" />
         <img style="margin-right: 17px; float: left;" *ngIf="country === 'Germany'"
@@ -18,7 +18,7 @@
             {{ 'LIVE_DATA.HEADER' | translate }}
           </h6>
           <br />
-          <h6 class="live-data-header">
+          <h6 class="live-data-header smallMobile">
             {{ 'LIVE_DATA.LAST_DATE' | translate }}: {{ data.date }}
           </h6>
         </div>

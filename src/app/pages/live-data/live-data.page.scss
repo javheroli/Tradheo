@@ -11,6 +11,12 @@
         color: var(--ion-color-light);
         display: inline;
     }
+
+    @media only screen and (max-width : 450px) {
+        .smallMobile {
+            font-size: 13px;
+        }
+    }
 }
 
 .menuIcon {

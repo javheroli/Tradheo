@@ -2,7 +2,7 @@
   <div class="auth-content">
     <!-- Logo -->
     <div class="arriba">
-      <ion-item style="width:350px; float: right;">
+      <ion-item class="item-languages">
         <ion-icon name="md-globe" slot="start" color="light"></ion-icon>
         <ion-label color="light">{{
           'SETTINGS.APP_LANGUAGE' | translate
@@ -309,7 +309,7 @@
               <ion-icon name="book" item-start></ion-icon>
               {{ 'REGISTER.DESCRIPTION' | translate }}
             </ion-label>
-            <ion-textarea [(ngModel)]="description" maxlength="150" formControlName="description"
+            <ion-textarea class="textarea" [(ngModel)]="description" maxlength="150" formControlName="description"
               placeholder="{{ 'REGISTER.DESCRIPTION_PLACEHOLDER' | translate }}"></ion-textarea>
           </ion-item>
 

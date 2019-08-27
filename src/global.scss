@@ -171,9 +171,22 @@ ion-card {
         }
     }
 
+    ion-textarea textarea {
+        min-height: 150px;
+
+    }
+
+
+
+
 
     .auth-content {
+
         margin: 0 5%;
+
+        @media only screen and (max-width : 450px) {
+            margin: 0
+        }
 
         .logo {
             width: 60px;
@@ -451,4 +464,8 @@ ion-select {
 
 ion-radio .radio-inner {
     border-width: 6px;
+}
+
+.toolbar-title-text {
+    white-space: normal;
 }

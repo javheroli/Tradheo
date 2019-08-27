@@ -64,3 +64,26 @@ ion-row {
 
 
 }
+
+@media only screen and (max-width : 450px) {
+    ion-buttons {
+        margin-left: 0;
+    }
+
+    h2 {
+        font-size: 14px;
+    }
+
+    .username {
+        font-size: 14px;
+    }
+
+    h4 {
+        font-size: 12px;
+    }
+
+    ion-item {
+        --inner-padding-end: 0px;
+        --padding-start: 8px
+    }
+}

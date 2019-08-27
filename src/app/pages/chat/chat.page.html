@@ -7,7 +7,10 @@
     <ion-avatar slot="start">
       <ion-img src="{{other.image}}"></ion-img>
     </ion-avatar>
-    <ion-title color="light">{{other.firstName}} {{other.lastName}}</ion-title>
+    <ion-title color="light">
+      <ion-text class="toolbar-title-text">{{other.firstName}} {{other.lastName}}</ion-text>
+
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 

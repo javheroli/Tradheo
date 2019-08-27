@@ -4,7 +4,10 @@
       <ion-menu-button color="secondary"></ion-menu-button>
       <ion-back-button color="secondary"></ion-back-button>
     </ion-buttons>
-    <ion-title color="light">{{ 'MENU.SIMULATOR' | translate}}</ion-title>
+    <ion-title color="light">
+      <ion-text class="toolbar-title-text">{{ 'MENU.SIMULATOR' | translate}}</ion-text>
+
+    </ion-title>
 
   </ion-toolbar>
 </ion-header>
@@ -206,7 +209,7 @@
 
         <div *ngIf="data.length === 0">
           <h1 style="padding: 12px 5px 12px;
-          font-size: 29px;">{{ 'SIMULATOR.NO_SIMULATORS' | translate}}</h1>
+          font-size: 25px;">{{ 'SIMULATOR.NO_SIMULATORS' | translate}}</h1>
         </div>
       </ion-card-content>
     </ion-card>

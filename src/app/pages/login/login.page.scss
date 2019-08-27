@@ -18,3 +18,12 @@
 
 
 }
+
+.item-languages {
+    width: 350px;
+    float: right;
+
+    @media only screen and (max-width : 450px) {
+        width: -webkit-fill-available;
+    }
+}

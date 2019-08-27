@@ -311,6 +311,27 @@ router.route('/editUser').post((req, res) => {
     var country = req.body.country;
     var city = req.body.city;
 
+    User.findById(id, (err, oldUser) => {
+        Message.find({
+            sender: oldUser.username
+        }, (error1, sentMessages) => {
+            sentMessages.forEach(x => {
+                x.sender = username;
+                x.save();
+            })
+
+        })
+        Message.find({
+            receiver: oldUser.username
+        }, (error1, receivedMessages) => {
+            receivedMessages.forEach(x => {
+                x.receiver = username;
+                x.save();
+            })
+
+        })
+    })
+
     if (req.file !== undefined) {
         var image = req.file.url;
         User.findByIdAndUpdate(id, {

@@ -4,7 +4,9 @@
       <ion-menu-button color="secondary"></ion-menu-button>
       <ion-back-button color="secondary" defaultHref=""></ion-back-button>
     </ion-buttons>
-    <ion-title color="primary">{{user.username }}</ion-title>
+    <ion-title color="primary">
+      <ion-text class="toolbar-title-text">{{user.username }}</ion-text>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -45,43 +47,85 @@
           <ion-col size="12" padding>
             <ion-list margin-bottom>
               <ion-item>
-                <ion-label color="dark">{{ 'PROFILE.FULL_NAME' | translate }}</ion-label>
-                {{ user.firstName }} {{ user.lastName }}
+                <div class="div-label">
+                  <ion-text color="dark">{{ 'PROFILE.FULL_NAME' | translate }}</ion-text>
+                </div>
+                <div class="div-value">
+                  <ion-text>{{ user.firstName }} {{ user.lastName }}</ion-text>
+                </div>
               </ion-item>
 
               <ion-item>
-                <ion-label color="dark">{{ 'PROFILE.AGE' | translate }}</ion-label>
-                {{ user.age }}
+                <div class="div-label">
+                  <ion-text color="dark">{{ 'PROFILE.AGE' | translate }}</ion-text>
+                </div>
+                <div class="div-value">
+                  <ion-text>{{ user.age }}</ion-text>
+                </div>
               </ion-item>
 
               <ion-item>
-                <ion-label color="dark">{{ 'PROFILE.EMAIL' | translate }}</ion-label>
-                {{ user.email }}
+                <div class="div-label">
+                  <ion-text color="dark">{{ 'PROFILE.EMAIL' | translate }}</ion-text>
+                </div>
+                <div class="div-value">
+                  <ion-text>{{ user.email }}</ion-text>
+                </div>
               </ion-item>
 
               <ion-item>
-                <ion-label color="dark">{{ 'PROFILE.PHONE' | translate }}</ion-label>
-                {{ user.phoneNumber }}
+
+
+                <div class="div-label">
+                  <ion-text color="dark">{{ 'PROFILE.PHONE' | translate }}</ion-text>
+                </div>
+                <div class="div-value">
+                  <ion-text>{{ user.phoneNumber }}</ion-text>
+                </div>
               </ion-item>
 
               <ion-item>
-                <ion-label color="dark">{{ 'PROFILE.COUNTRY' | translate }}</ion-label>
-                {{user.country}}
+
+
+                <div class="div-label">
+                  <ion-text color="dark">{{ 'PROFILE.COUNTRY' | translate }}</ion-text>
+                </div>
+                <div class="div-value">
+                  <ion-text>{{user.country}}</ion-text>
+                </div>
               </ion-item>
 
               <ion-item>
-                <ion-label color="dark">{{ 'PROFILE.CITY' | translate }}</ion-label>
-                {{ user.city }}
+
+
+                <div class="div-label">
+                  <ion-text color="dark">{{ 'PROFILE.CITY' | translate }}</ion-text>
+                </div>
+                <div class="div-value">
+                  <ion-text>{{ user.city }}</ion-text>
+                </div>
               </ion-item>
 
               <ion-item>
-                <ion-label color="dark">{{ 'PROFILE.MEMBER_SINCE' | translate }}</ion-label>
-                {{ user.registrationDate }}
+
+
+                <div class="div-label">
+                  <ion-text color="dark">{{ 'PROFILE.MEMBER_SINCE' | translate }}</ion-text>
+                </div>
+                <div class="div-value">
+                  <ion-text>{{ user.registrationDate }}</ion-text>
+                </div>
               </ion-item>
 
               <ion-item>
-                <ion-label color="dark">{{ 'PROFILE.LICENCE_EXPIRES' | translate }}</ion-label>
-                {{ user.licenceDate }}
+
+
+                <div class="div-label">
+                  <ion-text color="dark">{{ 'PROFILE.LICENCE_EXPIRES' | translate }}</ion-text>
+                </div>
+                <div class="div-value">
+                  <ion-text>{{ user.licenceDate }}</ion-text>
+                </div>
               </ion-item>
 
 

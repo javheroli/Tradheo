@@ -4,7 +4,9 @@
       <ion-menu-button color="secondary"></ion-menu-button>
       <ion-back-button color="secondary"></ion-back-button>
     </ion-buttons>
-    <ion-title color="light">{{ 'MENU.COMMUNITY' | translate }}</ion-title>
+    <ion-title color="light">
+      <ion-text class="toolbar-title-text">{{ 'MENU.COMMUNITY' | translate }}</ion-text>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -54,11 +56,11 @@
               <ion-label>
                 <ion-text color="dark">
                   <h2>
-                    <span><strong>{{ user.firstName }} {{ user.lastName }}</strong></span>
+                    <span><strong style="white-space: normal">{{ user.firstName }} {{ user.lastName }}</strong></span>
                   </h2>
-                  <span class="username">
+                  <span style="white-space: normal" class="username">
                     (<em>{{ user.username }}</em>)</span>
-                  <h4 style="font-weight: bold">
+                  <h4 style="font-weight: bold; white-space: normal">
                     {{ user.city }} ({{ user.country }})
                   </h4>
                 </ion-text>
