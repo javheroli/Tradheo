@@ -141,6 +141,18 @@ export class LiveDataPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.dm
+      .marketLiveData(this.country)
+      .then(res => {
+        res.date = String(new Date(res.date)).split(' GMT')[0];
+        this.previousData = res;
+        this.first = true;
+        this.data = res;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+      
     this.subscription = this.intervallTimer.subscribe(x => {
       this.dm.getAutomaticOperation().then(res => {
         if (!this.automaticOperation && res) {
