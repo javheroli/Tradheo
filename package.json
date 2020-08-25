@@ -33,7 +33,7 @@
     "core-js": "^2.5.4",
     "express": "^4.17.1",
     "google-libphonenumber": "^3.2.3",
-    "highcharts": "^7.1.2",
+    "highcharts": "^7.2.2",
     "ionic-selectable": "^4.4.1",
     "ng-recaptcha": "^4.3.0",
     "ngx-cookie-service": "^2.2.0",
